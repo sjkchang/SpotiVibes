@@ -1,7 +1,7 @@
 const spotify = require("../services/Spotify");
 const jwt = require("jsonwebtoken");
 
-const auth_url = (req, res) => {
+const login = (req, res) => {
     var scopes = [
         "user-read-private",
         "user-read-email",
@@ -57,7 +57,7 @@ const is_logged_in = (req, res) => {
 };
 
 module.exports = {
-    auth_url,
+    login,
     handle_callback,
     logout,
     is_logged_in,
