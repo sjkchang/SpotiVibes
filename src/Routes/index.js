@@ -19,6 +19,7 @@ spotifyRouter.get("/playlist/:uri?", spotifyController.get_playlist);
 spotifyRouter.get("/recommendations", spotifyController.get_recommmendations);
 spotifyRouter.get("/genres", spotifyController.get_genres);
 spotifyRouter.get("/top-tracks", spotifyController.get_top_tracks);
+spotifyRouter.get("/top-artists", spotifyController.get_top_artists);
 
 module.exports = {
     authRouter,

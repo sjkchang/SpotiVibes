@@ -8,12 +8,12 @@ app.use(cookieParser());
 
 app.use(express.static(path.resolve(__dirname, "../client/build")));
 
-app.get("/", (req, res) => {
-    res.sendFile(path.join(__dirname, "../client/build", "index.html"));
-});
-
 app.use("/api", routes.authRouter);
 app.use("/api/spotify", routes.spotifyRouter);
+
+app.get("*", (req, res) => {
+    res.sendFile(path.join(__dirname, "../client/build", "index.html"));
+});
 
 app.listen(3000, () => console.log("Example app listening on port 3000!"));
 

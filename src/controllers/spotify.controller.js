@@ -59,6 +59,17 @@ const get_top_tracks = async (req, res) => {
     }
 };
 
+const get_top_artists = async (req, res) => {
+    spotify.setAccessToken(res.locals.access_token);
+    let data;
+    try {
+        data = await spotify.getMyTopArtists();
+        res.send(data.body);
+    } catch (error) {
+        console.log(error);
+    }
+};
+
 const get_recommmendations = async (req, res) => {
     spotify.setAccessToken(res.locals.access_token);
 
@@ -94,6 +105,7 @@ module.exports = {
     get_playlists,
     get_playlist,
     get_top_tracks,
+    get_top_artists,
     get_recommmendations,
     get_genres,
 };
