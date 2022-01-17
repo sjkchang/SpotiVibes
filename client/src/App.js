@@ -1,14 +1,14 @@
 import "./App.css";
 import Navbar from "./components/Navbar/Navbar";
-import GenreBox from "./components/GenreBox/GenreBox";
-import TopTracks from "./components/TopTracks";
-import { Routes, Route, Link } from "react-router-dom";
+import TopTracks from "./pages/TopTracks";
+import TopArtists from "./pages/TopArtists";
+import GeneratePlaylist from "./pages/GeneratePlaylist";
+import { Routes, Route } from "react-router-dom";
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 
 export default function App() {
     const [loggedIn, setLoggedIn] = useState(false);
-    const [page, setPage] = useState("home");
 
     useEffect(() => {
         async function fetchMyAPI() {
@@ -20,12 +20,13 @@ export default function App() {
 
     return (
         <div className='App portfolio-theme'>
-            {loggedIn ? "Logged In" : "Logged Out"}
             <Navbar loggedIn={loggedIn} />
             <br />
-            <GenreBox />
             <Routes>
-                <Route path='top-songs' element={<TopTracks />} />
+                <Route path='top-tracks' element={<TopTracks />} />
+                <Route path='top-artists' element={<TopArtists />} />
+                <Route path='my-playlists' element={<TopTracks />} />
+                <Route path='generate' element={<GeneratePlaylist />} />
             </Routes>
         </div>
     );

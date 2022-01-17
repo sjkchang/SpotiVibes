@@ -13,13 +13,13 @@ export const LoggedInItems = [
     },
     {
         title: "Generate",
-        url: "#",
+        url: "generate",
         cName: "nav-links",
         reactUrl: true,
     },
     {
-        title: "Top Songs",
-        url: "top-songs",
+        title: "Top Tracks",
+        url: "top-tracks",
         cName: "nav-links",
         reactUrl: true,
     },
