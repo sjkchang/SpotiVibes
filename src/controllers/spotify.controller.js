@@ -73,20 +73,15 @@ const get_top_artists = async (req, res) => {
 const get_recommmendations = async (req, res) => {
     spotify.setAccessToken(res.locals.access_token);
 
-    let seeds = req.body.seeds;
+    //let seeds = req.body.seeds;
+    let seeds;
+    console.log(req);
     let recommendations;
     if (seeds) recommendations = await spotify.getRecommendations(seeds);
     else
         recommendations = await spotify.getRecommendations({
             seed_artists: ["56C8IMUO9RKB5uFPWDU11D", "3QyqTTQgSUaa449m8u6vpR"],
-            genres: [
-                "acoustic",
-                "alt-rock",
-                "dance",
-                "chill",
-                "ambient",
-                "alternative",
-            ],
+            seed_genres: ["acoustic"],
         });
 
     res.send(recommendations);
