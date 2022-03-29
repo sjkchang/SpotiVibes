@@ -16,12 +16,12 @@ spotifyRouter.get("/", spotifyController.index);
 spotifyRouter.get("/me", spotifyController.me);
 spotifyRouter.get("/playlists/:user?", spotifyController.get_playlists);
 spotifyRouter.get("/playlist/:uri?", spotifyController.get_playlist);
-spotifyRouter.get("/recommendations", spotifyController.get_recommmendations);
+spotifyRouter.post("/generate_playlist", spotifyController.generate_playlist);
 spotifyRouter.get("/genres", spotifyController.get_genres);
 spotifyRouter.get("/top-tracks", spotifyController.get_top_tracks);
 spotifyRouter.get("/top-artists", spotifyController.get_top_artists);
 
 module.exports = {
-    authRouter,
-    spotifyRouter,
+  authRouter,
+  spotifyRouter,
 };

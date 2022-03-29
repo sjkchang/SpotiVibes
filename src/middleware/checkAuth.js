@@ -1,9 +1,9 @@
 const jwt = require("jsonwebtoken");
 const spotify = require("../services/Spotify");
 
-const verifyJWT = async (req, res, next) => {
-  console.log("here");
-  const token = req.cookies.jwt;
+const checkAuth = async (req, res, next) => {
+  const token = req.headers;
+  console.log(token);
   if (token) {
     let data = jwt.verify(token, process.env.SECRET_KEY);
 
@@ -33,10 +33,8 @@ const verifyJWT = async (req, res, next) => {
       res.locals.access_token = data.access_token;
     }
   } else {
-    console.log("unauthorized");
     return res.status(401).send("User is not properly authenticated");
   }
-  console.log("end");
   next();
 };
 
@@ -52,4 +50,4 @@ const refresh_token = async (refresh_token) => {
   }
 };
 
-module.exports = verifyJWT;
+module.exports = checkAuth;
