@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
+import Artist from "../components/Artist/Artist";
 
 export const TopArtists = () => {
   const [artists, setArtists] = useState([]);
@@ -25,12 +26,7 @@ export const TopArtists = () => {
     <div className="TopArtists">
       <p>Top artists:</p>
       {artists.map((artist, index) => {
-        return (
-          <li>
-            <img src={artist.images[0].url} alt={artist.name}></img>
-            <p>{artist.name}</p>
-          </li>
-        );
+        return <Artist artist={artist} key={index} />;
       })}
     </div>
   );

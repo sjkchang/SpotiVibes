@@ -29,13 +29,34 @@ export default class SeedController {
     return seedsAsJson;
   }
 
+  getSeeds() {
+    let seeds = this.cookies.get("seeds") || [];
+    if (seeds.length <= 0) return [];
+
+    let seedsAsJson = {};
+    for (let i = 0; i < seeds.length; i++) {
+      let uri = seeds[i][0];
+      let uriType = seeds[i][1];
+
+      let seedType = "seed_" + uriType + "s";
+
+      if (seedType in seedsAsJson) {
+        seedsAsJson[seedType].push({ uri: seeds[i][0], name: seeds[i][2] });
+      } else {
+        seedsAsJson[seedType] = [{ uri: seeds[i][0], name: seeds[i][2] }];
+      }
+    }
+    return seedsAsJson;
+  }
+
   addSeed(uri, type, name) {
     let seeds = this.cookies.get("seeds") || [];
     if (seeds.length >= 4) {
-      throw new Error("Seed Limit Reached");
+      return false;
     }
     seeds.push([uri, type, name]);
     this.cookies.set("seeds", seeds);
+    return true;
   }
 
   removeSeed(uri) {

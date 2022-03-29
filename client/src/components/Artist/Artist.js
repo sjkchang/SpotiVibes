@@ -1,26 +1,24 @@
 import React, { useState, useEffect } from "react";
-import "./Track.css";
 import Cookies from "universal-cookie";
 import SeedController from "../../utils/seeds";
 
-export const Track = (props) => {
+export const Artist = (props) => {
   const [selected, setSelected] = useState(false);
-  const cookies = new Cookies();
   const seedController = new SeedController();
 
   useEffect(() => {
-    setSelected(seedController.containsUri(props.track.id));
+    setSelected(seedController.containsUri(props.artist.id));
   }, []);
 
   const toggleSelected = () => {
     if (selected) {
-      seedController.removeSeed(props.track.id);
+      seedController.removeSeed(props.artist.id);
       setSelected(false);
     } else {
       let success = seedController.addSeed(
-        props.track.id,
-        "track",
-        props.track.name
+        props.artist.id,
+        "artist",
+        props.artist.name
       );
       if (success) {
         setSelected(true);
@@ -31,12 +29,9 @@ export const Track = (props) => {
   };
 
   return (
-    <li className="Track">
-      <img src={props.track.album.images[0].url} alt="album art"></img>
-      <p>Title: {props.track.name} </p>
-      <p>Artist: {props.track.artists[0].name} </p>
-      <p>Album: {props.track.album.name} </p>
-      <p>Duration: {props.track.duration_ms} </p>
+    <li className="Artist">
+      <img src={props.artist.images[0].url} alt={props.artist.name}></img>
+      <p>{props.artist.name}</p>
       <button onClick={toggleSelected}>
         {selected ? "Unselect" : "Select"}
       </button>
@@ -44,4 +39,4 @@ export const Track = (props) => {
   );
 };
 
-export default Track;
+export default Artist;

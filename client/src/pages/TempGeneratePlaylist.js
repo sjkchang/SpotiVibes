@@ -2,22 +2,24 @@ import React, { useState, useEffect } from "react";
 import Cookies from "universal-cookie";
 import GenreBox from "../components/GenreBox/GenreBox";
 import TraitSlider from "../components/TraitSlider/TraitSlider";
+import SeedController from "../utils/seeds";
 
 import axios from "axios";
 
 export const GeneratePlaylist = () => {
   const [tracks, setTracks] = useState([]);
-  const [trackTitles, setTrackTitles] = useState([]);
+  const [artists, setArtists] = useState([]);
   const [seeds, setSeeds] = useState({});
+  const seedController = new SeedController();
 
   useEffect(() => {
     const cookies = new Cookies();
-    const seedTracks = cookies.get("selected_seed_tracks") || [];
-    const seedTrackTitles = cookies.get("selected_seed_track_titles") || [];
+    const seeds = seedController.getSeeds();
+    const formatedSeeds = seedController.getSeedsAsJson();
 
-    setTracks(seedTracks);
-    setSeeds({ seed_tracks: seedTracks });
-    setTrackTitles(seedTrackTitles);
+    setTracks(seeds.seed_tracks);
+    setArtists(seeds.seed_artists);
+    setSeeds(formatedSeeds);
   }, []);
 
   const updateSeeds = (seeds) => {
@@ -32,11 +34,17 @@ export const GeneratePlaylist = () => {
         <GenreBox />
         <p>Selected Tracks:</p>
         <ol>
-          {trackTitles.map((title, index) => {
-            return <li>{title}</li>;
+          {tracks.map((track, index) => {
+            return <li>{track.name}</li>;
           })}
         </ol>
 
+        <p>Selected Artists:</p>
+        <ol>
+          {artists.map((artist, index) => {
+            return <li>{artist.name}</li>;
+          })}
+        </ol>
         <TraitSlider
           name="Accousticness"
           min={0}
