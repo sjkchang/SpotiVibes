@@ -9,25 +9,33 @@ export const Track = (props) => {
   const seedController = new SeedController();
 
   useEffect(() => {
-    setSelected(seedController.containsUri(props.track.id));
+    let tracks = cookies.get("seed_tracks") || [];
+    if (tracks.indexOf(props.track.id) >= 0) {
+      setSelected(true);
+    } else {
+      setSelected(false);
+    }
   }, []);
 
   const toggleSelected = () => {
+    let seed_tracks = cookies.get("seed_tracks") || [];
+    let total_seeds = cookies.get("total_seeds") || 0;
+
     if (selected) {
-      seedController.removeSeed(props.track.id);
+      seed_tracks.splice(seed_tracks.indexOf(props.track.id), 1);
+      total_seeds--;
       setSelected(false);
     } else {
-      let success = seedController.addSeed(
-        props.track.id,
-        "track",
-        props.track.name
-      );
-      if (success) {
-        setSelected(true);
-      } else {
+      if (total_seeds >= 4) {
         alert("Max Number of Seeds Selected. Unselect a seed");
+      } else {
+        seed_tracks.push(props.track.id);
+        total_seeds++;
+        setSelected(true);
       }
     }
+    cookies.set("total_seeds", total_seeds);
+    cookies.set("seed_tracks", seed_tracks);
   };
 
   return (

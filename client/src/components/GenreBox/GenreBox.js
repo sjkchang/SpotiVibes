@@ -3,7 +3,7 @@ import "./GenreBox.css";
 import axios from "axios";
 import Select from "react-select";
 
-export const GenreBox = () => {
+export const GenreBox = ({ updateGenre }) => {
   const [genres, setGenres] = useState([]);
   const [isLoading, setLoading] = useState(true);
 
@@ -22,6 +22,10 @@ export const GenreBox = () => {
     fetchAPI();
   }, []);
 
+  const updateGenreSeed = (value) => {
+    updateGenre(value["value"]);
+  };
+
   return (
     <div className="GenreBox">
       <Select
@@ -30,6 +34,7 @@ export const GenreBox = () => {
         isLoading={isLoading}
         max={2}
         MaxLength={3}
+        onChange={updateGenreSeed}
       />
     </div>
   );

@@ -9,20 +9,29 @@ export const TraitSlider = ({
   max = 1,
   step = 0.05,
   updateSeeds,
+  disableSeed,
 }) => {
   let target = (max - min) / 2;
   const [values, setValues] = useState([min + step, target, max - step]);
   const [disabled, setDisabled] = useState(true);
 
-  const addValuesToSeeds = () => {
+  const setSeed = () => {
     let min = "min-" + name;
     let target = "target-" + name;
     let max = "max-" + name;
-    let seeds = {};
-    seeds[min] = values[0];
-    seeds[target] = values[1];
-    seeds[max] = target[2];
-    updateSeeds(seeds);
+    let seed = {};
+    seed[min] = values[0];
+    seed[target] = values[1];
+    seed[max] = values[2];
+    updateSeeds(seed);
+  };
+
+  const disable = () => {
+    let min = "min-" + name;
+    let target = "target-" + name;
+    let max = "max-" + name;
+
+    disableSeed([min, target, max]);
   };
 
   return (
@@ -31,9 +40,12 @@ export const TraitSlider = ({
       <button
         onClick={() => {
           setDisabled(!disabled);
+          if (!disabled) {
+            disable();
+          }
         }}
       >
-        {disabled ? `Use ${name}` : `Disable ${name}`}
+        {disabled ? `Enable` : `Disable`}
       </button>
       <p>
         Min: {values[0]} target: {values[1]} max: {values[2]}
@@ -48,7 +60,7 @@ export const TraitSlider = ({
         onChange={(value) => {
           setValues(value);
         }}
-        //onAfterChange={onAfterChange}
+        onAfterChange={setSeed}
         disabled={disabled}
       />
     </div>

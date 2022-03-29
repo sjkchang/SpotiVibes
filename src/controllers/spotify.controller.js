@@ -75,7 +75,7 @@ const generate_playlist = async (req, res) => {
 
   let body = req.body;
   let seeds = body.seeds;
-  console.log(seeds);
+  console.log(body);
   let recommendations;
   if (seeds) recommendations = await spotify.getRecommendations(seeds);
   else return res.status(400).send("Failed to generate playlist");

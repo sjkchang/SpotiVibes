@@ -9,73 +9,59 @@ export default class SeedController {
     this.cookies.set("Test", "Hello this is a test");
   }
 
-  getSeedsAsJson() {
-    let seeds = this.cookies.get("seeds") || [];
-    if (seeds.length <= 0) return {};
+  addTrack(uri) {
+    let total = this.cookies.get("num_seeds") || 0;
 
-    let seedsAsJson = {};
-    for (let i = 0; i < seeds.length; i++) {
-      let uri = seeds[i][0];
-      let uriType = seeds[i][1];
-
-      let seedType = "seed_" + uriType + "s";
-
-      if (seedType in seedsAsJson) {
-        seedsAsJson[seedType] += ", " + seeds[i][0];
-      } else {
-        seedsAsJson[seedType] = seeds[i][0];
-      }
-    }
-    return seedsAsJson;
-  }
-
-  getSeeds() {
-    let seeds = this.cookies.get("seeds") || [];
-    if (seeds.length <= 0) return [];
-
-    let seedsAsJson = {};
-    for (let i = 0; i < seeds.length; i++) {
-      let uri = seeds[i][0];
-      let uriType = seeds[i][1];
-
-      let seedType = "seed_" + uriType + "s";
-
-      if (seedType in seedsAsJson) {
-        seedsAsJson[seedType].push({ uri: seeds[i][0], name: seeds[i][2] });
-      } else {
-        seedsAsJson[seedType] = [{ uri: seeds[i][0], name: seeds[i][2] }];
-      }
-    }
-    return seedsAsJson;
-  }
-
-  addSeed(uri, type, name) {
-    let seeds = this.cookies.get("seeds") || [];
-    if (seeds.length >= 4) {
+    if (total >= 4) {
       return false;
+    } else {
+      let seed_tracks = this.cookies.get("seed_tracks") || [];
+      seed_tracks.push(uri);
+      this.cookies.set("seed_tracks", seed_tracks);
+      total++;
+      this.cookies.set("num_seeds", total);
+      return true;
     }
-    seeds.push([uri, type, name]);
-    this.cookies.set("seeds", seeds);
-    return true;
   }
 
-  removeSeed(uri) {
-    let seeds = this.cookies.get("seeds") || [];
-    for (let i = 0; i < seeds.length; i++) {
-      if (seeds[i][0] == uri) {
-        seeds.splice(i, 1);
-      }
+  addArtist(uri) {
+    let total = this.cookies.get("num_seeds") || 0;
+
+    if (total >= 4) {
+      return false;
+    } else {
+      let seed_artists = this.cookies.get("seed_artists") || [];
+      seed_artists.push(uri);
+      this.cookies.set("seed_artists", seed_artists);
+      total++;
+      this.cookies.set("num_seeds", total);
+      return true;
     }
-    this.cookies.set("seeds", seeds);
   }
 
-  containsUri(uri) {
-    let seeds = this.cookies.get("seeds") || [];
-    for (let i = 0; i < seeds.length; i++) {
-      if (seeds[i][0] == uri) {
-        return true;
+  removeTrack(uri) {
+    let seed_tracks = this.cookies.get("seed_tracks") || [];
+    for (let i = 0; i < seed_tracks.length; i++) {
+      if (seed_tracks[i] == uri) {
+        seed_tracks.splice(i, 1);
       }
     }
-    return false;
+    let total = this.cookies.get("num_seeds") || 0;
+    total--;
+    this.cookies.set("num_seeds", total);
+    this.cookies.set("seed_tracks", seed_tracks);
+  }
+
+  removeArtist(uri) {
+    let seed_artists = this.cookies.get("seed_artists") || [];
+    for (let i = 0; i < seed_artists.length; i++) {
+      if (seed_artists[i] == uri) {
+        seed_artists.splice(i, 1);
+      }
+    }
+    let total = this.cookies.get("num_seeds") || 0;
+    total--;
+    this.cookies.set("num_seeds", total);
+    this.cookies.set("seed_artists", seed_artists);
   }
 }
