@@ -23,9 +23,9 @@ export default function App() {
       <Navbar loggedIn={loggedIn} />
       <div className="content">
         <Routes>
+          <Route path="" element={<TopTracks />} />
           <Route path="top-tracks" element={<TopTracks />} />
           <Route path="top-artists" element={<TopArtists />} />
-          <Route path="my-playlists" element={<TopTracks />} />
           <Route path="generate" element={<GeneratePlaylist />} />
         </Routes>
       </div>
