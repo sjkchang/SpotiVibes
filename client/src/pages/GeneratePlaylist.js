@@ -15,8 +15,8 @@ export const GeneratePlaylist = () => {
   const cookies = new Cookies();
 
   useEffect(() => {
-    const seed_tracks = cookies.get("seed_tracks");
-    const seed_artists = cookies.get("seed_artists");
+    const seed_tracks = cookies.get("seed_tracks") || [];
+    const seed_artists = cookies.get("seed_artists") || [];
 
     setTracks(seed_tracks);
     setArtists(seed_artists);
