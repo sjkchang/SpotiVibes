@@ -52,7 +52,10 @@ const get_top_tracks = async (req, res) => {
 
   let data;
   try {
-    data = await spotify.getMyTopTracks();
+    data = await spotify.getMyTopTracks({
+      limit: 20,
+      time_range: "medium_term",
+    });
     res.send(data.body);
   } catch (error) {
     console.log(error);
@@ -63,7 +66,10 @@ const get_top_artists = async (req, res) => {
   spotify.setAccessToken(res.locals.access_token);
   let data;
   try {
-    data = await spotify.getMyTopArtists();
+    data = await spotify.getMyTopArtists({
+      limit: 20,
+      time_range: "medium_term",
+    });
     res.send(data.body);
   } catch (error) {
     console.log(error);

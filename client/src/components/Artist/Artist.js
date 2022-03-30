@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import Cookies from "universal-cookie";
-
+import "./Artist.css";
 export const Artist = (props) => {
   const [selected, setSelected] = useState(false);
   const cookies = new Cookies();
@@ -37,11 +37,19 @@ export const Artist = (props) => {
 
   return (
     <li className="Artist">
-      <img src={props.artist.images[0].url} alt={props.artist.name}></img>
-      <p>{props.artist.name}</p>
-      <button onClick={toggleSelected}>
+      <button
+        className={selected ? "selected button" : "button"}
+        onClick={toggleSelected}
+      >
         {selected ? "Unselect" : "Select"}
       </button>
+      <img
+        className="album-image"
+        src={props.artist.images[0].url}
+        alt={props.artist.name}
+      ></img>
+
+      <p>{props.artist.name}</p>
     </li>
   );
 };

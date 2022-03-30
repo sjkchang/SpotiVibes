@@ -2,7 +2,7 @@ import "./App.css";
 import Navbar from "./components/Navbar/Navbar";
 import TopTracks from "./pages/TopTracks";
 import TopArtists from "./pages/TopArtists";
-import GeneratePlaylist from "./pages/TempGeneratePlaylist";
+import GeneratePlaylist from "./pages/GeneratePlaylist";
 import { Routes, Route } from "react-router-dom";
 import React, { useState, useEffect } from "react";
 import axios from "axios";

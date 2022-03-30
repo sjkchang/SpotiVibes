@@ -24,7 +24,6 @@ export const TopArtists = () => {
 
   return (
     <div className="TopArtists">
-      <p>Top artists:</p>
       {artists.map((artist, index) => {
         return <Artist artist={artist} key={index} />;
       })}

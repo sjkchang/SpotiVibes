@@ -36,3 +36,22 @@
     transform: rotate(360deg);
   }
 }
+
+button {
+  color: #05386b;
+  background: transparent;
+  border: 1px solid #05386b;
+  border-radius: 3px;
+}
+
+button:hover {
+  color: #8ee4af;
+  background: #05386b;
+  border-radius: 3px;
+}
+
+.TopArtists {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around;
+}

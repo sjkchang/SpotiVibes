@@ -36,6 +36,12 @@ export const Track = (props) => {
     cookies.set("seed_tracks", seed_tracks);
   };
 
+  const convertTime = (millis) => {
+    var minutes = Math.floor(millis / 60000);
+    var seconds = ((millis % 60000) / 1000).toFixed(0);
+    return minutes + ":" + (seconds < 10 ? "0" : "") + seconds;
+  };
+
   return (
     <li className="Track">
       <img
@@ -44,12 +50,15 @@ export const Track = (props) => {
         alt="album art"
       ></img>
       <div className="track-info">
-        <p> {props.track.name} </p>
-        <p> {props.track.artists[0].name} </p>
+        <div className="track-text">
+          <p className="title"> {props.track.name} </p>
+          <p>
+            {props.track.artists[0].name} · {props.track.album.name}
+          </p>
+        </div>
+        <p>{convertTime(props.track.duration_ms)} </p>
       </div>
 
-      <p> {props.track.album.name} </p>
-      <p>Duration: {props.track.duration_ms} </p>
       <button onClick={toggleSelected}>
         {selected ? "Unselect" : "Select"}
       </button>

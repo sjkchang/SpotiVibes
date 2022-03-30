@@ -1,154 +1,155 @@
 import React, { useState, useEffect } from "react";
 import Cookies from "universal-cookie";
 import GenreBox from "../components/GenreBox/GenreBox";
-import { Range } from "rc-slider";
-import "rc-slider/assets/index.css";
+import TraitSlider from "../components/TraitSlider/TraitSlider";
+
 import axios from "axios";
-import SeedController from "../utils/seeds";
 
 export const GeneratePlaylist = () => {
-  const [tracks, setTracks] = useState([]);
-  const [trackTitles, setTrackTitles] = useState([]);
-  const [accousticness, setAccousticness] = useState([0, 0.5, 1]);
-  const [tempo, setTempo] = useState([0, 140, 600]);
-  const [danceabliity, setDanceabliity] = useState([0, 0.5, 1]);
-  const [instramemtalness, setInstramemtalness] = useState([0, 0.5, 1]);
-  const [speechLevel, setSpeechLevel] = useState([0, 0.5, 1]);
+  const [title, setTitle] = useState("Untitled Playlist");
+  const [description, setDescription] = useState("");
 
-  const seedController = new SeedController();
+  const [tracks, setTracks] = useState([]);
+  const [artists, setArtists] = useState([]);
+  const [seeds, setSeeds] = useState({});
+  const cookies = new Cookies();
 
   useEffect(() => {
-    const cookies = new Cookies();
-    const seedTracks = cookies.get("selected_seed_tracks") || [];
-    console.log(seedTracks);
-    const seedTrackTitles = cookies.get("selected_seed_track_titles") || [];
-    setTracks(seedTracks);
-    setTrackTitles(seedTrackTitles);
+    const seed_tracks = cookies.get("seed_tracks");
+    const seed_artists = cookies.get("seed_artists");
+
+    setTracks(seed_tracks);
+    setArtists(seed_artists);
+    let formatedSeeds = {
+      seed_tracks: seed_tracks,
+      seed_artists: seed_artists,
+    };
+    setSeeds(formatedSeeds);
   }, []);
+
+  const updateSeeds = (seed) => {
+    for (let key in seed) {
+      seeds[key] = seed[key];
+    }
+
+    setSeeds(seeds);
+  };
+
+  const disableSeed = (keys) => {
+    for (let key of keys) {
+      delete seeds[key];
+    }
+  };
+
+  const updateGenre = (genre) => {
+    seeds["seed_genres"] = genre;
+    setSeeds(seeds);
+  };
+
+  const submit = () => {
+    seeds["limit"] = 100;
+    setSeeds(seeds);
+    let body = {
+      seeds: seeds,
+      title: title,
+      description: description,
+    };
+    console.log(seeds);
+    let res = axios.post("api/spotify/generate_playlist", body);
+  };
 
   return (
     <div className="GeneratePlaylist">
       <div>
-        <GenreBox />
+        <label for="title">Enter playlist title:</label>
+        <input
+          type="text"
+          id="title"
+          name="title"
+          placeholder="Playlist Title"
+          onChange={(event) => {
+            setTitle(event.target.value);
+          }}
+        />
+        <label for="title">Enter playlist description:</label>
+        <input
+          type="text"
+          id="description"
+          name="description"
+          placeholder="Playlist Description"
+          onChange={(event) => {
+            setDescription(event.target.value);
+          }}
+        />
+        <GenreBox updateGenre={updateGenre} />
         <p>Selected Tracks:</p>
         <ol>
-          {trackTitles.map((title, index) => {
-            return <li>{title}</li>;
+          {tracks.map((track, index) => {
+            return <li>{track.name}</li>;
           })}
         </ol>
-        <strong>Accousticness: </strong>
-        <p>min-accousticness: {accousticness[0]}</p>
-        <p>target-accousticness: {accousticness[1]}</p>
-        <p>max-accousticness: {accousticness[2]}</p>
-        <Range
-          min={0}
-          max={1}
-          defaultValue={accousticness}
-          step={0.05}
-          count={2}
-          allowCross={false}
-          onAfterChange={(value) => {
-            setAccousticness(value);
-          }}
-        />
-        <strong>Tempo: </strong>
-        <p>min-tempo: {tempo[0]}</p>
-        <p>target-tempo: {tempo[1]}</p>
-        <p>max-tempo: {tempo[2]}</p>
-        <Range
-          min={0}
-          max={600}
-          defaultValue={tempo}
-          step={1}
-          count={2}
-          allowCross={false}
-          onAfterChange={(value) => {
-            setTempo(value);
-          }}
-        />
-        <strong>Danceabliity: </strong>
-        <p>min-danceabliity: {danceabliity[0]}</p>
-        <p>target-danceabliity: {danceabliity[1]}</p>
-        <p>max-danceabliity: {danceabliity[2]}</p>
-        <Range
-          min={0}
-          max={1}
-          defaultValue={danceabliity}
-          step={0.05}
-          count={2}
-          allowCross={false}
-          onAfterChange={(value) => {
-            setDanceabliity(value);
-          }}
-        />
 
-        <strong>Instramemtalness: </strong>
-        <p>min-instramemtalness: {instramemtalness[0]}</p>
-        <p>target-instramemtalness: {instramemtalness[1]}</p>
-        <p>max-instramemtalness: {instramemtalness[2]}</p>
-        <Range
+        <p>Selected Artists:</p>
+        <ol>
+          {artists.map((artist, index) => {
+            return <li>{artist.name}</li>;
+          })}
+        </ol>
+        <TraitSlider
+          name="acousticness"
           min={0}
           max={1}
-          defaultValue={instramemtalness}
           step={0.05}
-          count={2}
-          allowCross={false}
-          onAfterChange={(value) => {
-            setInstramemtalness(value);
-          }}
+          updateSeeds={updateSeeds}
+          disableSeed={disableSeed}
         />
-
-        <strong>Speech Level: </strong>
-        <p>min-speechLevel: {speechLevel[0]}</p>
-        <p>target-speechLevel: {speechLevel[1]}</p>
-        <p>max-speechLevel: {speechLevel[2]}</p>
-        <Range
+        <TraitSlider
+          name="energy"
           min={0}
           max={1}
-          defaultValue={speechLevel}
           step={0.05}
-          count={2}
-          allowCross={false}
-          onAfterChange={(value) => {
-            setSpeechLevel(value);
-          }}
+          updateSeeds={updateSeeds}
+          disableSeed={disableSeed}
         />
-
+        <TraitSlider
+          name="speechiness"
+          min={0}
+          max={1}
+          step={0.05}
+          updateSeeds={updateSeeds}
+          disableSeed={disableSeed}
+        />
+        <TraitSlider
+          name="valence"
+          min={0}
+          max={1}
+          step={0.05}
+          updateSeeds={updateSeeds}
+          disableSeed={disableSeed}
+        />
+        <TraitSlider
+          name="danceability"
+          min={0}
+          max={1}
+          step={0.05}
+          updateSeeds={updateSeeds}
+          disableSeed={disableSeed}
+        />
+        <TraitSlider
+          name="instrumentalness"
+          min={0}
+          max={1}
+          step={0.05}
+          updateSeeds={updateSeeds}
+          disableSeed={disableSeed}
+        />
         <button
-          onClick={async () => {
-            console.log();
-            let body = {
-              seeds: {
-                limit: 100,
-                seed_tracks: tracks,
-                /*
-                min_accousticness: accousticness[0],
-                target_accousticness: accousticness[1],
-                max_accousticness: accousticness[2],
-
-                min_tempo: tempo[0],
-                target_tempo: tempo[1],
-                max_tempo: tempo[2],
-*/
-                min_danceability: danceabliity[0],
-                target_danceability: danceabliity[1],
-                max_danceability: danceabliity[2],
-                /*
-                min_instrumentalness: instramemtalness[0],
-                target_instrumentalness: instramemtalness[1],
-                max_instrumentalness: instramemtalness[2],
-*/
-                min_speechiness: speechLevel[0],
-                target_speechiness: speechLevel[1],
-                max_speechiness: speechLevel[2],
-              },
-              title: "Test Playlist",
-              description: "Test Description",
-            };
-            let res = await axios.post("api/spotify/generate_playlist", body);
-            console.log(res);
+          onClick={() => {
+            submit();
           }}
-        ></button>
+        >
+          Generate Playlist
+        </button>
       </div>
     </div>
   );
