@@ -55,3 +55,8 @@ button:hover {
   flex-wrap: wrap;
   justify-content: space-around;
 }
+
+.TopTracks {
+  display: flex;
+  justify-content: center;
+}

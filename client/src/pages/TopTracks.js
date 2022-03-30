@@ -7,7 +7,7 @@ export const TopTracks = () => {
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
-    async function fetchAPI() {
+    async function fetchTracks() {
       let response = await axios.get("/api/spotify/top-tracks");
       let list = [];
 
@@ -19,7 +19,8 @@ export const TopTracks = () => {
       setTracks(list);
       setIsLoading(false);
     }
-    fetchAPI();
+
+    fetchTracks();
   }, []);
 
   return (
