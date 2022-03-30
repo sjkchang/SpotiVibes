@@ -1,0 +1,10 @@
+.Track {
+  display: grid;
+  justify-content: center;
+  grid-template-columns: [first] 80px [line2] 10rem [line3] 10rem [col4-start] 10rem [five] 60px [end];
+}
+
+.album-art {
+  width: 60px;
+  height: 60px;
+}

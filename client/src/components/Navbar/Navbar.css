@@ -1,0 +1,28 @@
+.Navbar {
+  display: flex;
+  background-color: #05386b;
+  color: #edf5e1;
+}
+
+.navbar-logo {
+  margin-left: 20px;
+}
+
+.nav-menu {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-shrink: 0;
+  flex-grow: 1;
+}
+
+ul {
+  list-style-type: none;
+  margin: 0;
+  padding: 20px;
+}
+
+.nav-menu a {
+  text-decoration: none;
+  color: #ffffff;
+}

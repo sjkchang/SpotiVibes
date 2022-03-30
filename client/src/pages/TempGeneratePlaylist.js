@@ -2,22 +2,28 @@ import React, { useState, useEffect } from "react";
 import Cookies from "universal-cookie";
 import GenreBox from "../components/GenreBox/GenreBox";
 import TraitSlider from "../components/TraitSlider/TraitSlider";
-import SeedController from "../utils/seeds";
 
 import axios from "axios";
 
 export const GeneratePlaylist = () => {
+  const [title, setTitle] = useState("Untitled Playlist");
+  const [description, setDescription] = useState("");
+
   const [tracks, setTracks] = useState([]);
   const [artists, setArtists] = useState([]);
   const [seeds, setSeeds] = useState({});
-  const seedController = new SeedController();
+  const cookies = new Cookies();
 
   useEffect(() => {
-    const seeds = seedController.getSeeds();
-    const formatedSeeds = seedController.getSeedsAsJson();
+    const seed_tracks = cookies.get("seed_tracks");
+    const seed_artists = cookies.get("seed_artists");
 
-    setTracks(seeds.seed_tracks);
-    setArtists(seeds.seed_artists);
+    setTracks(seed_tracks);
+    setArtists(seed_artists);
+    let formatedSeeds = {
+      seed_tracks: seed_tracks,
+      seed_artists: seed_artists,
+    };
     setSeeds(formatedSeeds);
   }, []);
 
@@ -41,10 +47,12 @@ export const GeneratePlaylist = () => {
   };
 
   const submit = () => {
+    seeds["limit"] = 100;
+    setSeeds(seeds);
     let body = {
       seeds: seeds,
-      title: "Test Tilte",
-      description: "Test Description",
+      title: title,
+      description: description,
     };
     console.log(seeds);
     let res = axios.post("api/spotify/generate_playlist", body);
@@ -53,6 +61,26 @@ export const GeneratePlaylist = () => {
   return (
     <div className="GeneratePlaylist">
       <div>
+        <label for="title">Enter playlist title:</label>
+        <input
+          type="text"
+          id="title"
+          name="title"
+          placeholder="Playlist Title"
+          onChange={(event) => {
+            setTitle(event.target.value);
+          }}
+        />
+        <label for="title">Enter playlist description:</label>
+        <input
+          type="text"
+          id="description"
+          name="description"
+          placeholder="Playlist Description"
+          onChange={(event) => {
+            setDescription(event.target.value);
+          }}
+        />
         <GenreBox updateGenre={updateGenre} />
         <p>Selected Tracks:</p>
         <ol>
@@ -75,12 +103,52 @@ export const GeneratePlaylist = () => {
           updateSeeds={updateSeeds}
           disableSeed={disableSeed}
         />
+        <TraitSlider
+          name="energy"
+          min={0}
+          max={1}
+          step={0.05}
+          updateSeeds={updateSeeds}
+          disableSeed={disableSeed}
+        />
+        <TraitSlider
+          name="speechiness"
+          min={0}
+          max={1}
+          step={0.05}
+          updateSeeds={updateSeeds}
+          disableSeed={disableSeed}
+        />
+        <TraitSlider
+          name="valence"
+          min={0}
+          max={1}
+          step={0.05}
+          updateSeeds={updateSeeds}
+          disableSeed={disableSeed}
+        />
+        <TraitSlider
+          name="danceability"
+          min={0}
+          max={1}
+          step={0.05}
+          updateSeeds={updateSeeds}
+          disableSeed={disableSeed}
+        />
+        <TraitSlider
+          name="instrumentalness"
+          min={0}
+          max={1}
+          step={0.05}
+          updateSeeds={updateSeeds}
+          disableSeed={disableSeed}
+        />
         <button
           onClick={() => {
             submit();
           }}
         >
-          Check Seed
+          Generate Playlist
         </button>
       </div>
     </div>

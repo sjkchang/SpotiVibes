@@ -1,10 +1,8 @@
 import React, { useState, useEffect } from "react";
 import Cookies from "universal-cookie";
-import SeedController from "../../utils/seeds";
 
 export const Artist = (props) => {
   const [selected, setSelected] = useState(false);
-  const seedController = new SeedController();
   const cookies = new Cookies();
 
   useEffect(() => {

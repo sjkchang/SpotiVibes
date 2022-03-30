@@ -1,12 +1,10 @@
 import React, { useState, useEffect } from "react";
 import "./Track.css";
 import Cookies from "universal-cookie";
-import SeedController from "../../utils/seeds";
 
 export const Track = (props) => {
   const [selected, setSelected] = useState(false);
   const cookies = new Cookies();
-  const seedController = new SeedController();
 
   useEffect(() => {
     let tracks = cookies.get("seed_tracks") || [];
@@ -40,10 +38,17 @@ export const Track = (props) => {
 
   return (
     <li className="Track">
-      <img src={props.track.album.images[0].url} alt="album art"></img>
-      <p>Title: {props.track.name} </p>
-      <p>Artist: {props.track.artists[0].name} </p>
-      <p>Album: {props.track.album.name} </p>
+      <img
+        className="album-art"
+        src={props.track.album.images[0].url}
+        alt="album art"
+      ></img>
+      <div className="track-info">
+        <p> {props.track.name} </p>
+        <p> {props.track.artists[0].name} </p>
+      </div>
+
+      <p> {props.track.album.name} </p>
       <p>Duration: {props.track.duration_ms} </p>
       <button onClick={toggleSelected}>
         {selected ? "Unselect" : "Select"}
