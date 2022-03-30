@@ -23,6 +23,7 @@ export const GeneratePlaylist = () => {
     let formatedSeeds = {
       seed_tracks: seed_tracks,
       seed_artists: seed_artists,
+      seed_genres: "happy",
     };
     setSeeds(formatedSeeds);
   }, []);

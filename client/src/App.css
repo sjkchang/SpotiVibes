@@ -1,5 +1,7 @@
 .App {
   text-align: center;
+  display: flex;
+  flex-direction: column;
 }
 
 .App-logo {
@@ -59,4 +61,8 @@ button:hover {
 .TopTracks {
   display: flex;
   justify-content: center;
+}
+
+.content {
+  padding-top: 80px;
 }

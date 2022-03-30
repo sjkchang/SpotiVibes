@@ -21,13 +21,14 @@ export default function App() {
   return (
     <div className="App portfolio-theme">
       <Navbar loggedIn={loggedIn} />
-      <br />
-      <Routes>
-        <Route path="top-tracks" element={<TopTracks />} />
-        <Route path="top-artists" element={<TopArtists />} />
-        <Route path="my-playlists" element={<TopTracks />} />
-        <Route path="generate" element={<GeneratePlaylist />} />
-      </Routes>
+      <div className="content">
+        <Routes>
+          <Route path="top-tracks" element={<TopTracks />} />
+          <Route path="top-artists" element={<TopArtists />} />
+          <Route path="my-playlists" element={<TopTracks />} />
+          <Route path="generate" element={<GeneratePlaylist />} />
+        </Routes>
+      </div>
     </div>
   );
 }

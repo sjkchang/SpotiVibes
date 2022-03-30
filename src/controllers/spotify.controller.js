@@ -16,44 +16,13 @@ const me = async (req, res) => {
   }
 };
 
-const get_playlists = async (req, res) => {
-  spotify.setAccessToken(res.locals.access_token);
-
-  let user = req.params.user;
-  let data;
-  try {
-    if (user) {
-      data = await spotify.getUserPlaylists(user);
-    } else {
-      data = await spotify.getUserPlaylists();
-    }
-    res.send(data.body);
-  } catch (error) {
-    console.log(error);
-  }
-};
-
-const get_playlist = async (req, res) => {
-  spotify.setAccessToken(res.locals.access_token);
-
-  let playlist_uri = req.params.uri;
-  if (!playlist_uri) return res.status(404).send("Missing URL Parameter");
-  let data;
-  try {
-    data = await spotify.getPlaylist(playlist_uri);
-    res.send(data.body);
-  } catch (error) {
-    console.log(error);
-  }
-};
-
 const get_top_tracks = async (req, res) => {
   spotify.setAccessToken(res.locals.access_token);
 
   let data;
   try {
     data = await spotify.getMyTopTracks({
-      limit: 20,
+      limit: 50,
       time_range: "medium_term",
     });
     res.send(data.body);
@@ -67,7 +36,7 @@ const get_top_artists = async (req, res) => {
   let data;
   try {
     data = await spotify.getMyTopArtists({
-      limit: 20,
+      limit: 50,
       time_range: "medium_term",
     });
     res.send(data.body);
@@ -115,8 +84,6 @@ const get_genres = async (req, res) => {
 module.exports = {
   index,
   me,
-  get_playlists,
-  get_playlist,
   get_top_tracks,
   get_top_artists,
   generate_playlist,

@@ -2,6 +2,9 @@
   display: flex;
   background-color: #05386b;
   color: #edf5e1;
+  position: fixed;
+  top: 0px;
+  width: 100%;
 }
 
 .navbar-logo {
