@@ -22,7 +22,7 @@ export async function getTopItems(type="tracks", timeRange="medium_term", limit=
   if(!timeRangeOptions.includes(timeRange)) throw Error("Invalid Time Range:" + timeRange);
 
   if(limit < 0 || limit > 50) throw Error("Invalid Limit:" + limit);
-  if(offset < 0 || offset > 100_000) throw Error("Invalid Limit:" + limit);
+  if(offset < 0 || offset > 50) throw Error("Invalid Limit:" + limit);
 
   let args = new URLSearchParams({
     time_range: timeRange,

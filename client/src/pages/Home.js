@@ -1,19 +1,18 @@
 import React, {useEffect} from 'react';
-import LoginBtn from '../components/loginBtn';
+import LoginButton from '../components/LoginButton';
 import UserProfile from '../components/UserProfile';
-import TopTracks from '../components/TopTracks';
-import TopArtists from '../components/TopArtists';
+import TopItems from '../components/TopItems';
 
 
 function Home({children}) {
     
     return (
         <div>
-            <LoginBtn>Login</LoginBtn>
+            <LoginButton>Login</LoginButton>
             <UserProfile />
             <div>
-                <TopTracks />
-                <TopArtists />
+                <TopItems type="tracks" />
+                <TopItems type="artists" term="long_term" />
             </div>
             
         </div>
