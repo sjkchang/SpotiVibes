@@ -6,7 +6,7 @@ import TopItems from "../components/TopItems";
 function Home({ children }) {
     return (
         <div>
-            <LoginButton>Login</LoginButton>
+            <a href="welcome">Welcome Page</a>
             <UserProfile />
             <div>
                 <TopItems type="tracks" />

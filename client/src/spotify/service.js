@@ -1,3 +1,5 @@
+import { checkToken } from "./auth";
+
 export async function getProfile() {
     let accessToken = localStorage.getItem("access_token");
 
@@ -18,6 +20,8 @@ export async function getTopItems(
     limit = 20,
     offset = 0
 ) {
+    checkToken();
+
     let accessToken = localStorage.getItem("access_token");
 
     const typeOptions = ["tracks", "artists"];
@@ -50,6 +54,8 @@ export async function getTopItems(
 }
 
 export async function getPlaylists(limit = 20, offset = 0) {
+    checkToken();
+
     let accessToken = localStorage.getItem("access_token");
 
     if (limit < 0 || limit > 50) throw Error("Invalid Limit:" + limit);

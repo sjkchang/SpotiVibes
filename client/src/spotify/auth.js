@@ -78,8 +78,62 @@ export function handle_callback(clientId, redirectUri) {
         .then((data) => {
             console.log(data);
             window.localStorage.setItem("access_token", data.access_token);
+            window.localStorage.setItem("refresh_token", data.refresh_token);
+            let expiresAt = new Date();
+            //Subtract 10 seconds to be safe
+            expiresAt.setTime(
+                expiresAt.getTime() + data.expires_in * 1000 - 10000
+            );
+            window.localStorage.setItem("expires_at", expiresAt);
+            window.location = "/";
         })
         .catch((error) => {
             console.error("Error:", error);
         });
+}
+
+export function refresh() {
+    let refreshToken = window.localStorage.getItem("refresh_token");
+
+    let body = new URLSearchParams({
+        grant_type: "refresh_token",
+        refresh_token: refreshToken,
+        client_id: "6c30dc46a81a4bd9881134d8606c5fd9",
+    });
+
+    const response = fetch("https://accounts.spotify.com/api/token", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/x-www-form-urlencoded",
+        },
+        body: body,
+    })
+        .then((response) => {
+            if (!response.ok) {
+                console.log("Error Fetching Access Token");
+                throw new Error("HTTP status " + response.status);
+            }
+            return response.json();
+        })
+        .then((data) => {
+            console.log(data);
+            window.localStorage.setItem("access_token", data.access_token);
+            window.localStorage.setItem("refresh_token", data.refresh_token);
+            let expiresAt = new Date();
+            //Subtract 10 seconds to be safe
+            expiresAt.setTime(
+                expiresAt.getTime() + data.expires_in * 1000 - 10000
+            );
+            window.localStorage.setItem("expires_at", expiresAt);
+        })
+        .catch((error) => {
+            console.error("Error:", error);
+        });
+}
+
+export async function checkToken() {
+    let expiresAt = new Date(localStorage.getItem("expires_at"));
+    if (expiresAt.getTime() < new Date().getTime()) {
+        refresh();
+    }
 }
