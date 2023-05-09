@@ -1,20 +1,18 @@
-import React, {useEffect, useState} from 'react';
-import {getProfile} from '../spotify/service';
+import React, { useEffect, useState } from "react";
+import { getProfile } from "../spotify/service";
 
-function UserProfile({children}) {
+function UserProfile({ children }) {
     const [data, setData] = useState("");
     useEffect(() => {
         async function fetchAPI() {
             let response = await getProfile();
             setData(response);
         }
-        fetchAPI()
+        fetchAPI();
     }, []);
     return (
         <div>
-            <div>
-                {data ? <p>{JSON.stringify(data)}</p> : "nope"}
-            </div>
+            <div>{data ? <p>{JSON.stringify(data)}</p> : "nope"}</div>
         </div>
     );
 }
