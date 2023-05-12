@@ -1,17 +1,10 @@
-import React, { useEffect } from "react";
-import LoginButton from "../components/LoginButton";
-import UserProfile from "../components/UserProfile";
-import TopItems from "../components/TopItems";
+import React, { useEffect, useState } from "react";
 
-function Home({ children }) {
+function Home({ logout }) {
     return (
         <div>
-            <a href="welcome">Welcome Page</a>
-            <UserProfile />
-            <div>
-                <TopItems type="tracks" />
-                <TopItems type="artists" term="long_term" />
-            </div>
+            Home
+            <button onClick={logout}>Logout</button>
         </div>
     );
 }

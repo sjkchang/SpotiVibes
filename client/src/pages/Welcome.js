@@ -1,10 +1,10 @@
-import React, { useEffect } from "react";
-import LoginButton from "../components/LoginButton";
+import React, { useEffect, useState } from "react";
 
-function Welcome({ children }) {
+function Welcome({ login }) {
     return (
         <div>
-            <LoginButton>Login</LoginButton>
+            Welcome
+            <button onClick={login}>Login</button>
         </div>
     );
 }

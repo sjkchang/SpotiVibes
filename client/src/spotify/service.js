@@ -1,4 +1,4 @@
-import { checkToken } from "./auth";
+import { authService } from "./AuthService";
 
 export async function getProfile() {
     let accessToken = localStorage.getItem("access_token");
@@ -20,7 +20,9 @@ export async function getTopItems(
     limit = 20,
     offset = 0
 ) {
-    checkToken();
+    try {
+        authService.checkToken();
+    } catch (error) {}
 
     let accessToken = localStorage.getItem("access_token");
 
@@ -54,7 +56,7 @@ export async function getTopItems(
 }
 
 export async function getPlaylists(limit = 20, offset = 0) {
-    checkToken();
+    authService.checkToken();
 
     let accessToken = localStorage.getItem("access_token");
 

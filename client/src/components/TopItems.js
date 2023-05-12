@@ -11,14 +11,18 @@ function TopItems({ type = "items", term = "medium_term" }) {
     }
 
     useEffect(() => {
-        fetchAPI(0)
-            .then((items) => {
-                setitems(items);
-                setLoading(false);
-            })
-            .catch((error) => {
-                console.log(error);
-            });
+        if (items.length == 0) {
+            fetchAPI(0)
+                .then((items) => {
+                    setitems(items);
+                    setLoading(false);
+                })
+                .catch((error) => {
+                    setitems([{ name: "Error: Not Logged In" }]);
+                    setLoading(false);
+                    console.log(Error);
+                });
+        }
     }, []);
 
     const addItems = useCallback(() => {
@@ -28,9 +32,7 @@ function TopItems({ type = "items", term = "medium_term" }) {
                 setitems((items) => [...items, ...newItems]);
                 setLoading(false);
             })
-            .catch((error) => {
-                console.log(error);
-            });
+            .catch((error) => {});
     });
 
     return (
