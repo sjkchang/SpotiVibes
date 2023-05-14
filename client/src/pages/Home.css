@@ -1,0 +1,19 @@
+.top-items {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+}
+
+.top-item-children {
+    flex-grow: 1;
+}
+
+@media only screen and (max-width: 768px) {
+    .top-items {
+        display: block;
+        margin-top: 70px;
+    }
+
+    body {
+        background-color: blue;
+    }
+}

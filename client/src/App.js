@@ -10,7 +10,6 @@ function App() {
 
     const login = async () => {
         authService.authorize();
-        setLoggedIn(true);
     };
     const logout = async () => {
         authService.logout();
@@ -18,7 +17,7 @@ function App() {
     };
 
     return (
-        <div>
+        <div className="App">
             {loggedIn ? <Home logout={logout} /> : <Welcome login={login} />}
             <button onClick={authService.getToken}>Get Token</button>
             <button onClick={authService.refresh}>Refresh Token</button>

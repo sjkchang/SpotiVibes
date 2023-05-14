@@ -1,9 +1,13 @@
 import React, { useEffect, useState, useCallback } from "react";
 import { getTopItems } from "../spotify/service";
+import Track from "./TrackItem/TrackItem";
+import Artist from "./ArtistItem/ArtistItem";
 
-function TopItems({ type = "items", term = "medium_term" }) {
+function TopItems({ term = "medium_term", children }) {
     const [items, setitems] = useState([]);
     const [loading, setLoading] = useState(true);
+
+    let type = children.type.name == "TrackItem" ? "tracks" : "artists";
 
     async function fetchAPI(offset) {
         let response = await getTopItems(type, term, 10, offset);
@@ -19,16 +23,16 @@ function TopItems({ type = "items", term = "medium_term" }) {
                 })
                 .catch((error) => {
                     setitems([{ name: "Error: Not Logged In" }]);
-                    setLoading(false);
-                    console.log(Error);
+                    console.log(error);
                 });
         }
     }, []);
 
-    const addItems = useCallback(() => {
+    const seeMoreItems = useCallback(() => {
         setLoading(true);
         fetchAPI(items.length)
             .then((newItems) => {
+                console.log(items[0]);
                 setitems((items) => [...items, ...newItems]);
                 setLoading(false);
             })
@@ -39,13 +43,21 @@ function TopItems({ type = "items", term = "medium_term" }) {
         <div>
             <ol>
                 {items.map((item, i) => (
-                    <li key={i}>{item.name}</li>
+                    <li key={i}>
+                        {React.cloneElement(
+                            children,
+                            {
+                                item: item,
+                            },
+                            null
+                        )}
+                    </li>
                 ))}
                 {loading ? <li>loading...</li> : null}
             </ol>
             <button
                 disabled={items.length >= 50 ? true : false}
-                onClick={addItems}
+                onClick={seeMoreItems}
             >
                 See More
             </button>
