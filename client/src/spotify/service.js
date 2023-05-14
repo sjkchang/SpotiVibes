@@ -1,17 +1,14 @@
 import { authService } from "./AuthService";
 
 export async function getProfile() {
-    let accessToken = localStorage.getItem("access_token");
-
-    const response = await fetch("https://api.spotify.com/v1/me", {
+    let accessToken = authService.getToken();
+    return fetch("https://api.spotify.com/v1/me", {
         headers: {
             Authorization: "Bearer " + accessToken,
         },
+    }).then((response) => {
+        return response.json();
     });
-
-    const data = await response.json();
-
-    return data;
 }
 
 export async function getTopItems(
@@ -24,7 +21,7 @@ export async function getTopItems(
         authService.checkToken();
     } catch (error) {}
 
-    let accessToken = localStorage.getItem("access_token");
+    let accessToken = authService.getToken();
 
     const typeOptions = ["tracks", "artists"];
     if (!typeOptions.includes(type)) throw Error("Invalid type:" + type);
@@ -42,24 +39,16 @@ export async function getTopItems(
         offset: offset,
     });
 
-    const response = await fetch(
-        "https://api.spotify.com/v1/me/top/" + type + "?" + args,
-        {
-            headers: {
-                Authorization: "Bearer " + accessToken,
-            },
-        }
-    );
-
-    const data = await response.json();
-    return data;
+    return fetch("https://api.spotify.com/v1/me/top/" + type + "?" + args, {
+        headers: {
+            Authorization: "Bearer " + accessToken,
+        },
+    }).then((response) => {
+        return response.json();
+    });
 }
 
 export async function getPlaylists(limit = 20, offset = 0) {
-    authService.checkToken();
-
-    let accessToken = localStorage.getItem("access_token");
-
     if (limit < 0 || limit > 50) throw Error("Invalid Limit:" + limit);
     if (offset < 0 || offset > 100_000) throw Error("Invalid Limit:" + limit);
 
@@ -68,15 +57,65 @@ export async function getPlaylists(limit = 20, offset = 0) {
         offset: offset,
     });
 
-    const response = await fetch(
-        "https://api.spotify.com/v1/me/playlists/?" + args,
+    return fetch("https://api.spotify.com/v1/me/playlists/?" + args, {
+        headers: {
+            Authorization: "Bearer " + authService.getToken(),
+        },
+    }).then((response) => {
+        return response.json();
+    });
+}
+
+export async function getGenres() {
+    return fetch(
+        "https://api.spotify.com/v1/recommendations/available-genre-seeds",
         {
             headers: {
-                Authorization: "Bearer " + accessToken,
+                Authorization: "Bearer " + authService.getToken(),
             },
         }
-    );
+    ).then((response) => {
+        return response.json();
+    });
+}
 
-    const data = await response.json();
-    return data;
+export async function generatePlaylist(
+    limit = 20,
+    seed_artists,
+    seed_genres,
+    seed_tracks,
+    audio_features
+) {
+    let stringifySeeds = (seed_artists, seed_genres, seed_tracks) => {
+        let num_seeds =
+            seed_artists.length + seed_genres.length + seed_tracks.length;
+        if (num_seeds > 5 || num_seeds < 1) {
+            throw Error("To Many Seeds");
+        }
+        let artists = seed_artists.join(",");
+        let genres = seed_genres.join(",");
+        let tracks = seed_tracks.join(",");
+        return {
+            seed_artists: artists,
+            seed_genres: genres,
+            seed_tracks: tracks,
+        };
+    };
+
+    let seeds = stringifySeeds(seed_artists, seed_genres, seed_tracks);
+    let accessToken = authService.getToken();
+
+    let args = new URLSearchParams({
+        limit: limit,
+        ...seeds,
+        ...audio_features,
+    });
+
+    return fetch("https://api.spotify.com/v1/recommendations?" + args, {
+        headers: {
+            Authorization: "Bearer " + accessToken,
+        },
+    }).then((response) => {
+        return response.json();
+    });
 }

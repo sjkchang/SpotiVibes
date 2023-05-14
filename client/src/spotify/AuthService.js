@@ -31,6 +31,19 @@ const parseHashParams = () => {
     return parsedHash;
 };
 
+async function refresh() {
+    try {
+        const { data } = await axios.get(
+            `/refresh_token?refresh_token=${getRefreshToken()}`
+        );
+        console.log(data);
+        const { access_token } = data;
+        setAccessToken(access_token);
+        window.location.reload();
+    } catch (e) {
+        console.error(e);
+    }
+}
 export class AuthService {
     authorize() {
         const LOGIN_URI =
@@ -60,22 +73,15 @@ export class AuthService {
                 return access_token;
             }
         }
+
+        if (Date.now() > getTokenExperation()) {
+            console.log("Refreshing");
+            refresh();
+            return;
+        }
+
         console.log(access_token);
         return access_token;
-    }
-
-    async refresh() {
-        try {
-            const { data } = await axios.get(
-                `/refresh_token?refresh_token=${getRefreshToken()}`
-            );
-            console.log(data);
-            const { access_token } = data;
-            setAccessToken(access_token);
-            window.location.reload();
-        } catch (e) {
-            console.error(e);
-        }
     }
 
     isAuthenticated() {
