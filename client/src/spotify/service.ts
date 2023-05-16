@@ -1,4 +1,7 @@
+import axios from "axios";
 import { authService } from "./AuthService";
+import { Artist, Track } from "spotify-types";
+import { TopItemsQuery, TopTracksResponse, TopArtistsResponse } from "./types";
 
 export async function getProfile() {
     let accessToken = authService.getToken();
@@ -11,43 +14,50 @@ export async function getProfile() {
     });
 }
 
-export async function getTopItems(
-    type = "tracks",
-    timeRange = "medium_term",
-    limit = 20,
-    offset = 0
-) {
-    try {
-        authService.checkToken();
-    } catch (error) {}
-
+export async function getTopTracks(
+    query: TopItemsQuery
+): Promise<Array<Track>> {
     let accessToken = authService.getToken();
 
-    const typeOptions = ["tracks", "artists"];
-    if (!typeOptions.includes(type)) throw Error("Invalid type:" + type);
-
-    const timeRangeOptions = ["short_term", "medium_term", "long_term"];
-    if (!timeRangeOptions.includes(timeRange))
-        throw Error("Invalid Time Range:" + timeRange);
-
-    if (limit < 0 || limit > 50) throw Error("Invalid Limit:" + limit);
-    if (offset < 0 || offset > 50) throw Error("Invalid Limit:" + limit);
-
-    let args = new URLSearchParams({
-        time_range: timeRange,
-        limit: limit,
-        offset: offset,
-    });
-
-    return fetch("https://api.spotify.com/v1/me/top/" + type + "?" + args, {
-        headers: {
-            Authorization: "Bearer " + accessToken,
-        },
-    }).then((response) => {
-        return response.json();
-    });
+    return await axios
+        .get("https://api.spotify.com/v1/me/top/tracks", {
+            headers: {
+                Authorization: "Bearer " + accessToken,
+            },
+            params: {
+                limit: query.limit.toString(),
+                offset: query.offset.toString(),
+            },
+        })
+        .then(({ data }: { data: TopTracksResponse }) => {
+            console.log("Data: ");
+            console.log(data.items);
+            return data.items;
+        });
 }
 
+export async function getTopArtists(
+    query: TopItemsQuery
+): Promise<Array<Artist>> {
+    let accessToken = authService.getToken();
+
+    let items: Array<Artist> = await axios
+        .get("https://api.spotify.com/v1/me/top/artists", {
+            headers: {
+                Authorization: "Bearer " + accessToken,
+            },
+            params: {
+                limit: query.limit.toString(),
+                offset: query.offset.toString(),
+            },
+        })
+        .then(({ data }: { data: TopArtistsResponse }) => {
+            return data.items;
+        });
+    return items;
+}
+
+/*
 export async function getPlaylists(limit = 20, offset = 0) {
     if (limit < 0 || limit > 50) throw Error("Invalid Limit:" + limit);
     if (offset < 0 || offset > 100_000) throw Error("Invalid Limit:" + limit);
@@ -119,3 +129,5 @@ export async function generatePlaylist(
         return response.json();
     });
 }
+
+*/

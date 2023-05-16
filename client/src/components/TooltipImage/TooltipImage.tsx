@@ -1,11 +1,24 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 
 import "./TooltipImage.css";
-
 import { PlusIcon, Cross1Icon } from "@radix-ui/react-icons";
 import * as Tooltip from "@radix-ui/react-tooltip";
 
-function Home({ image_url, tip, toggled, toggle, rounded = false }) {
+interface TooltipImageProps {
+    image_url: string;
+    tip: string;
+    toggled: () => boolean;
+    toggle: () => void;
+    rounded?: boolean;
+}
+
+function TooltipImage({
+    image_url,
+    tip,
+    toggled,
+    toggle,
+    rounded = false,
+}: TooltipImageProps) {
     return (
         <Tooltip.Provider>
             <Tooltip.Root>
@@ -18,6 +31,7 @@ function Home({ image_url, tip, toggled, toggle, rounded = false }) {
                     >
                         <img
                             src={image_url}
+                            alt="spotify track"
                             className={
                                 rounded ? "track-image rounded" : "track-image"
                             }
@@ -52,4 +66,4 @@ function Home({ image_url, tip, toggled, toggle, rounded = false }) {
     );
 }
 
-export default Home;
+export default TooltipImage;

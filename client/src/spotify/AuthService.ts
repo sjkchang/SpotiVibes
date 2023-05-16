@@ -1,37 +1,44 @@
 import axios from "axios";
 
-const setAccessToken = (token) => {
+const setAccessToken = (token: string) => {
     window.localStorage.setItem("spotify_access_token", token);
     setTokenExperation();
 };
-const setRefreshToken = (token) =>
+const setRefreshToken = (token: string) =>
     window.localStorage.setItem("spotify_refresh_token", token);
 const setTokenExperation = () => {
-    let expiresAt = Date.now() + 3600 * 1000;
-    window.localStorage.setItem("spotify_token_expires_at", expiresAt);
+    let expiresAt: number = Date.now() + 3600 * 1000;
+
+    window.localStorage.setItem(
+        "spotify_token_expires_at",
+        expiresAt.toString()
+    );
 };
-const getAccessToken = () =>
+const getAccessToken = (): string | null =>
     window.localStorage.getItem("spotify_access_token");
-const getRefreshToken = () =>
+const getRefreshToken = (): string | null =>
     window.localStorage.getItem("spotify_refresh_token");
-const getTokenExperation = () =>
-    window.localStorage.getItem("spotify_token_expires_at");
-const removeAccessToken = () =>
+const getTokenExperation = (): number | null => {
+    let expiresAt = window.localStorage.getItem("spotify_token_expires_at");
+    if (expiresAt != null) return parseInt(expiresAt);
+    return null;
+};
+const removeAccessToken = (): void =>
     window.localStorage.removeItem("spotify_access_token");
-const removeRefreshToken = () =>
+const removeRefreshToken = (): void =>
     window.localStorage.removeItem("spotify_refresh_token");
-const removeTokenExperation = () =>
+const removeTokenExperation = (): void =>
     window.localStorage.removeItem("spotify_token_expires_at");
 
-const parseHashParams = () => {
-    const parsedHash = new URLSearchParams(
+const parseHashParams = (): URLSearchParams => {
+    const parsedHash: URLSearchParams = new URLSearchParams(
         window.location.hash.substring(1) // any_hash_key=any_value
     );
     window.history.replaceState(null, "", window.location.pathname);
     return parsedHash;
 };
 
-async function refresh() {
+export async function refresh() {
     try {
         const { data } = await axios.get(
             `/refresh_token?refresh_token=${getRefreshToken()}`
@@ -44,21 +51,22 @@ async function refresh() {
         console.error(e);
     }
 }
+
 export class AuthService {
-    authorize() {
+    authorize(): void {
         const LOGIN_URI =
             process.env.REACT_APP_LOGIN_URI || "http://localhost:8080/login";
-        window.location = LOGIN_URI;
+        window.location.assign(LOGIN_URI);
     }
 
-    logout() {
+    logout(): void {
         removeAccessToken();
         removeRefreshToken();
         removeTokenExperation();
         window.location.reload();
     }
 
-    getToken() {
+    getToken(): string | null {
         let access_token = getAccessToken();
 
         //If no current access token, check the hash params
@@ -74,13 +82,14 @@ export class AuthService {
             }
         }
 
-        if (Date.now() > getTokenExperation()) {
-            console.log("Refreshing");
-            refresh();
-            return;
+        let expiresAt = getTokenExperation();
+        if (expiresAt != null) {
+            if (Date.now() > expiresAt) {
+                console.log("Refreshing");
+                refresh();
+            }
         }
 
-        console.log(access_token);
         return access_token;
     }
 

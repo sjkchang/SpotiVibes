@@ -1,6 +1,6 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 
-function Welcome({ login }) {
+function Welcome({ login }: any) {
     return (
         <div>
             Welcome
