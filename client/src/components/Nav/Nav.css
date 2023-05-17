@@ -1,0 +1,19 @@
+.Nav {
+    flex-direction: column;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    background-color: var(--tertiary);
+    text-align: center;
+    z-index: 99;
+    height: 60px;
+}
+
+.Menu {
+    display: flex;
+    height: 100%;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-around;
+}

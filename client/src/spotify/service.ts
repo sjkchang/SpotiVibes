@@ -25,6 +25,7 @@ export async function getTopTracks(
                 Authorization: "Bearer " + accessToken,
             },
             params: {
+                time_range: query.time_range,
                 limit: query.limit.toString(),
                 offset: query.offset.toString(),
             },
@@ -47,6 +48,7 @@ export async function getTopArtists(
                 Authorization: "Bearer " + accessToken,
             },
             params: {
+                time_range: query.time_range,
                 limit: query.limit.toString(),
                 offset: query.offset.toString(),
             },
@@ -54,6 +56,44 @@ export async function getTopArtists(
         .then(({ data }: { data: TopArtistsResponse }) => {
             return data.items;
         });
+    return items;
+}
+
+export async function getTracks(uris: Array<string>): Promise<Array<Track>> {
+    let accessToken = authService.getToken();
+
+    let items: Array<Track> = await axios
+        .get("https://api.spotify.com/v1/tracks", {
+            headers: {
+                Authorization: "Bearer " + accessToken,
+            },
+            params: {
+                ids: uris.toString(),
+            },
+        })
+        .then(({ data }: { data: any }) => {
+            return data.tracks;
+        });
+
+    return items;
+}
+
+export async function getArtists(uris: Array<string>): Promise<Array<Artist>> {
+    let accessToken = authService.getToken();
+
+    let items: Array<Artist> = await axios
+        .get("https://api.spotify.com/v1/artists", {
+            headers: {
+                Authorization: "Bearer " + accessToken,
+            },
+            params: {
+                ids: uris.toString(),
+            },
+        })
+        .then(({ data }: { data: any }) => {
+            return data.artists;
+        });
+
     return items;
 }
 

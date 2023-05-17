@@ -1,0 +1,52 @@
+.TabsRoot {
+    display: flex;
+    flex-direction: column;
+}
+
+.TabsList {
+    display: flex;
+}
+
+.TabHeader {
+    display: flex;
+    justify-content: space-between;
+}
+
+.Lable {
+    height: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    font-size: 25px;
+    font-weight: 600;
+}
+
+.TabsTrigger {
+    font-family: inherit;
+    padding: 0 20px;
+    height: 45px;
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    font-size: 15px;
+    color: var(--accent);
+    background-color: transparent;
+    border-style: none;
+    border-bottom: 3px;
+}
+
+.TabsTrigger:hover {
+    border-bottom: 3px solid var(--accent);
+}
+.TabsTrigger[data-state="active"] {
+    border-bottom: 3px solid var(--secondary);
+    color: var(--secondary);
+}
+.TabsTrigger:focus {
+    position: relative;
+}
+
+.TabsContent {
+    outline: none;
+}

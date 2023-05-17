@@ -1,24 +1,16 @@
 import React, { useEffect, useState } from "react";
-
+import TopItems from "./TopItems/TopItems";
 import { Artist, Track } from "spotify-types";
 import { getTopArtists, getTopTracks } from "../spotify/service";
 
-import TopItemsList from "../components/TopItemsList/TopItemsList";
 import "./Home.css";
+import Nav from "../components/Nav/Nav";
+import SelectedSeeds from "../components/SelectedSeeds/SelectedSeeds";
 
 function Home({ logout }: any) {
     const [seeds, setSeeds] = useState<Array<string>>([]);
 
     let toggleSeed = (uri: string): void => {
-        if (includesSeed(uri)) {
-            setSeeds((seeds) => {
-                return seeds.filter((seeds) => seeds !== uri);
-            });
-        } else {
-            if (seeds.length < 5) {
-                setSeeds((seeds): Array<string> => [...seeds, uri]);
-            }
-        }
         console.log("Clicked");
     };
 
@@ -28,12 +20,14 @@ function Home({ logout }: any) {
 
     return (
         <div>
-            <TopItemsList
+            <Nav></Nav>
+            <SelectedSeeds />
+            <TopItems
                 className="top-item-children"
-                maxItems={50}
                 toggleSeed={toggleSeed}
                 includesSeed={includesSeed}
-            ></TopItemsList>
+            ></TopItems>
+
             <button onClick={logout}>Logout</button>
         </div>
     );

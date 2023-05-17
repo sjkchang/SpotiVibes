@@ -1,16 +1,18 @@
 import React from "react";
 import { Track } from "spotify-types";
 import TooltipImage from "../TooltipImage/TooltipImage";
-
+import { useAppDispatch, useAppSelector } from "../../redux/hooks";
+import { toggleSeeds } from "../../redux/slices/seedsSlice";
 import "./TrackItem.css";
 
 interface TrackProps extends React.HTMLAttributes<any> {
     track?: Track;
-    includesSeed: (uri: string) => boolean;
-    toggleSeed: (uri: string) => void;
 }
 
-function TrackItem({ track, includesSeed, toggleSeed }: TrackProps) {
+function TrackItem({ track }: TrackProps) {
+    const seeds = useAppSelector((state: any) => state.seeds);
+    const dispatch = useAppDispatch();
+
     function parseMsToTime(milliseconds: number): string {
         //Get remainder from hours and convert to minutes
         var minutes = milliseconds / (1000 * 60);
@@ -29,8 +31,10 @@ function TrackItem({ track, includesSeed, toggleSeed }: TrackProps) {
         return (
             <div className="Track">
                 <TooltipImage
-                    toggled={() => includesSeed(track.uri)}
-                    toggle={() => toggleSeed(track.uri)}
+                    toggled={() => {
+                        return seeds.uris.includes(track.uri);
+                    }}
+                    toggle={() => dispatch(toggleSeeds(track.uri))}
                     image_url={track.album.images[2].url}
                     tip="Set as Seed"
                 />

@@ -1,6 +1,11 @@
 html {
     scrollbar-color: #666 #201c29;
     scrollbar-width: thin;
+    min-height: 100vh;
+    background-color: var(--background);
+    color: var(--secondary);
+    padding-top: 100px;
+    padding-bottom: 25px;
 }
 
 body {
@@ -28,10 +33,12 @@ body::-webkit-scrollbar-thumb {
 }
 
 :root {
-    --primary: white;
-    --secondary: grey;
-    --accent: green;
-    --background: red;
+    --primary: #d7fff1;
+    --secondary: #80b192;
+    --accent: #6a8d92;
+    --background: #4b4e6d;
+    --tertiary: #493548;
+    --spotify-green: #aafcb8;
 }
 
 ol,

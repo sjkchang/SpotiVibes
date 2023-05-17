@@ -1,7 +1,7 @@
 import "./App.css";
 import React, { useState } from "react";
 import { authService, refresh } from "../../spotify/AuthService";
-import Welcome from "../../pages/Welcome";
+import Welcome from "../../pages/Welcome/Welcome";
 import Home from "../../pages/Home";
 
 function App() {
@@ -18,8 +18,6 @@ function App() {
     return (
         <div className="App">
             {loggedIn ? <Home logout={logout} /> : <Welcome login={login} />}
-            <button onClick={authService.getToken}>Get Token</button>
-            <button onClick={refresh}>Refresh Token</button>
         </div>
     );
 }
