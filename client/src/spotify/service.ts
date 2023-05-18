@@ -1,6 +1,6 @@
 import axios from "axios";
 import { authService } from "./AuthService";
-import { Artist, Track } from "spotify-types";
+import { Artist, Track, Playlist } from "spotify-types";
 import { TopItemsQuery, TopTracksResponse, TopArtistsResponse } from "./types";
 
 export async function getProfile() {
@@ -97,24 +97,30 @@ export async function getArtists(uris: Array<string>): Promise<Array<Artist>> {
     return items;
 }
 
-/*
 export async function getPlaylists(limit = 20, offset = 0) {
     if (limit < 0 || limit > 50) throw Error("Invalid Limit:" + limit);
     if (offset < 0 || offset > 100_000) throw Error("Invalid Limit:" + limit);
 
-    let args = new URLSearchParams({
-        limit: limit,
-        offset: offset,
-    });
+    let args = new URLSearchParams();
 
-    return fetch("https://api.spotify.com/v1/me/playlists/?" + args, {
-        headers: {
-            Authorization: "Bearer " + authService.getToken(),
-        },
-    }).then((response) => {
-        return response.json();
-    });
+    let items: Array<Playlist> = await axios
+        .get("https://api.spotify.com/v1/me/playlists", {
+            headers: {
+                Authorization: "Bearer " + authService.getToken(),
+            },
+            params: {
+                limit: limit,
+                offset: offset,
+            },
+        })
+        .then(({ data }: { data: any }) => {
+            return data.items;
+        });
+
+    return items;
 }
+
+/*
 
 export async function getGenres() {
     return fetch(

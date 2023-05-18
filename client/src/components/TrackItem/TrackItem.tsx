@@ -6,10 +6,10 @@ import { toggleSeeds } from "../../redux/slices/seedsSlice";
 import "./TrackItem.css";
 
 interface TrackProps extends React.HTMLAttributes<any> {
-    track?: Track;
+    item?: Track;
 }
 
-function TrackItem({ track }: TrackProps) {
+function TrackItem({ item }: TrackProps) {
     const seeds = useAppSelector((state: any) => state.seeds);
     const dispatch = useAppDispatch();
 
@@ -27,30 +27,30 @@ function TrackItem({ track }: TrackProps) {
         return m + ":" + s;
     }
 
-    if (track) {
+    if (item) {
         return (
             <div className="Track">
                 <TooltipImage
                     toggled={() => {
-                        return seeds.uris.includes(track.uri);
+                        return seeds.uris.includes(item.uri);
                     }}
-                    toggle={() => dispatch(toggleSeeds(track.uri))}
-                    image_url={track.album.images[2].url}
+                    toggle={() => dispatch(toggleSeeds(item.uri))}
+                    image_url={item.album.images[2].url}
                     tip="Set as Seed"
                 />
 
                 <div className="track-info">
                     <div className="track-data">
                         <div className="track-title">
-                            <a href="/"> {track.name}</a>
+                            <a href="/"> {item.name}</a>
                         </div>
                         <span className="track-album-info">
                             <span>
-                                {track.artists[0].name} | {track.album.name}
+                                {item.artists[0].name} | {item.album.name}
                             </span>
                         </span>
                     </div>
-                    <div>{parseMsToTime(track.duration_ms)}</div>
+                    <div>{parseMsToTime(item.duration_ms)}</div>
                 </div>
             </div>
         );

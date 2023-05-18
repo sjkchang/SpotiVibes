@@ -1,33 +1,33 @@
 import React from "react";
 import "./ArtistItem.css";
 import TooltipImage from "../TooltipImage/TooltipImage";
-import { Artist } from "spotify-types";
+import SpotifyTypes from "spotify-types";
 import { useAppDispatch, useAppSelector } from "../../redux/hooks";
 import { toggleSeeds } from "../../redux/slices/seedsSlice";
 
 interface ArtistProps extends React.HTMLAttributes<any> {
-    artist?: Artist;
+    item?: SpotifyTypes.Artist;
 }
 
-function ArtistItem({ artist }: ArtistProps) {
+function ArtistItem({ item }: ArtistProps) {
     const seeds = useAppSelector((state: any) => state.seeds);
     const dispatch = useAppDispatch();
 
-    if (artist) {
+    if (item) {
         return (
             <div className="Artist">
                 <TooltipImage
                     toggled={() => {
-                        return seeds.uris.includes(artist.uri);
+                        return seeds.uris.includes(item.uri);
                     }}
-                    toggle={() => dispatch(toggleSeeds(artist.uri))}
-                    image_url={artist.images[2].url}
+                    toggle={() => dispatch(toggleSeeds(item.uri))}
+                    image_url={item.images[2].url}
                     rounded={true}
                     tip="Set as Seed"
                 />
                 <div className="artist-info">
                     <div className="artist-name">
-                        <a href="/"> {artist.name}</a>
+                        <a href="/"> {item.name}</a>
                     </div>
                 </div>
             </div>

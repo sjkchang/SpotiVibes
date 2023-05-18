@@ -2,7 +2,7 @@ import "./App.css";
 import React, { useState } from "react";
 import { authService, refresh } from "../../spotify/AuthService";
 import Welcome from "../../pages/Welcome/Welcome";
-import Home from "../../pages/Home";
+import Home from "../../pages/Home/Home";
 
 function App() {
     const [loggedIn, setLoggedIn] = useState(authService.isAuthenticated());

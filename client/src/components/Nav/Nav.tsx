@@ -9,10 +9,10 @@ function Nav() {
                     <a href="/">Home</a>
                 </div>
                 <div className="MenuItem">
-                    <a href="/">Generate</a>
+                    <a href="/generate">Generate</a>
                 </div>
                 <div className="MenuItem">
-                    <a href="/">Playlists</a>
+                    <a href="/playlists">Playlists</a>
                 </div>
             </div>
         </div>

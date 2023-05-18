@@ -1,21 +1,18 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import TopTracks from "../../components/TopTracks/TopTracks";
 import TopArtists from "../../components/TopArtists/TopArtists";
+import Playlists from "../Playlists/Playlists";
+
 import { TimeRangeEnum } from "../../spotify/types";
 import * as Tabs from "@radix-ui/react-tabs";
 import "./TopItems.css";
 
-interface TopItemsProps extends React.HTMLAttributes<any> {
-    toggleSeed: (uri: string) => void;
-    includesSeed: (uri: string) => boolean;
-}
-
-function TopItems({ toggleSeed, includesSeed }: TopItemsProps) {
+function TopItems() {
     return (
         <div>
             <Tabs.Root className="TabsRoot" defaultValue="tab2">
                 <div className="TabHeader">
-                    <div className="Lable">Top Items</div>
+                    <h1>Top Items</h1>
                     <Tabs.List
                         className="TabsList"
                         aria-label="Manage your account"
@@ -31,49 +28,25 @@ function TopItems({ toggleSeed, includesSeed }: TopItemsProps) {
                         </Tabs.Trigger>
                     </Tabs.List>
                 </div>
-
                 <Tabs.Content className="TabsContent" value="tab1">
                     <div className="top-items">
-                        <TopArtists
-                            timeRange={TimeRangeEnum.Short}
-                            toggleSeed={toggleSeed}
-                            includesSeed={includesSeed}
-                        />
-                        <TopTracks
-                            timeRange={TimeRangeEnum.Short}
-                            toggleSeed={toggleSeed}
-                            includesSeed={includesSeed}
-                        />
+                        <TopArtists timeRange={TimeRangeEnum.Short} />
+                        <TopTracks timeRange={TimeRangeEnum.Short} />
                     </div>
                 </Tabs.Content>
                 <Tabs.Content className="TabsContent" value="tab2">
                     <div className="top-items">
-                        <TopArtists
-                            timeRange={TimeRangeEnum.Medium}
-                            toggleSeed={toggleSeed}
-                            includesSeed={includesSeed}
-                        />
-                        <TopTracks
-                            timeRange={TimeRangeEnum.Medium}
-                            toggleSeed={toggleSeed}
-                            includesSeed={includesSeed}
-                        />
+                        <TopArtists timeRange={TimeRangeEnum.Medium} />
+                        <TopTracks timeRange={TimeRangeEnum.Medium} />
                     </div>
                 </Tabs.Content>
                 <Tabs.Content className="TabsContent" value="tab3">
                     <div className="top-items">
-                        <TopArtists
-                            timeRange={TimeRangeEnum.Long}
-                            toggleSeed={toggleSeed}
-                            includesSeed={includesSeed}
-                        />
-                        <TopTracks
-                            timeRange={TimeRangeEnum.Long}
-                            toggleSeed={toggleSeed}
-                            includesSeed={includesSeed}
-                        />
+                        <TopArtists timeRange={TimeRangeEnum.Long} />
+                        <TopTracks timeRange={TimeRangeEnum.Long} />
                     </div>
                 </Tabs.Content>
+                <Playlists />
             </Tabs.Root>
         </div>
     );

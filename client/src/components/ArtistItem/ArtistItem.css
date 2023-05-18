@@ -1,3 +1,6 @@
+.Top-Artists {
+    display: flex;
+}
 .Artist {
     list-style: none;
     display: grid;

@@ -1,30 +1,26 @@
 import React, { useEffect, useState } from "react";
-import { Track } from "spotify-types";
-import ComponentList from "../ComponentList/ComponentList";
-
+import SpotifyTypes from "spotify-types";
 import { getTopTracks } from "../../spotify/service";
-import TrackItem from "../TrackItem/TrackItem";
 
 import {
     SpotifyTypesEnum,
     TimeRangeEnum,
     TopItemsQuery,
 } from "../../spotify/types";
+import CardScroll from "../CardScroll/CardScroll";
 
 interface TopTracksProps extends React.HTMLAttributes<any> {
     timeRange: TimeRangeEnum;
-    toggleSeed: (uri: string) => void;
-    includesSeed: (uri: string) => boolean;
 }
 
-function TopTracks({ timeRange, toggleSeed, includesSeed }: TopTracksProps) {
-    const [tracks, setTracks] = useState<Array<Track>>([]);
+function TopTracks({ timeRange }: TopTracksProps) {
+    const [tracks, setTracks] = useState<Array<SpotifyTypes.Track>>([]);
     const [loading, setLoading] = useState(false);
 
     let maxItems = 50;
 
     const seeMoreItems = (type: string) => {
-        fetchTracks(timeRange, 10, tracks.length)
+        fetchTracks(timeRange, 20, tracks.length)
             .then((newItems) => {
                 setTracks((tracks) => [...tracks, ...newItems]);
             })
@@ -49,7 +45,7 @@ function TopTracks({ timeRange, toggleSeed, includesSeed }: TopTracksProps) {
     useEffect(() => {
         if (tracks.length === 0) {
             setLoading(true);
-            fetchTracks(timeRange, 10, 0)
+            fetchTracks(timeRange, 20, 0)
                 .then((tracks) => {
                     console.log("tracks:");
                     console.log(tracks);
@@ -60,7 +56,7 @@ function TopTracks({ timeRange, toggleSeed, includesSeed }: TopTracksProps) {
                     console.log(error);
                 });
         }
-    }, [tracks]);
+    }, [tracks, timeRange]);
 
     if (loading) {
         return (
@@ -72,17 +68,19 @@ function TopTracks({ timeRange, toggleSeed, includesSeed }: TopTracksProps) {
     }
 
     return (
-        <div>
-            <h3>Tracks</h3>
-            <ComponentList className="top-item-children" items={tracks}>
-                <TrackItem />
-            </ComponentList>
-            <button
-                disabled={tracks.length >= maxItems ? true : false}
-                onClick={() => seeMoreItems("tracks")}
-            >
-                See More
-            </button>
+        <div className="Top-Tracks">
+            <div className="top-header">
+                <h2>Tracks</h2>
+                <button
+                    className="btn"
+                    disabled={tracks.length >= maxItems ? true : false}
+                    onClick={() => seeMoreItems("tracks")}
+                >
+                    See More
+                </button>
+            </div>
+
+            <CardScroll items={tracks}></CardScroll>
         </div>
     );
 }

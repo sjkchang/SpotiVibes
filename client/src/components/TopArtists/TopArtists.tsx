@@ -1,34 +1,26 @@
 import React, { useEffect, useState } from "react";
-import { Artist } from "spotify-types";
-import ComponentList from "../ComponentList/ComponentList";
-
-import { getTopArtists, getTopTracks } from "../../spotify/service";
-import ArtistItem from "../ArtistItem/ArtistItem";
+import SpotifyTypes from "spotify-types";
+import { getTopArtists } from "../../spotify/service";
 
 import {
     SpotifyTypesEnum,
     TimeRangeEnum,
     TopItemsQuery,
 } from "../../spotify/types";
+import CardScroll from "../CardScroll/CardScroll";
 
 interface TopItemsListProps extends React.HTMLAttributes<any> {
     timeRange: TimeRangeEnum;
-    toggleSeed: (uri: string) => void;
-    includesSeed: (uri: string) => boolean;
 }
 
-function TopItemsList({
-    timeRange,
-    toggleSeed,
-    includesSeed,
-}: TopItemsListProps) {
-    const [artists, setArtists] = useState<Array<Artist>>([]);
+function TopItemsList({ timeRange }: TopItemsListProps) {
+    const [artists, setArtists] = useState<Array<SpotifyTypes.Artist>>([]);
     const [loading, setLoading] = useState(false);
 
     let maxItems = 50;
 
     const seeMoreItems = (type: string) => {
-        fetchArtists(timeRange, 10, artists.length)
+        fetchArtists(timeRange, 20, artists.length)
             .then((newItems) => {
                 setArtists((artists) => [...artists, ...newItems]);
             })
@@ -55,7 +47,7 @@ function TopItemsList({
     useEffect(() => {
         if (artists.length === 0) {
             setLoading(true);
-            fetchArtists(timeRange, 10, 0)
+            fetchArtists(timeRange, 20, 0)
                 .then((artists) => {
                     setArtists(artists);
                     setLoading(false);
@@ -64,7 +56,7 @@ function TopItemsList({
                     console.log(error);
                 });
         }
-    }, [artists]);
+    }, [artists, timeRange]);
 
     if (loading) {
         return (
@@ -77,16 +69,17 @@ function TopItemsList({
 
     return (
         <div>
-            <h3>Artists</h3>
-            <ComponentList className="top-item-children" items={artists}>
-                <ArtistItem />
-            </ComponentList>
-            <button
-                disabled={artists.length >= maxItems ? true : false}
-                onClick={() => seeMoreItems("artists")}
-            >
-                See More
-            </button>
+            <div className="top-header">
+                <h2>Artists</h2>
+                <button
+                    className="btn"
+                    disabled={artists.length >= maxItems ? true : false}
+                    onClick={() => seeMoreItems("artists")}
+                >
+                    See More
+                </button>
+            </div>
+            <CardScroll items={artists} />
         </div>
     );
 }
