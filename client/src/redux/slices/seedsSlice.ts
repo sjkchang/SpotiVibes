@@ -1,6 +1,10 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { createSlice, Action, PayloadAction } from "@reduxjs/toolkit";
 
-const initialState = {
+interface seedState {
+    uris: Array<string>;
+}
+
+const initialState: seedState = {
     uris: [],
 };
 
@@ -8,7 +12,7 @@ export const seedsSlice = createSlice({
     name: "seeds",
     initialState,
     reducers: {
-        toggleSeeds: (state, action) => {
+        toggleSeeds: (state: seedState, action: PayloadAction<string>) => {
             if (state.uris.includes(action.payload)) {
                 state.uris = state.uris.filter(
                     (uris) => uris !== action.payload

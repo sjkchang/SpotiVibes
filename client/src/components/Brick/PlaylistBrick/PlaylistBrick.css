@@ -1,0 +1,51 @@
+.Track {
+    list-style: none;
+    display: grid;
+    grid-template-columns: auto 1fr;
+    -moz-box-align: center;
+    align-items: center;
+    margin-bottom: 30px;
+    height: 50px;
+}
+
+.track-info {
+    display: grid;
+    grid-template-columns: 1fr max-content;
+    color: var(--secondary);
+    font-size: 1.1rem;
+    margin-left: 20px;
+}
+
+.track-title {
+    color: var(--primary);
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.track-data {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.track-album-info {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    padding-right: 1px;
+    font-size: 14px;
+    margin-top: 3px;
+    padding-bottom: 5px;
+}
+
+a:hover {
+    text-decoration: underline;
+}
+
+.track-image {
+    width: 50px;
+    min-width: 50px;
+    height: 50px;
+    min-height: 50px;
+}

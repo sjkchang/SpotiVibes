@@ -7,7 +7,8 @@ import {
     TimeRangeEnum,
     TopItemsQuery,
 } from "../../spotify/types";
-import CardScroll from "../CardScroll/CardScroll";
+import CardGrid from "../CardGrid/CardGrid";
+import BrickList from "../BrickList/BrickList";
 
 interface TopItemsListProps extends React.HTMLAttributes<any> {
     timeRange: TimeRangeEnum;
@@ -20,34 +21,29 @@ function TopItemsList({ timeRange }: TopItemsListProps) {
     let maxItems = 50;
 
     const seeMoreItems = (type: string) => {
-        fetchArtists(timeRange, 20, artists.length)
+        let query = new TopItemsQuery(
+            SpotifyTypesEnum.Tracks,
+            timeRange,
+            20,
+            artists.length
+        );
+        getTopArtists(query)
             .then((newItems) => {
                 setArtists((artists) => [...artists, ...newItems]);
             })
             .catch((error) => {});
     };
 
-    async function fetchArtists(
-        time_range: TimeRangeEnum,
-        limit: number,
-        offset: number
-    ) {
-        let query = new TopItemsQuery(
-            SpotifyTypesEnum.Tracks,
-            time_range,
-            limit,
-            offset
-        );
-        let response = await getTopArtists(query);
-        console.log("Response: ");
-        console.log(response);
-        return response;
-    }
-
     useEffect(() => {
         if (artists.length === 0) {
             setLoading(true);
-            fetchArtists(timeRange, 20, 0)
+            let query = new TopItemsQuery(
+                SpotifyTypesEnum.Tracks,
+                timeRange,
+                20,
+                0
+            );
+            getTopArtists(query)
                 .then((artists) => {
                     setArtists(artists);
                     setLoading(false);
@@ -79,7 +75,7 @@ function TopItemsList({ timeRange }: TopItemsListProps) {
                     See More
                 </button>
             </div>
-            <CardScroll items={artists} />
+            <BrickList items={artists} />
         </div>
     );
 }

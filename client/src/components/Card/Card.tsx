@@ -35,7 +35,7 @@ const isPlaylist = (
     (item as SpotifyTypes.Playlist).uri.includes("playlist");
 
 function Card({ item }: CardProps) {
-    let type;
+    let type: string = "";
     let title;
     let description;
     let image;
@@ -82,7 +82,7 @@ function Card({ item }: CardProps) {
                 <div
                     className="Card"
                     onClick={(e) => {
-                        window.location.href = "/";
+                        window.location.href = "/" + type + item.id;
                     }}
                 >
                     <div className="CardImage">

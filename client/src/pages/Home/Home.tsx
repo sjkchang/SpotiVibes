@@ -5,6 +5,9 @@ import GeneratePlaylist from "../GeneratePlaylists/GeneratePlaylist";
 import { Routes, Route } from "react-router-dom";
 import "./Home.css";
 import Playlists from "../Playlists/Playlists";
+import Playlist from "../Playlist/Playlist";
+import Artist from "../Artist/Artist";
+import Track from "../Track/Track";
 
 function Home({ logout }: any) {
     return (
@@ -14,6 +17,9 @@ function Home({ logout }: any) {
                 <Route path="/" element={<TopItems />} />
                 <Route path="/generate" element={<GeneratePlaylist />} />
                 <Route path="/playlists" element={<Playlists />} />
+                <Route path="/playlist/:id" element={<Playlist />} />
+                <Route path="/artist/:id" element={<Artist />} />
+                <Route path="/track/:id" element={<Track />} />
             </Routes>
         </div>
     );

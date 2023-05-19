@@ -2,6 +2,8 @@ import axios from "axios";
 import { authService } from "./AuthService";
 import { Artist, Track, Playlist } from "spotify-types";
 import { TopItemsQuery, TopTracksResponse, TopArtistsResponse } from "./types";
+import { platform } from "os";
+import { PlayIcon } from "@radix-ui/react-icons";
 
 export async function getProfile() {
     let accessToken = authService.getToken();
@@ -118,6 +120,83 @@ export async function getPlaylists(limit = 20, offset = 0) {
         });
 
     return items;
+}
+
+export async function getPlaylist(playlistId: string) {
+    let [playlist, tracks] = await Promise.all([
+        axios
+            .get("https://api.spotify.com/v1/playlists/" + playlistId, {
+                headers: {
+                    Authorization: "Bearer " + authService.getToken(),
+                },
+            })
+            .then(({ data }: { data: Playlist }) => {
+                return data;
+            }),
+        axios
+            .get(
+                "https://api.spotify.com/v1/playlists/" +
+                    playlistId +
+                    "/tracks",
+                {
+                    headers: {
+                        Authorization: "Bearer " + authService.getToken(),
+                    },
+                }
+            )
+            .then(({ data }: { data: any }) => {
+                return data.items;
+            }),
+    ]);
+
+    return [playlist, tracks];
+}
+
+export async function getArtist(artistId: string) {
+    let [playlist, tracks] = await Promise.all([
+        axios
+            .get("https://api.spotify.com/v1/artists/" + artistId, {
+                headers: {
+                    Authorization: "Bearer " + authService.getToken(),
+                },
+            })
+            .then(({ data }: { data: Artist }) => {
+                return data;
+            }),
+        axios
+            .get(
+                "https://api.spotify.com/v1/artists/" +
+                    artistId +
+                    "/top-tracks",
+                {
+                    headers: {
+                        Authorization: "Bearer " + authService.getToken(),
+                    },
+                    params: {
+                        market: "US",
+                    },
+                }
+            )
+            .then(({ data }: { data: any }) => {
+                return data.tracks;
+            }),
+    ]);
+
+    return [playlist, tracks];
+}
+
+export async function getTrack(trackId: string) {
+    let track = await axios
+        .get("https://api.spotify.com/v1/tracks/" + trackId, {
+            headers: {
+                Authorization: "Bearer " + authService.getToken(),
+            },
+        })
+        .then(({ data }: { data: Track }) => {
+            return data;
+        });
+
+    return track;
 }
 
 /*

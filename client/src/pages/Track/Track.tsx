@@ -1,0 +1,49 @@
+import React, { useEffect, useState } from "react";
+import SpotifyTypes from "spotify-types";
+import { getTrack } from "../../spotify/service";
+import { useParams } from "react-router-dom";
+
+function Artist() {
+    const [track, setTrack] = useState<SpotifyTypes.Track>();
+
+    const [loading, setLoading] = useState(false);
+
+    let { id } = useParams();
+
+    useEffect(() => {
+        setLoading(true);
+        if (id) {
+            getTrack(id)
+                .then((result) => {
+                    console.log(result);
+                    setTrack(result);
+                    setLoading(false);
+                })
+                .catch((error) => {
+                    console.log(error);
+                });
+        }
+    }, []);
+
+    if (loading) {
+        return (
+            <div>
+                <h3>Tracks</h3>
+                Loading
+            </div>
+        );
+    }
+
+    if (track) {
+        return <div className="Playlist">{track.name}</div>;
+    }
+
+    return (
+        <div>
+            <h3>Tracks</h3>
+            Loading
+        </div>
+    );
+}
+
+export default Artist;

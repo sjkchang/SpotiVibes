@@ -2,7 +2,8 @@ import { Playlist } from "spotify-types";
 import "./Playlists.css";
 import React, { useEffect, useState } from "react";
 import { getPlaylists } from "../../spotify/service";
-import CardScroll from "../../components/CardScroll/CardScroll";
+import BrickList from "../../components/BrickList/BrickList";
+import CardGrid from "../../components/CardGrid/CardGrid";
 
 function Playlists() {
     let [playlists, setPlaylists] = useState<Array<Playlist>>([]);
@@ -29,7 +30,7 @@ function Playlists() {
     return (
         <div className="Playlists">
             <h1>Playlists</h1>
-            <CardScroll items={playlists} />
+            <BrickList items={playlists} />
         </div>
     );
 }

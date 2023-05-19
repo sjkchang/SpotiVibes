@@ -7,7 +7,7 @@ import {
     TimeRangeEnum,
     TopItemsQuery,
 } from "../../spotify/types";
-import CardScroll from "../CardScroll/CardScroll";
+import BrickList from "../BrickList/BrickList";
 
 interface TopTracksProps extends React.HTMLAttributes<any> {
     timeRange: TimeRangeEnum;
@@ -20,32 +20,29 @@ function TopTracks({ timeRange }: TopTracksProps) {
     let maxItems = 50;
 
     const seeMoreItems = (type: string) => {
-        fetchTracks(timeRange, 20, tracks.length)
+        let query = new TopItemsQuery(
+            SpotifyTypesEnum.Tracks,
+            timeRange,
+            20,
+            tracks.length
+        );
+        getTopTracks(query)
             .then((newItems) => {
                 setTracks((tracks) => [...tracks, ...newItems]);
             })
             .catch((error) => {});
     };
 
-    async function fetchTracks(
-        time_range: TimeRangeEnum,
-        limit: number,
-        offset: number
-    ) {
-        let query = new TopItemsQuery(
-            SpotifyTypesEnum.Tracks,
-            time_range,
-            limit,
-            offset
-        );
-        let response = await getTopTracks(query);
-        return response;
-    }
-
     useEffect(() => {
         if (tracks.length === 0) {
             setLoading(true);
-            fetchTracks(timeRange, 20, 0)
+            let query = new TopItemsQuery(
+                SpotifyTypesEnum.Tracks,
+                timeRange,
+                20,
+                0
+            );
+            getTopTracks(query)
                 .then((tracks) => {
                     console.log("tracks:");
                     console.log(tracks);
@@ -80,7 +77,7 @@ function TopTracks({ timeRange }: TopTracksProps) {
                 </button>
             </div>
 
-            <CardScroll items={tracks}></CardScroll>
+            <BrickList items={tracks}></BrickList>
         </div>
     );
 }
