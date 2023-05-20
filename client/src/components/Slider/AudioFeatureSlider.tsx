@@ -10,9 +10,7 @@ interface AudioFeatureSliderProps {
     max: number;
     value: Min_Max_Target;
     step?: number;
-    setFeature:
-        | ((key: string, feature: Min_Max_Target) => void)
-        | ((feature: Min_Max_Target) => void);
+    setFeature: (feature: Min_Max_Target) => void;
 }
 
 function AudioFeatureSlider({
@@ -40,7 +38,7 @@ function AudioFeatureSlider({
                 min={min + step}
                 step={step}
                 onValueChange={(value: Array<number>) => {
-                    setFeature(label, {
+                    setFeature({
                         target: value[0],
                     });
                 }}

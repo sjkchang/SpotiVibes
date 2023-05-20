@@ -9,36 +9,7 @@ import {
 import "./GeneratePlaylist.css";
 import Slider from "../../components/Slider/Slider";
 import AudioFeatureSlider from "../../components/Slider/AudioFeatureSlider";
-
-function useLocalStorage<Type>(
-    key: string,
-    initialValue: Type | undefined = undefined
-) {
-    return useState(() => {
-        if (typeof window === "undefined") {
-            return initialValue;
-        }
-        try {
-            // Get from local storage by key
-            const item = window.localStorage.getItem(key);
-            // Parse stored json or if none return initialValue
-            return item ? JSON.parse(item) : initialValue;
-        } catch (error) {
-            // If error also return initialValue
-            console.log(error);
-            return initialValue;
-        }
-    });
-}
-
-function onChangeLocalSave<Type>(
-    key: string,
-    value: Type,
-    setValue: (value: Type) => void
-) {
-    window.localStorage.setItem(key, JSON.stringify(value));
-    setValue(value);
-}
+import useLocalStorage from "../../hooks/useLocalStorage";
 
 function GeneratePlaylist() {
     const [acousticness, setAcousticness] = useLocalStorage<Min_Max_Target>(
@@ -77,9 +48,9 @@ function GeneratePlaylist() {
         { target: 0.5 }
     );
 
-    const [numTracks, setNumTracks] = useState<number>(20);
-    const [genres, setGenres] = useState<Array<string>>([]);
-    const [genre, setGenre] = useState<string>("");
+    const [numTracks, setNumTracks] = useLocalStorage<number>("numTracks", 20);
+    const [genres, setGenres] = useLocalStorage<Array<string>>("genres", []);
+    const [genre, setGenre] = useLocalStorage<string>("genre", "");
 
     const seeds = useAppSelector((state: any) => state.seeds);
     const dispatch = useAppDispatch();
@@ -162,45 +133,35 @@ function GeneratePlaylist() {
                     max={1}
                     min={0}
                     value={acousticness}
-                    setFeature={(key, value) => {
-                        onChangeLocalSave(key, value, setAcousticness);
-                    }}
+                    setFeature={setAcousticness}
                 />
                 <AudioFeatureSlider
                     label="danceability"
                     max={1}
                     min={0}
                     value={danceability}
-                    setFeature={(key, value) => {
-                        onChangeLocalSave(key, value, setDanceability);
-                    }}
+                    setFeature={setDanceability}
                 />
                 <AudioFeatureSlider
                     label="energy"
                     max={1}
                     min={0}
                     value={energy}
-                    setFeature={(key, value) => {
-                        onChangeLocalSave(key, value, setEnergy);
-                    }}
+                    setFeature={setEnergy}
                 />
                 <AudioFeatureSlider
                     label="instrumentalness"
                     max={1}
                     min={0}
                     value={instrumentalness}
-                    setFeature={(key, value) => {
-                        onChangeLocalSave(key, value, setInstrumentalness);
-                    }}
+                    setFeature={setInstrumentalness}
                 />
                 <AudioFeatureSlider
                     label="liveness"
                     max={1}
                     min={0}
                     value={liveness}
-                    setFeature={(key, value) => {
-                        onChangeLocalSave(key, value, setLiveness);
-                    }}
+                    setFeature={setLiveness}
                 />
                 <AudioFeatureSlider
                     label="popularity"
@@ -208,36 +169,28 @@ function GeneratePlaylist() {
                     min={0}
                     step={1}
                     value={popularity}
-                    setFeature={(key, value) => {
-                        onChangeLocalSave(key, value, setPopularity);
-                    }}
+                    setFeature={setPopularity}
                 />
                 <AudioFeatureSlider
                     label="speechiness"
                     max={1}
                     min={0}
                     value={speechiness}
-                    setFeature={(key, value) => {
-                        onChangeLocalSave(key, value, setSpeechiness);
-                    }}
+                    setFeature={setSpeechiness}
                 />
                 <AudioFeatureSlider
                     label="valence"
                     max={1}
                     min={0}
                     value={valence}
-                    setFeature={(key, value) => {
-                        onChangeLocalSave(key, value, setValence);
-                    }}
+                    setFeature={setValence}
                 />
                 <AudioFeatureSlider
                     label="loudness"
                     max={1}
                     min={0}
                     value={loudness}
-                    setFeature={(key, value) => {
-                        onChangeLocalSave(key, value, setLoudness);
-                    }}
+                    setFeature={setLoudness}
                 />
             </div>
 
