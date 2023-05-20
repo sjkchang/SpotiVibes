@@ -13,6 +13,13 @@ function ArtistBrick({ artist }: ArtistProps) {
     const seeds = useAppSelector((state: any) => state.seeds);
     const dispatch = useAppDispatch();
 
+    let image: string;
+    if (artist.images.length > 0) {
+        image = artist.images[artist.images.length - 1].url;
+    } else {
+        image = "https://i.stack.imgur.com/l60Hf.png";
+    }
+
     return (
         <div className="Artist">
             <TooltipImage
@@ -20,7 +27,7 @@ function ArtistBrick({ artist }: ArtistProps) {
                     return seeds.uris.includes(artist.uri);
                 }}
                 toggle={() => dispatch(toggleSeeds(artist.uri))}
-                image_url={artist.images[2].url}
+                image_url={image}
                 rounded={true}
                 tip="Set as Seed"
             />

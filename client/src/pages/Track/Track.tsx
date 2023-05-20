@@ -3,7 +3,7 @@ import SpotifyTypes from "spotify-types";
 import { getTrack } from "../../spotify/service";
 import { useParams } from "react-router-dom";
 
-function Artist() {
+function Track() {
     const [track, setTrack] = useState<SpotifyTypes.Track>();
 
     const [loading, setLoading] = useState(false);
@@ -46,4 +46,4 @@ function Artist() {
     );
 }
 
-export default Artist;
+export default Track;

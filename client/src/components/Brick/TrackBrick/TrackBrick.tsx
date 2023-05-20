@@ -27,6 +27,13 @@ function TrackBrick({ track }: TrackProps) {
         return m + ":" + s;
     }
 
+    let image: string;
+    if (track.album.images.length > 0) {
+        image = track.album.images[track.album.images.length - 1].url;
+    } else {
+        image = "https://freeimage.host/i/album-cover-placeholder.HlHy9Yx";
+    }
+
     return (
         <div className="Track">
             <TooltipImage
@@ -34,7 +41,7 @@ function TrackBrick({ track }: TrackProps) {
                     return seeds.uris.includes(track.uri);
                 }}
                 toggle={() => dispatch(toggleSeeds(track.uri))}
-                image_url={track.album.images[2].url}
+                image_url={image}
                 tip="Set as Seed"
             />
 

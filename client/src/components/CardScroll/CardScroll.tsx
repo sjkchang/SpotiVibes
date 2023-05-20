@@ -14,8 +14,8 @@ function CardScroll({ items }: CardScrollProps) {
     return (
         <div className="CardScroll">
             <div className="ScrollArea">
-                {items.map((item) => (
-                    <div className="rotation-wrapper-outer">
+                {items.map((item, i) => (
+                    <div key={i} className="rotation-wrapper-outer">
                         <div className="rotation-wrapper-inner">
                             <Card item={item}></Card>
                         </div>

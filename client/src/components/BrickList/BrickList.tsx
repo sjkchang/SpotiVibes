@@ -12,9 +12,11 @@ interface BrickListProps {
 
 function BrickList({ items }: BrickListProps) {
     return (
-        <div className="row">
-            {items.map((item) => (
-                <Brick item={item} />
+        <div className="BrickContainer">
+            {items.map((item, i) => (
+                <div key={i}>
+                    <Brick item={item} />
+                </div>
             ))}
         </div>
     );

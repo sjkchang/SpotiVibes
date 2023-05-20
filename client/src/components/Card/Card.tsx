@@ -67,9 +67,15 @@ function Card({ item }: CardProps) {
     }
 
     if (item) {
+        let link = "/" + type + "/" + item.id;
         if (type === "Playlist") {
             return (
-                <div className="Card">
+                <div
+                    className="Card"
+                    onClick={(e) => {
+                        window.location.href = link;
+                    }}
+                >
                     <div className="CardImage">
                         <img src={image} alt="playlist" />
                     </div>
@@ -82,7 +88,7 @@ function Card({ item }: CardProps) {
                 <div
                     className="Card"
                     onClick={(e) => {
-                        window.location.href = "/" + type + item.id;
+                        window.location.href = link;
                     }}
                 >
                     <div className="CardImage">
