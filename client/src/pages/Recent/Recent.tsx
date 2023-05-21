@@ -10,7 +10,6 @@ function Recent() {
     useEffect(() => {
         getRecentTracks()
             .then((tracks) => {
-                console.log(tracks);
                 setTracks(tracks);
             })
             .catch((error) => {

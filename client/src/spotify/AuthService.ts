@@ -43,7 +43,6 @@ export async function refresh() {
         const { data } = await axios.get(
             `/refresh_token?refresh_token=${getRefreshToken()}`
         );
-        console.log(data);
         const { access_token } = data;
         setAccessToken(access_token);
         window.location.reload();
@@ -85,7 +84,6 @@ export class AuthService {
         let expiresAt = getTokenExperation();
         if (expiresAt != null) {
             if (Date.now() > expiresAt) {
-                console.log("Refreshing");
                 refresh();
             }
         }

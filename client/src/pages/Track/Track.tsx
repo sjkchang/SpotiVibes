@@ -15,7 +15,6 @@ function Track() {
         if (id) {
             getTrack(id)
                 .then((result) => {
-                    console.log(result);
                     setTrack(result);
                     setLoading(false);
                 })
@@ -23,7 +22,7 @@ function Track() {
                     console.log(error);
                 });
         }
-    }, []);
+    }, [id]);
 
     if (loading) {
         return (

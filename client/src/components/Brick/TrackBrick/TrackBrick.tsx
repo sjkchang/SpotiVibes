@@ -56,7 +56,9 @@ function TrackBrick({ track }: TrackProps) {
                         </span>
                     </span>
                 </div>
-                <div>{parseMsToTime(track.duration_ms)}</div>
+                <div className="track-duration">
+                    {parseMsToTime(track.duration_ms)}
+                </div>
             </div>
         </div>
     );

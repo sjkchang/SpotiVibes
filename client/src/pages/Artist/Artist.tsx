@@ -23,7 +23,6 @@ function Artist() {
         if (id) {
             getArtist(id)
                 .then((result) => {
-                    console.log(result);
                     setArtist(result[0]);
 
                     setArtistTopTracks(result[1]);

@@ -6,7 +6,7 @@ import Slider from "../../components/Slider/Slider";
 
 interface AudioFeatureSliderProps {
     label: string;
-    min: number;
+    min?: number;
     max: number;
     value: Min_Max_Target;
     step?: number;
@@ -15,27 +15,27 @@ interface AudioFeatureSliderProps {
 
 function AudioFeatureSlider({
     label,
-    min,
+    min = 0,
     max,
     value,
-    step = 0.05,
+    step = (max - min) / 100,
     setFeature,
 }: AudioFeatureSliderProps) {
     let currentValue: Array<number> = [];
 
     if (value) {
-        if (value.target) {
+        if (value.target != undefined) {
             currentValue[0] = value.target;
         }
     }
     return (
         <div>
             <label>{label}</label>
+            <label>{currentValue[0]}</label>
             <Slider
-                defaultValue={[(max - min) / 2]}
                 value={currentValue}
                 max={max}
-                min={min + step}
+                min={min}
                 step={step}
                 onValueChange={(value: Array<number>) => {
                     setFeature({

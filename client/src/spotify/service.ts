@@ -5,13 +5,10 @@ import {
     Track,
     Playlist,
     RecentlyPlayed,
-    SearchContent,
     Paging,
     Recommendations,
 } from "spotify-types";
 import { TopItemsQuery, TopTracksResponse, TopArtistsResponse } from "./types";
-import { platform } from "os";
-import { PlayIcon } from "@radix-ui/react-icons";
 
 export async function getProfile() {
     let accessToken = authService.getToken();
@@ -41,8 +38,6 @@ export async function getTopTracks(
             },
         })
         .then(({ data }: { data: TopTracksResponse }) => {
-            console.log("Data: ");
-            console.log(data.items);
             return data.items;
         });
 }
@@ -70,6 +65,7 @@ export async function getTopArtists(
 }
 
 export async function getTracks(uris: Array<string>): Promise<Array<Track>> {
+    if (uris.length === 0) return [];
     let accessToken = authService.getToken();
 
     let items: Array<Track> = await axios
@@ -89,6 +85,8 @@ export async function getTracks(uris: Array<string>): Promise<Array<Track>> {
 }
 
 export async function getArtists(uris: Array<string>): Promise<Array<Artist>> {
+    if (uris.length === 0) return [];
+
     let accessToken = authService.getToken();
 
     let items: Array<Artist> = await axios
@@ -110,8 +108,6 @@ export async function getArtists(uris: Array<string>): Promise<Array<Artist>> {
 export async function getPlaylists(limit = 20, offset = 0) {
     if (limit < 0 || limit > 50) throw Error("Invalid Limit:" + limit);
     if (offset < 0 || offset > 100_000) throw Error("Invalid Limit:" + limit);
-
-    let args = new URLSearchParams();
 
     let items: Array<Playlist> = await axios
         .get("https://api.spotify.com/v1/me/playlists", {
@@ -240,7 +236,6 @@ export interface SearchResult {
 }
 
 export async function searchSpotify({ queryString }: searchParams) {
-    let q = encodeURIComponent(queryString);
     let type = ["artist", "track", "playlist"].toString();
     let tracks = await axios
         .get("https://api.spotify.com/v1/search", {
@@ -308,7 +303,6 @@ export interface TrackFeatures {
 }
 
 export async function generatePlaylist(params: GeneratePlaylistParams) {
-    console.log("Top");
     let stringifySeeds = (
         seed_artists: Array<string>,
         seed_genres: Array<string>,
@@ -330,8 +324,6 @@ export async function generatePlaylist(params: GeneratePlaylistParams) {
     };
 
     let parseAudioFeatures = (features: TrackFeatures) => {
-        console.log(features);
-
         let audio_features: any = {};
 
         for (let [featureName, feature] of Object.entries(features)) {
@@ -356,7 +348,6 @@ export async function generatePlaylist(params: GeneratePlaylistParams) {
 
     let audio_features = {};
     if (params.track_features) {
-        console.log(audio_features);
         audio_features = parseAudioFeatures(params.track_features);
     }
 

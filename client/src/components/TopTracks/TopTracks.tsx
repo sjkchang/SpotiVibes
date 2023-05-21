@@ -44,8 +44,6 @@ function TopTracks({ timeRange }: TopTracksProps) {
             );
             getTopTracks(query)
                 .then((tracks) => {
-                    console.log("tracks:");
-                    console.log(tracks);
                     setTracks(tracks);
                     setLoading(false);
                 })

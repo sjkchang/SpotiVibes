@@ -15,17 +15,18 @@ function Search() {
 
     useEffect(() => {
         if (search) {
-            searchSpotify({ queryString: search })
-                .then((response) => {
-                    setSearchResult(response);
-                    setTracks(response.tracks.items);
-                    setArtists(response.artists.items);
-                    setPlaylists(response.playlists.items);
-                    console.log(response);
-                })
-                .catch((error) => {
-                    console.log(error);
-                });
+            if (search.trim()) {
+                searchSpotify({ queryString: search })
+                    .then((response) => {
+                        setSearchResult(response);
+                        setTracks(response.tracks.items);
+                        setArtists(response.artists.items);
+                        setPlaylists(response.playlists.items);
+                    })
+                    .catch((error) => {
+                        console.log(error);
+                    });
+            }
         } else {
             setTracks([]);
             setArtists([]);

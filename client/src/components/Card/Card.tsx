@@ -1,5 +1,5 @@
 import "./Card.css";
-import React from "react";
+import React, { useState } from "react";
 import SpotifyTypes from "spotify-types";
 import { PlusIcon, Cross1Icon } from "@radix-ui/react-icons";
 import { useAppDispatch, useAppSelector } from "../../redux/hooks";
@@ -42,6 +42,14 @@ function Card({ item }: CardProps) {
 
     const seeds = useAppSelector((state: any) => state.seeds);
     const dispatch = useAppDispatch();
+
+    let uri;
+    if (item) {
+        uri = item.uri;
+    } else {
+        uri = "";
+    }
+    const [toggled, setToggled] = useState<boolean>();
 
     if (isArtist(item)) {
         type = "Artist";
@@ -103,7 +111,7 @@ function Card({ item }: CardProps) {
                                 if (e && e.stopPropagation) e.stopPropagation();
                             }}
                         >
-                            {seeds.uris.includes(item.uri) ? (
+                            {seeds.uris.includes(uri) ? (
                                 <div className="HoverIcon always-on">
                                     <Cross1Icon />
                                 </div>

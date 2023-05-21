@@ -10,8 +10,6 @@ function Playlists() {
 
     async function fetchPlaylists(limit: number, offset: number) {
         let response = await getPlaylists(limit, offset);
-        console.log("Response: ");
-        console.log(response);
         return response;
     }
 

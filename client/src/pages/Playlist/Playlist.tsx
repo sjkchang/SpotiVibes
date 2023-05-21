@@ -23,7 +23,6 @@ function Playlist() {
         if (id) {
             getPlaylist(id)
                 .then((result) => {
-                    console.log(result);
                     setPlaylist(result[0]);
 
                     let tracks: Array<SpotifyTypes.Track> = [];
