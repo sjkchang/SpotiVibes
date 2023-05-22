@@ -7,6 +7,7 @@ import {
     RecentlyPlayed,
     Paging,
     Recommendations,
+    AudioFeatures,
 } from "spotify-types";
 import { TopItemsQuery, TopTracksResponse, TopArtistsResponse } from "./types";
 
@@ -203,6 +204,20 @@ export async function getTrack(trackId: string) {
     return track;
 }
 
+export async function getTrackFeatures(trackId: string) {
+    let track = await axios
+        .get("https://api.spotify.com/v1/audio-features/" + trackId, {
+            headers: {
+                Authorization: "Bearer " + authService.getToken(),
+            },
+        })
+        .then(({ data }: { data: AudioFeatures }) => {
+            return data;
+        });
+
+    return track;
+}
+
 export async function getRecentTracks() {
     let tracks = await axios
         .get("https://api.spotify.com/v1/me/player/recently-played", {
@@ -272,7 +287,7 @@ export async function getGenres() {
 export interface Min_Max_Target {
     min?: number;
     max?: number;
-    target?: number;
+    target: number;
 }
 interface GeneratePlaylistParams {
     playlistName?: string;

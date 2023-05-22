@@ -23,7 +23,7 @@ function TopTracks({ timeRange }: TopTracksProps) {
         let query = new TopItemsQuery(
             SpotifyTypesEnum.Tracks,
             timeRange,
-            20,
+            10,
             tracks.length
         );
         getTopTracks(query)
@@ -39,7 +39,7 @@ function TopTracks({ timeRange }: TopTracksProps) {
             let query = new TopItemsQuery(
                 SpotifyTypesEnum.Tracks,
                 timeRange,
-                20,
+                10,
                 0
             );
             getTopTracks(query)

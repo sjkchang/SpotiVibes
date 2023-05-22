@@ -4,6 +4,7 @@ import { searchSpotify, SearchResult } from "../../spotify/service";
 import { useParams } from "react-router-dom";
 import BrickList from "../../components/BrickList/BrickList";
 import CardGrid from "../../components/CardGrid/CardGrid";
+import GeneratePlaylist from "../GeneratePlaylists/GeneratePlaylist";
 
 function Search() {
     const [search, setSearch] = useState<string>();
@@ -37,6 +38,7 @@ function Search() {
     if (tracks && artists && playlists) {
         return (
             <div>
+                <GeneratePlaylist></GeneratePlaylist>
                 <h3>Search</h3>
                 <input
                     type="search"

@@ -16,15 +16,15 @@ function PlaylistBrick({ playlist }: PlaylistBrickProps) {
     }
 
     return (
-        <div className="Track">
-            <img className="track-image" src={image} />
+        <div className="Brick">
+            <img className="brick-image" src={image} />
 
-            <div className="track-info">
-                <div className="track-data">
-                    <div className="track-title">
+            <div className="brick-info">
+                <div className="brick-data">
+                    <div className="brick-title">
                         <a href={"/playlist/" + playlist.id}>{playlist.name}</a>
                     </div>
-                    <span className="track-album-info">
+                    <span className="brick-album-info">
                         <span>Playlist | {playlist.owner.display_name} </span>
                     </span>
                 </div>

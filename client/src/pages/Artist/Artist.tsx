@@ -9,7 +9,7 @@ import {
     TopItemsQuery,
 } from "../../spotify/types";
 import BrickList from "../../components/BrickList/BrickList";
-
+import "./Artist.css";
 function Artist() {
     const [artist, setArtist] = useState<SpotifyTypes.Artist>();
     const [artistTopTracks, setArtistTopTracks] =
@@ -34,20 +34,29 @@ function Artist() {
         }
     }, []);
 
-    if (loading) {
-        return (
-            <div>
-                <h3>Tracks</h3>
-                Loading
-            </div>
-        );
-    }
-
     if (artist && artistTopTracks) {
+        let image =
+            artist.images.length > 0
+                ? artist.images[0].url
+                : "https://freeimage.host/i/album-cover-placeholder.HlHy9Yx";
         return (
-            <div className="Playlist">
-                {artist.name}
-                <BrickList items={artistTopTracks}></BrickList>
+            <div className="ArtistPage">
+                <div className="ArtistInfo">
+                    <div className="ArtistImage">
+                        <img className="Image" src={image} />
+                    </div>
+                    <div className="ArtistName">{artist.name}</div>
+                    <div className="ArtistDescription">
+                        {artist.followers.total.toLocaleString()} Followers
+                    </div>
+                    <div className="ArtistPopularity">
+                        Popularity: {artist.popularity}%
+                    </div>
+                </div>
+                <div className="PopularTracks">
+                    <div className="TopTracksHeader">Popular</div>
+                    <BrickList items={artistTopTracks}></BrickList>
+                </div>
             </div>
         );
     }

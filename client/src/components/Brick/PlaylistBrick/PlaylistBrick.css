@@ -1,4 +1,4 @@
-.Track {
+.Brick {
     list-style: none;
     display: grid;
     grid-template-columns: auto 1fr;
@@ -8,7 +8,7 @@
     height: 50px;
 }
 
-.track-info {
+.brick-info {
     display: grid;
     grid-template-columns: 1fr max-content;
     color: var(--secondary);
@@ -16,20 +16,20 @@
     margin-left: 20px;
 }
 
-.track-title {
+.brick-title {
     color: var(--primary);
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
 }
 
-.track-data {
+.brick-data {
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
 }
 
-.track-album-info {
+.brick-album-info {
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
@@ -43,7 +43,7 @@ a:hover {
     text-decoration: underline;
 }
 
-.track-image {
+.brick-image {
     width: 50px;
     min-width: 50px;
     height: 50px;

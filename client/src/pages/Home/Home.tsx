@@ -15,7 +15,6 @@ function Home({ logout }: any) {
     return (
         <div>
             <Nav logout={logout}></Nav>
-            <GeneratePlaylist></GeneratePlaylist>
             <Routes>
                 <Route path="/" element={<TopItems />} />
                 <Route path="/playlists" element={<Playlists />} />

@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import SpotifyTypes from "spotify-types";
 import { getPlaylist } from "../../spotify/service";
 import { useParams } from "react-router-dom";
-
+import "./Playlist.css";
 import {
     SpotifyTypesEnum,
     TimeRangeEnum,
@@ -14,12 +14,10 @@ function Playlist() {
     const [playlist, setPlaylist] = useState<SpotifyTypes.Playlist>();
     const [playlistTracks, setPlaylistTracks] =
         useState<Array<SpotifyTypes.Track>>();
-    const [loading, setLoading] = useState(false);
 
     let { id } = useParams();
 
     useEffect(() => {
-        setLoading(true);
         if (id) {
             getPlaylist(id)
                 .then((result) => {
@@ -31,7 +29,6 @@ function Playlist() {
                     }
 
                     setPlaylistTracks(tracks);
-                    setLoading(false);
                 })
                 .catch((error) => {
                     console.log(error);
@@ -39,19 +36,29 @@ function Playlist() {
         }
     }, []);
 
-    if (loading) {
-        return (
-            <div>
-                <h3>Tracks</h3>
-                Loading
-            </div>
-        );
-    }
-
     if (playlist && playlistTracks) {
+        let image =
+            playlist.images.length > 0
+                ? playlist.images[0].url
+                : "https://freeimage.host/i/album-cover-placeholder.HlHy9Yx";
+
+        let length = playlistTracks.length;
         return (
             <div className="Playlist">
-                {playlist.name}
+                <div className="PlaylistInfo">
+                    <div className="PlaylistImage">
+                        <img className="Image" src={image}></img>
+                    </div>
+                    <div className="PlaylistName">{playlist.name}</div>
+                    <div className="PlaylistDescription">
+                        By: {playlist.owner.display_name}
+                    </div>
+                    <div className="PlaylistDescription">
+                        {playlist.description}
+                    </div>
+                    <div className="PlaylistCount">{length} Tracks</div>
+                </div>
+
                 <BrickList items={playlistTracks}></BrickList>
             </div>
         );

@@ -17,6 +17,7 @@ function Playlists() {
         if (playlists.length === 0) {
             fetchPlaylists(20, 0)
                 .then((playlists) => {
+                    console.log(playlists);
                     setPlaylists(playlists);
                 })
                 .catch((error) => {

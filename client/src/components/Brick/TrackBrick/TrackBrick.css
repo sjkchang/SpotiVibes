@@ -1,4 +1,4 @@
-.Track {
+.TrackBrick {
     list-style: none;
     display: grid;
     grid-template-columns: auto 1fr;

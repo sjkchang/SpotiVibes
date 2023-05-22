@@ -35,7 +35,7 @@ function TrackBrick({ track }: TrackProps) {
     }
 
     return (
-        <div className="Track">
+        <div className="TrackBrick">
             <TooltipImage
                 toggled={() => {
                     return seeds.uris.includes(track.uri);

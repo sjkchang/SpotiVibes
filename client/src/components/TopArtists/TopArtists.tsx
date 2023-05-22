@@ -24,7 +24,7 @@ function TopItemsList({ timeRange }: TopItemsListProps) {
         let query = new TopItemsQuery(
             SpotifyTypesEnum.Tracks,
             timeRange,
-            20,
+            10,
             artists.length
         );
         getTopArtists(query)
@@ -40,7 +40,7 @@ function TopItemsList({ timeRange }: TopItemsListProps) {
             let query = new TopItemsQuery(
                 SpotifyTypesEnum.Tracks,
                 timeRange,
-                20,
+                10,
                 0
             );
             getTopArtists(query)

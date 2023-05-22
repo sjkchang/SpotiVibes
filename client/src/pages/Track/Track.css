@@ -1,0 +1,61 @@
+.Track {
+    display: flex;
+    width: 100%;
+    min-height: 100vh;
+    align-items: start;
+}
+
+.TrackHeader {
+    display: flex;
+    flex-direction: row;
+}
+
+.TrackImage {
+    width: 250px;
+    height: 250px;
+    margin-right: 40px;
+}
+
+.Image {
+    width: 100%;
+    height: 100%;
+}
+
+.TrackTitle {
+    color: var(--primary);
+    font-size: 42px;
+    margin: 0px 0px 5px;
+    font-weight: 900;
+}
+
+.TrackArtist {
+    font-weight: 700;
+    text-align: left !important;
+    margin: 0px 0px 10px;
+    font-size: 22px;
+}
+
+.TrackAlbum {
+    font-weight: 400;
+    font-size: 16px;
+    margin: 0px 0px 10px;
+}
+
+.AddSeedBtn {
+    display: inline-block;
+    background-color: var(--spotify-green);
+    color: var(--primary);
+    font-weight: 700;
+    font-size: 12px;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    border-radius: 50px;
+    padding: 11px 24px;
+    margin: 20px 0px;
+    cursor: pointer;
+    transition: all 0.25s cubic-bezier(0.3, 0, 0.4, 1) 0s;
+}
+
+.AddSeedBtn:hover {
+    filter: brightness(120%);
+}
