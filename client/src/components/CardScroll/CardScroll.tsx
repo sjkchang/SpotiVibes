@@ -7,7 +7,8 @@ interface CardScrollProps {
     items:
         | Array<SpotifyTypes.Artist>
         | Array<SpotifyTypes.Track>
-        | Array<SpotifyTypes.Playlist>;
+        | Array<SpotifyTypes.Playlist>
+        | Array<SpotifyTypes.Album>;
 }
 
 function CardScroll({ items }: CardScrollProps) {

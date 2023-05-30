@@ -6,7 +6,12 @@ import { useAppDispatch, useAppSelector } from "../../redux/hooks";
 import { toggleSeeds } from "../../redux/slices/seedsSlice";
 
 interface CardProps {
-    item?: SpotifyTypes.Artist | SpotifyTypes.Track | SpotifyTypes.Playlist;
+    item?:
+        | SpotifyTypes.Artist
+        | SpotifyTypes.Track
+        | SpotifyTypes.Playlist
+        | SpotifyTypes.Album;
+    fixedSize?: boolean;
 }
 
 const isArtist = (
@@ -14,6 +19,7 @@ const isArtist = (
         | SpotifyTypes.Artist
         | SpotifyTypes.Track
         | SpotifyTypes.Playlist
+        | SpotifyTypes.Album
         | undefined
 ): item is SpotifyTypes.Artist =>
     (item as SpotifyTypes.Artist).uri.includes("artist");
@@ -22,6 +28,7 @@ const isTrack = (
         | SpotifyTypes.Artist
         | SpotifyTypes.Track
         | SpotifyTypes.Playlist
+        | SpotifyTypes.Album
         | undefined
 ): item is SpotifyTypes.Track =>
     (item as SpotifyTypes.Track).uri.includes("track");
@@ -30,15 +37,27 @@ const isPlaylist = (
         | SpotifyTypes.Artist
         | SpotifyTypes.Track
         | SpotifyTypes.Playlist
+        | SpotifyTypes.Album
         | undefined
 ): item is SpotifyTypes.Playlist =>
     (item as SpotifyTypes.Playlist).uri.includes("playlist");
+const isAlbum = (
+    item:
+        | SpotifyTypes.Artist
+        | SpotifyTypes.Track
+        | SpotifyTypes.Playlist
+        | SpotifyTypes.Album
+        | undefined
+): item is SpotifyTypes.Album =>
+    (item as SpotifyTypes.Album).uri.includes("album");
 
-function Card({ item }: CardProps) {
+function Card({ item, fixedSize }: CardProps) {
     let type: string = "";
     let title;
     let description;
     let image;
+
+    let className = fixedSize ? "CardFixedSize" : "Card";
 
     const seeds = useAppSelector((state: any) => state.seeds);
     const dispatch = useAppDispatch();
@@ -72,6 +91,13 @@ function Card({ item }: CardProps) {
         }
         title = item.name;
         description = "Playlist";
+    } else if (isAlbum(item)) {
+        type = "Album";
+        if (item.images.length !== 0) {
+            image = item.images[0].url;
+        }
+        title = item.name;
+        description = item.artists[0].name;
     }
 
     if (item) {
@@ -79,7 +105,7 @@ function Card({ item }: CardProps) {
         if (type === "Playlist") {
             return (
                 <div
-                    className="Card"
+                    className={className}
                     onClick={(e) => {
                         window.location.href = link;
                     }}
@@ -94,7 +120,7 @@ function Card({ item }: CardProps) {
         } else {
             return (
                 <div
-                    className="Card"
+                    className={className}
                     onClick={(e) => {
                         window.location.href = link;
                     }}

@@ -4,7 +4,18 @@
     background-color: var(--tertiary);
     padding: 25px;
     border-radius: 3%;
-    width: 150px;
+}
+
+.CardFixedSize {
+    display: flex;
+    flex-direction: column;
+    background-color: var(--tertiary);
+    padding: 25px;
+    border-radius: 3%;
+
+    width: 200px;
+    flex: 1 1 270px;
+    height: 270px;
 }
 
 .Card:hover {

@@ -32,11 +32,11 @@ body::-webkit-scrollbar-thumb {
 }
 
 :root {
-    --primary: #d7fff1;
-    --secondary: #80b192;
-    --accent: #6a8d92;
-    --background: #4b4e6d;
-    --tertiary: #493548;
+    --primary: #fceff9;
+    --secondary: #9ca2ab;
+    --accent: #475e45;
+    --background: #063437;
+    --tertiary: #042325;
     --spotify-green: #aafcb8;
 }
 
@@ -48,4 +48,52 @@ ul {
 
 a {
     all: unset;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+    display: inline-block;
+    text-decoration: none;
+    color: var(--primary);
+}
+
+h1 {
+    font-weight: 700;
+    font-size: 28px;
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+
+h2 {
+    color: var(--secondary);
+}
+
+h3 {
+    color: var(--primary);
+}
+
+button {
+    background-color: transparent;
+    color: var(--spotify-green);
+    border: 1px solid var(--spotify-green);
+    border-radius: 30px;
+    padding: 12px 30px;
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    text-align: center;
+}
+
+button:hover {
+    background-color: var(--spotify-green);
+    color: var(--background);
+}
+
+.rounded {
+    border-radius: 50%;
 }

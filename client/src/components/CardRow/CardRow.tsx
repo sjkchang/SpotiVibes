@@ -1,9 +1,9 @@
 import React from "react";
 import SpotifyTypes from "spotify-types";
 import Card from "../Card/Card";
-import "./CardGrid.css";
+import "./CardRow.css";
 
-interface CardGridProps {
+interface CardRowProps {
     items:
         | Array<SpotifyTypes.Artist>
         | Array<SpotifyTypes.Track>
@@ -11,16 +11,16 @@ interface CardGridProps {
         | Array<SpotifyTypes.Album>;
 }
 
-function CardGrid({ items }: CardGridProps) {
+function CardRow({ items }: CardRowProps) {
     return (
-        <div className="row">
+        <div className="CardRow">
             {items.map((item, i) => (
                 <div key={i}>
-                    <Card item={item}></Card>
+                    <Card item={item} fixedSize={true}></Card>
                 </div>
             ))}
         </div>
     );
 }
 
-export default CardGrid;
+export default CardRow;

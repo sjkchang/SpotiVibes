@@ -28,8 +28,7 @@ function GeneratePlaylist() {
         useLocalStorage<Min_Max_Target>("instrumentalness", { target: 0.5 });
     const [liveness, setLiveness, clearLiveness] =
         useLocalStorage<Min_Max_Target>("liveness", { target: 0.5 });
-    const [popularity, setPopularity, clearPopularity] =
-        useLocalStorage<Min_Max_Target>("popularity", { target: 50 });
+
     const [speechiness, setSpeechiness, clearSpeechiness] =
         useLocalStorage<Min_Max_Target>("speechiness", { target: 0.5 });
 
@@ -81,7 +80,6 @@ function GeneratePlaylist() {
                     energy: energy,
                     instrumentalness: instrumentalness,
                     liveness: liveness,
-                    popularity: popularity,
                     speechiness: speechiness,
                     valence: valence,
                     loudness: loudness,
@@ -167,13 +165,6 @@ function GeneratePlaylist() {
                         max={1}
                         value={liveness}
                         setFeature={setLiveness}
-                    />
-                    <AudioFeatureSlider
-                        label="popularity"
-                        max={100}
-                        step={1}
-                        value={popularity}
-                        setFeature={setPopularity}
                     />
                     <AudioFeatureSlider
                         label="speechiness"

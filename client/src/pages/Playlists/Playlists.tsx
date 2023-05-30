@@ -8,16 +8,10 @@ import CardGrid from "../../components/CardGrid/CardGrid";
 function Playlists() {
     let [playlists, setPlaylists] = useState<Array<Playlist>>([]);
 
-    async function fetchPlaylists(limit: number, offset: number) {
-        let response = await getPlaylists(limit, offset);
-        return response;
-    }
-
     useEffect(() => {
         if (playlists.length === 0) {
-            fetchPlaylists(20, 0)
+            getPlaylists(20, 0)
                 .then((playlists) => {
-                    console.log(playlists);
                     setPlaylists(playlists);
                 })
                 .catch((error) => {
@@ -29,7 +23,7 @@ function Playlists() {
     return (
         <div className="Playlists">
             <h1>Playlists</h1>
-            <BrickList items={playlists} />
+            <CardGrid items={playlists} />
         </div>
     );
 }

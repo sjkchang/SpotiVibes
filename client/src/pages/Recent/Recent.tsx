@@ -19,8 +19,8 @@ function Recent() {
 
     if (tracks) {
         return (
-            <div className="Playlist">
-                Recently Played
+            <div className="Recent">
+                <h1 className="RecentHeader"> Recently Played</h1>
                 <BrickList items={tracks} />
             </div>
         );

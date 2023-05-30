@@ -23,6 +23,8 @@ function Home({ logout }: any) {
                 <Route path="/track/:id" element={<Track />} />
                 <Route path="/recent" element={<Recent />} />
                 <Route path="/search" element={<Search />} />
+                <Route path="/top-tracks" element={<Search />} />
+                <Route path="/top-artists" element={<Search />} />
             </Routes>
         </div>
     );

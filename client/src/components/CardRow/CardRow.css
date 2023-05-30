@@ -1,0 +1,12 @@
+.CardRow {
+    display: flex;
+    justify-content: flex-start;
+
+    /* Equal to height of a Card 270px + 50px of padding*/
+    height: 320px;
+    flex-wrap: wrap;
+    overflow-y: hidden;
+    gap: 15px;
+
+    margin-bottom: 20px;
+}

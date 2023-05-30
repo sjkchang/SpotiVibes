@@ -66,16 +66,16 @@ function TopItemsList({ timeRange }: TopItemsListProps) {
     return (
         <div>
             <div className="top-header">
-                <h2>Artists</h2>
-                <button
-                    className="btn"
-                    disabled={artists.length >= maxItems ? true : false}
-                    onClick={() => seeMoreItems("artists")}
-                >
-                    See More
-                </button>
+                <h3>Artists</h3>
             </div>
             <BrickList items={artists} />
+            <button
+                className="btn"
+                disabled={artists.length >= maxItems ? true : false}
+                onClick={() => seeMoreItems("artists")}
+            >
+                See More
+            </button>
         </div>
     );
 }

@@ -65,17 +65,17 @@ function TopTracks({ timeRange }: TopTracksProps) {
     return (
         <div className="Top-Tracks">
             <div className="top-header">
-                <h2>Tracks</h2>
-                <button
-                    className="btn"
-                    disabled={tracks.length >= maxItems ? true : false}
-                    onClick={() => seeMoreItems("tracks")}
-                >
-                    See More
-                </button>
+                <h3>Tracks</h3>
             </div>
 
             <BrickList items={tracks}></BrickList>
+            <button
+                className="btn"
+                disabled={tracks.length >= maxItems ? true : false}
+                onClick={() => seeMoreItems("tracks")}
+            >
+                See More
+            </button>
         </div>
     );
 }

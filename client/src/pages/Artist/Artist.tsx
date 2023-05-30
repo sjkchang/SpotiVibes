@@ -43,7 +43,7 @@ function Artist() {
             <div className="ArtistPage">
                 <div className="ArtistInfo">
                     <div className="ArtistImage">
-                        <img className="Image" src={image} />
+                        <img className="Image rounded" src={image} />
                     </div>
                     <div className="ArtistName">{artist.name}</div>
                     <div className="ArtistDescription">
