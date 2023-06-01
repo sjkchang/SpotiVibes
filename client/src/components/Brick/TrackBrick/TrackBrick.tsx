@@ -52,7 +52,13 @@ function TrackBrick({ track }: TrackProps) {
                     </div>
                     <span className="track-album-info">
                         <span>
-                            {track.artists[0].name} | {track.album.name}
+                            <a href={"/artist/" + track.artists[0].id}>
+                                {track.artists[0].name}
+                            </a>
+                            {""} | {""}
+                            <a href={"/album/" + track.album.id}>
+                                {track.album.name}
+                            </a>
                         </span>
                     </span>
                 </div>

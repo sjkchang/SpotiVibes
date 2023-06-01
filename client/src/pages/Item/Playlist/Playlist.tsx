@@ -1,14 +1,14 @@
 import React, { useEffect, useState } from "react";
 import SpotifyTypes from "spotify-types";
-import { getPlaylist } from "../../spotify/service";
+import { getPlaylist } from "../../../spotify/service";
 import { useParams } from "react-router-dom";
 import "./Playlist.css";
 import {
     SpotifyTypesEnum,
     TimeRangeEnum,
     TopItemsQuery,
-} from "../../spotify/types";
-import BrickList from "../../components/BrickList/BrickList";
+} from "../../../spotify/types";
+import BrickList from "../../../components/BrickList/BrickList";
 
 function Playlist() {
     const [playlist, setPlaylist] = useState<SpotifyTypes.Playlist>();

@@ -2,6 +2,7 @@ import axios from "axios";
 import { authService } from "./AuthService";
 import {
     Artist,
+    Album,
     Track,
     Playlist,
     RecentlyPlayed,
@@ -157,6 +158,33 @@ export async function getPlaylist(playlistId: string) {
     return [playlist, tracks];
 }
 
+export async function getAlbum(albumId: string) {
+    let [album, tracks] = await Promise.all([
+        axios
+            .get("https://api.spotify.com/v1/albums/" + albumId, {
+                headers: {
+                    Authorization: "Bearer " + authService.getToken(),
+                },
+            })
+            .then(({ data }: { data: Album }) => {
+                console.log(data);
+                return data;
+            }),
+        axios
+            .get("https://api.spotify.com/v1/albums/" + albumId + "/tracks", {
+                headers: {
+                    Authorization: "Bearer " + authService.getToken(),
+                },
+            })
+            .then(({ data }: { data: any }) => {
+                console.log(data);
+                return data.items;
+            }),
+    ]);
+
+    return [album, tracks];
+}
+
 export async function getArtist(artistId: string) {
     let [playlist, tracks] = await Promise.all([
         axios
@@ -223,6 +251,9 @@ export async function getRecentTracks() {
         .get("https://api.spotify.com/v1/me/player/recently-played", {
             headers: {
                 Authorization: "Bearer " + authService.getToken(),
+            },
+            params: {
+                limit: 50,
             },
         })
         .then(({ data }: { data: RecentlyPlayed }) => {

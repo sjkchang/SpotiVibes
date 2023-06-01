@@ -10,7 +10,7 @@ function Playlists() {
 
     useEffect(() => {
         if (playlists.length === 0) {
-            getPlaylists(20, 0)
+            getPlaylists(50, 0)
                 .then((playlists) => {
                     setPlaylists(playlists);
                 })

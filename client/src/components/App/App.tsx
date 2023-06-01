@@ -6,14 +6,15 @@ import Welcome from "../../pages/Welcome/Welcome";
 import Nav from "../Nav/Nav";
 import { Routes, Route } from "react-router-dom";
 import Playlists from "../../pages/Playlists/Playlists";
-import Playlist from "../../pages/Playlist/Playlist";
-import Artist from "../../pages/Artist/Artist";
-import Track from "../../pages/Track/Track";
+import Playlist from "../../pages/Item/Playlist/Playlist";
+import Artist from "../../pages/Item/Artist/Artist";
+import Track from "../../pages/Item/Track/Track";
 import Recent from "../../pages/Recent/Recent";
 import Home from "../../pages/Home/Home";
 
 import TopArtists from "../TopArtists/TopArtists";
 import TopTracks from "../TopTracks/TopTracks";
+import Album from "../../pages/Item/Album/Album";
 
 function App() {
     const [loggedIn, setLoggedIn] = useState(authService.isAuthenticated());
@@ -39,6 +40,7 @@ function App() {
 
                         <Route path="/playlist/:id" element={<Playlist />} />
                         <Route path="/artist/:id" element={<Artist />} />
+                        <Route path="/album/:id" element={<Album />} />
                         <Route path="/track/:id" element={<Track />} />
                         <Route path="/recent" element={<Recent />} />
                     </Routes>
