@@ -94,6 +94,13 @@ button:hover {
     color: var(--background);
 }
 
+button:disabled {
+    background-color: var(--spotify-green);
+    color: var(--background);
+    filter: grayscale(50%);
+    border: 1px solid var(--secondary);
+}
+
 .rounded {
     border-radius: 50%;
 }

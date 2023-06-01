@@ -10,43 +10,55 @@ import {
 import CardGrid from "../CardGrid/CardGrid";
 import BrickList from "../BrickList/BrickList";
 
-interface TopItemsListProps extends React.HTMLAttributes<any> {
-    timeRange: TimeRangeEnum;
-}
+const NUM_ITEMS_PER_LOAD = 10;
+const MAX_ITEMS = 50;
 
-function TopItemsList({ timeRange }: TopItemsListProps) {
+function TopItemsList() {
+    const [timeRange, setTimeRange] = useState<TimeRangeEnum>(
+        TimeRangeEnum.Medium
+    );
     const [artists, setArtists] = useState<Array<SpotifyTypes.Artist>>([]);
-    const [loading, setLoading] = useState(false);
+    const [itemsExhausted, setItemsExhausted] = useState<boolean>(false);
 
-    let maxItems = 50;
+    const changeTimeFrame = (timeRange: TimeRangeEnum) => {
+        setArtists([]);
+        setTimeRange(timeRange);
+        setItemsExhausted(false);
+    };
 
     const seeMoreItems = (type: string) => {
         let query = new TopItemsQuery(
             SpotifyTypesEnum.Tracks,
             timeRange,
-            10,
+            NUM_ITEMS_PER_LOAD,
             artists.length
         );
         getTopArtists(query)
             .then((newItems) => {
-                setArtists((artists) => [...artists, ...newItems]);
+                let combinedArray = [...artists, ...newItems];
+                if (
+                    combinedArray.length <
+                    artists.length + NUM_ITEMS_PER_LOAD
+                ) {
+                    setItemsExhausted(true);
+                }
+
+                setArtists(combinedArray);
             })
             .catch((error) => {});
     };
 
     useEffect(() => {
         if (artists.length === 0) {
-            setLoading(true);
             let query = new TopItemsQuery(
                 SpotifyTypesEnum.Tracks,
                 timeRange,
-                10,
+                NUM_ITEMS_PER_LOAD,
                 0
             );
             getTopArtists(query)
                 .then((artists) => {
                     setArtists(artists);
-                    setLoading(false);
                 })
                 .catch((error) => {
                     console.log(error);
@@ -54,24 +66,26 @@ function TopItemsList({ timeRange }: TopItemsListProps) {
         }
     }, [artists, timeRange]);
 
-    if (loading) {
-        return (
-            <div>
-                <h3>Artists</h3>
-                Loading
-            </div>
-        );
-    }
-
     return (
         <div>
             <div className="top-header">
-                <h3>Artists</h3>
+                <h1>Top Artists</h1>
+                <button onClick={() => changeTimeFrame(TimeRangeEnum.Short)}>
+                    Short
+                </button>
+                <button onClick={() => changeTimeFrame(TimeRangeEnum.Medium)}>
+                    Medium
+                </button>
+                <button onClick={() => changeTimeFrame(TimeRangeEnum.Long)}>
+                    Long
+                </button>
             </div>
-            <BrickList items={artists} />
+            <CardGrid items={artists} />
             <button
                 className="btn"
-                disabled={artists.length >= maxItems ? true : false}
+                disabled={
+                    artists.length >= MAX_ITEMS || itemsExhausted ? true : false
+                }
                 onClick={() => seeMoreItems("artists")}
             >
                 See More

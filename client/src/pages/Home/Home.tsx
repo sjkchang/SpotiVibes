@@ -1,31 +1,18 @@
-import React from "react";
-import TopItems from "../TopItems/TopItems";
-import Nav from "../../components/Nav/Nav";
-import GeneratePlaylist from "../GeneratePlaylists/GeneratePlaylist";
-import { Routes, Route } from "react-router-dom";
-import "./Home.css";
-import Playlists from "../Playlists/Playlists";
-import Playlist from "../Playlist/Playlist";
-import Artist from "../Artist/Artist";
-import Track from "../Track/Track";
-import Recent from "../Recent/Recent";
-import Search from "../Search/Search";
+import React, { useState } from "react";
 
-function Home({ logout }: any) {
+import SearchBar from "../../components/SearchBar/SearchBar";
+import "./Home.css";
+
+import Search from "../Search/Search";
+import UsersTopItems from "../UsersTopItems/UsersTopItems";
+
+function Home() {
+    const [search, setSearch] = useState<string>();
+
     return (
         <div>
-            <Nav logout={logout}></Nav>
-            <Routes>
-                <Route path="/" element={<TopItems />} />
-                <Route path="/playlists" element={<Playlists />} />
-                <Route path="/playlist/:id" element={<Playlist />} />
-                <Route path="/artist/:id" element={<Artist />} />
-                <Route path="/track/:id" element={<Track />} />
-                <Route path="/recent" element={<Recent />} />
-                <Route path="/search" element={<Search />} />
-                <Route path="/top-tracks" element={<Search />} />
-                <Route path="/top-artists" element={<Search />} />
-            </Routes>
+            <SearchBar setSearch={setSearch}></SearchBar>
+            {search ? <Search search={search} /> : <UsersTopItems />}
         </div>
     );
 }

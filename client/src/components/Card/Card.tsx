@@ -1,5 +1,5 @@
 import "./Card.css";
-import React, { useState } from "react";
+import React from "react";
 import SpotifyTypes from "spotify-types";
 import { PlusIcon, Cross1Icon } from "@radix-ui/react-icons";
 import { useAppDispatch, useAppSelector } from "../../redux/hooks";
@@ -57,7 +57,7 @@ function Card({ item, fixedSize }: CardProps) {
     let description;
     let image;
 
-    let className = fixedSize ? "CardFixedSize" : "Card";
+    let className = fixedSize ? "Card CardFixedSize" : "Card";
 
     const seeds = useAppSelector((state: any) => state.seeds);
     const dispatch = useAppDispatch();
@@ -68,7 +68,6 @@ function Card({ item, fixedSize }: CardProps) {
     } else {
         uri = "";
     }
-    const [toggled, setToggled] = useState<boolean>();
 
     if (isArtist(item)) {
         type = "Artist";

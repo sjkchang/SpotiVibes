@@ -13,7 +13,7 @@ interface CardGridProps {
 
 function CardGrid({ items }: CardGridProps) {
     return (
-        <div className="row">
+        <div className="CardGrid">
             {items.map((item, i) => (
                 <div key={i}>
                     <Card item={item}></Card>
