@@ -26,7 +26,8 @@
 
 .SliderRange {
     position: absolute;
-    background-color: var(--spotify-green);
+    background-color: var(--accent);
+    filter: brightness(120%);
     border-radius: 9999px;
     height: 100%;
 }
@@ -44,5 +45,6 @@
 }
 .SliderThumb:focus {
     outline: none;
-    border: 2px solid var(--spotify-green);
+    border: 2px solid var(--accent);
+    filter: brightness(120%);
 }

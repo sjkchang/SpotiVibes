@@ -3,6 +3,7 @@ import { Track } from "spotify-types";
 import TooltipImage from "../../TooltipImage/TooltipImage";
 import { useAppDispatch, useAppSelector } from "../../../redux/hooks";
 import { toggleSeeds } from "../../../redux/slices/seedsSlice";
+import { parseMsToTime } from "../../../utils/TIme";
 import "./TrackBrick.css";
 
 interface TrackProps extends React.HTMLAttributes<any> {
@@ -12,20 +13,6 @@ interface TrackProps extends React.HTMLAttributes<any> {
 function TrackBrick({ track }: TrackProps) {
     const seeds = useAppSelector((state: any) => state.seeds);
     const dispatch = useAppDispatch();
-
-    function parseMsToTime(milliseconds: number): string {
-        //Get remainder from hours and convert to minutes
-        var minutes = milliseconds / (1000 * 60);
-        var absoluteMinutes = Math.floor(minutes);
-        var m = absoluteMinutes;
-
-        //Get remainder from minutes and convert to seconds
-        var seconds = (minutes - absoluteMinutes) * 60;
-        var absoluteSeconds = Math.floor(seconds);
-        var s = absoluteSeconds > 9 ? absoluteSeconds : "0" + absoluteSeconds;
-
-        return m + ":" + s;
-    }
 
     let image: string;
     if (track.album.images.length > 0) {
@@ -55,7 +42,7 @@ function TrackBrick({ track }: TrackProps) {
                             <a href={"/artist/" + track.artists[0].id}>
                                 {track.artists[0].name}
                             </a>
-                            {""} | {""}
+                            {" | "}
                             <a href={"/album/" + track.album.id}>
                                 {track.album.name}
                             </a>

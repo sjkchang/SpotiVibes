@@ -1,4 +1,4 @@
-import { Artist, Track } from "spotify-types";
+import SpotifyTypes from "spotify-types";
 
 interface TopItemsResponse {
     href: string;
@@ -10,11 +10,11 @@ interface TopItemsResponse {
 }
 
 export interface TopTracksResponse extends TopItemsResponse {
-    items: Array<Track>;
+    items: Array<SpotifyTypes.Track>;
 }
 
 export interface TopArtistsResponse extends TopItemsResponse {
-    items: Array<Artist>;
+    items: Array<SpotifyTypes.Artist>;
 }
 
 export enum TimeRangeEnum {
@@ -50,3 +50,40 @@ export class TopItemsQuery {
         this.offset = offset;
     }
 }
+
+export const isArtist = (
+    item:
+        | SpotifyTypes.Artist
+        | SpotifyTypes.Track
+        | SpotifyTypes.Playlist
+        | SpotifyTypes.Album
+        | undefined
+): item is SpotifyTypes.Artist =>
+    (item as SpotifyTypes.Artist).uri.includes("artist");
+export const isTrack = (
+    item:
+        | SpotifyTypes.Artist
+        | SpotifyTypes.Track
+        | SpotifyTypes.Playlist
+        | SpotifyTypes.Album
+        | undefined
+): item is SpotifyTypes.Track =>
+    (item as SpotifyTypes.Track).uri.includes("track");
+export const isPlaylist = (
+    item:
+        | SpotifyTypes.Artist
+        | SpotifyTypes.Track
+        | SpotifyTypes.Playlist
+        | SpotifyTypes.Album
+        | undefined
+): item is SpotifyTypes.Playlist =>
+    (item as SpotifyTypes.Playlist).uri.includes("playlist");
+export const isAlbum = (
+    item:
+        | SpotifyTypes.Artist
+        | SpotifyTypes.Track
+        | SpotifyTypes.Playlist
+        | SpotifyTypes.Album
+        | undefined
+): item is SpotifyTypes.Album =>
+    (item as SpotifyTypes.Album).uri.includes("album");

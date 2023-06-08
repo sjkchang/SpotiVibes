@@ -37,7 +37,14 @@ body::-webkit-scrollbar-thumb {
     --accent: #475e45;
     --background: #063437;
     --tertiary: #042325;
-    --spotify-green: #aafcb8;
+    --spotify-green: #1db954;
+}
+
+input,
+textarea,
+button {
+    all: unset;
+    box-sizing: border-box;
 }
 
 ol,
@@ -77,26 +84,26 @@ h3 {
 }
 
 button {
-    background-color: transparent;
-    color: var(--spotify-green);
-    border: 1px solid var(--spotify-green);
-    border-radius: 30px;
-    padding: 12px 30px;
-    font-size: 12px;
+    display: inline-block;
+    background-color: var(--spotify-green);
+    color: var(--primary);
     font-weight: 700;
+    font-size: 12px;
     letter-spacing: 1px;
     text-transform: uppercase;
-    text-align: center;
+    border-radius: 50px;
+    padding: 11px 24px;
+    margin: 20px 0px;
+    cursor: pointer;
+    transition: all 0.25s cubic-bezier(0.3, 0, 0.4, 1) 0s;
 }
 
 button:hover {
-    background-color: var(--spotify-green);
-    color: var(--background);
+    filter: brightness(120%);
 }
 
 button:disabled {
-    background-color: var(--spotify-green);
-    color: var(--background);
+    color: var(--primary);
     filter: grayscale(50%);
     border: 1px solid var(--secondary);
 }

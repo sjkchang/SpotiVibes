@@ -2,8 +2,6 @@ import React, { useEffect, useState } from "react";
 import SpotifyTypes from "spotify-types";
 import { searchSpotify } from "../../spotify/service";
 import "./Search.css";
-import CardRow from "../../components/CardRow/CardRow";
-import BrickList from "../../components/BrickList/BrickList";
 import CardGrid from "../../components/CardGrid/CardGrid";
 
 interface SearchResultsProps {

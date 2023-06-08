@@ -1,5 +1,6 @@
 import "./Nav.css";
 import React from "react";
+import PlaylistForm from "../PlaylistForm/PlaylistForm";
 
 interface NavProps {
     logout: () => void;

@@ -4,7 +4,7 @@ import SpotifyTypes from "spotify-types";
 import { PlusIcon, Cross1Icon } from "@radix-ui/react-icons";
 import { useAppDispatch, useAppSelector } from "../../redux/hooks";
 import { toggleSeeds } from "../../redux/slices/seedsSlice";
-
+import { isArtist, isAlbum, isTrack, isPlaylist } from "../../spotify/types";
 interface CardProps {
     item?:
         | SpotifyTypes.Artist
@@ -13,43 +13,6 @@ interface CardProps {
         | SpotifyTypes.Album;
     fixedSize?: boolean;
 }
-
-const isArtist = (
-    item:
-        | SpotifyTypes.Artist
-        | SpotifyTypes.Track
-        | SpotifyTypes.Playlist
-        | SpotifyTypes.Album
-        | undefined
-): item is SpotifyTypes.Artist =>
-    (item as SpotifyTypes.Artist).uri.includes("artist");
-const isTrack = (
-    item:
-        | SpotifyTypes.Artist
-        | SpotifyTypes.Track
-        | SpotifyTypes.Playlist
-        | SpotifyTypes.Album
-        | undefined
-): item is SpotifyTypes.Track =>
-    (item as SpotifyTypes.Track).uri.includes("track");
-const isPlaylist = (
-    item:
-        | SpotifyTypes.Artist
-        | SpotifyTypes.Track
-        | SpotifyTypes.Playlist
-        | SpotifyTypes.Album
-        | undefined
-): item is SpotifyTypes.Playlist =>
-    (item as SpotifyTypes.Playlist).uri.includes("playlist");
-const isAlbum = (
-    item:
-        | SpotifyTypes.Artist
-        | SpotifyTypes.Track
-        | SpotifyTypes.Playlist
-        | SpotifyTypes.Album
-        | undefined
-): item is SpotifyTypes.Album =>
-    (item as SpotifyTypes.Album).uri.includes("album");
 
 function Card({ item, fixedSize }: CardProps) {
     let type: string = "";
@@ -82,7 +45,15 @@ function Card({ item, fixedSize }: CardProps) {
             image = item.album.images[0].url;
         }
         title = item.name;
-        description = item.artists[0].name + " | " + item.album.name;
+        description = (
+            <div>
+                <a href={"/artist/" + item.artists[0].id}>
+                    {item.artists[0].name}
+                </a>
+                {" | "}
+                <a href={"/album/" + item.album.id}>{item.album.name}</a>
+            </div>
+        );
     } else if (isPlaylist(item)) {
         type = "Playlist";
         if (item.images.length !== 0) {

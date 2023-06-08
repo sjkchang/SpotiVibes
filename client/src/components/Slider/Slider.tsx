@@ -1,14 +1,15 @@
 import React from "react";
 import * as SliderPrimitive from "@radix-ui/react-slider";
-
+import "./Slider.css";
 interface sliderProps {
-    value: Array<number>;
+    value?: Array<number>;
     defaultValue?: Array<number>;
     step?: number;
     minStepsBetweenThumbs?: number;
     max?: number;
     min?: number;
     onValueChange?: (value: Array<number>) => void;
+    disabled?: boolean;
 }
 
 function Slider(props: sliderProps) {
@@ -18,9 +19,7 @@ function Slider(props: sliderProps) {
             <SliderPrimitive.Track className="SliderTrack">
                 <SliderPrimitive.Range className="SliderRange" />
             </SliderPrimitive.Track>
-            {value.map((val: number, i: number) => (
-                <SliderPrimitive.Thumb key={i} className="SliderThumb" />
-            ))}
+            <SliderPrimitive.Thumb className="SliderThumb" />
         </SliderPrimitive.Root>
     );
 }

@@ -4,35 +4,11 @@ import SpotifyTypes from "spotify-types";
 import TrackBrick from "./TrackBrick/TrackBrick";
 import ArtistBrick from "./ArtistBrick/ArtistItem";
 import PlaylistBrick from "./PlaylistBrick/PlaylistBrick";
+import { isArtist, isAlbum, isTrack, isPlaylist } from "../../spotify/types";
 
 interface BrickProps {
     item: SpotifyTypes.Artist | SpotifyTypes.Track | SpotifyTypes.Playlist;
 }
-
-const isArtist = (
-    item:
-        | SpotifyTypes.Artist
-        | SpotifyTypes.Track
-        | SpotifyTypes.Playlist
-        | undefined
-): item is SpotifyTypes.Artist =>
-    (item as SpotifyTypes.Artist).uri.includes("artist");
-const isTrack = (
-    item:
-        | SpotifyTypes.Artist
-        | SpotifyTypes.Track
-        | SpotifyTypes.Playlist
-        | undefined
-): item is SpotifyTypes.Track =>
-    (item as SpotifyTypes.Track).uri.includes("track");
-const isPlaylist = (
-    item:
-        | SpotifyTypes.Artist
-        | SpotifyTypes.Track
-        | SpotifyTypes.Playlist
-        | undefined
-): item is SpotifyTypes.Playlist =>
-    (item as SpotifyTypes.Playlist).uri.includes("playlist");
 
 function Brick({ item }: BrickProps) {
     if (isArtist(item)) {

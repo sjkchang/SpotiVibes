@@ -332,20 +332,20 @@ interface GeneratePlaylistParams {
 }
 
 export interface TrackFeatures {
-    acousticness?: Min_Max_Target;
-    danceability?: Min_Max_Target;
-    duration_ms?: Min_Max_Target;
-    energy?: Min_Max_Target;
-    instrumentalness?: Min_Max_Target;
-    key?: Min_Max_Target;
-    liveness?: Min_Max_Target;
-    loudness?: Min_Max_Target;
-    mode?: Min_Max_Target;
-    popularity?: Min_Max_Target;
-    speechiness?: Min_Max_Target;
-    tempo?: Min_Max_Target;
-    time_signature?: Min_Max_Target;
-    valence?: Min_Max_Target;
+    acousticness?: number;
+    danceability?: number;
+    duration_ms?: number;
+    energy?: number;
+    instrumentalness?: number;
+    key?: number;
+    liveness?: number;
+    loudness?: number;
+    mode?: number;
+    popularity?: number;
+    speechiness?: number;
+    tempo?: number;
+    time_signature?: number;
+    valence?: number;
 }
 
 export async function generatePlaylist(params: GeneratePlaylistParams) {
@@ -374,18 +374,8 @@ export async function generatePlaylist(params: GeneratePlaylistParams) {
 
         for (let [featureName, feature] of Object.entries(features)) {
             if (feature) {
-                if (feature.min) {
-                    let min_feature = "min_" + featureName;
-                    audio_features[min_feature] = feature.min;
-                }
-                if (feature.max) {
-                    let max_feature = "max_" + featureName;
-                    audio_features[max_feature] = feature.max;
-                }
-                if (feature.target) {
-                    let target_feature = "target_" + featureName;
-                    audio_features[target_feature] = feature.target;
-                }
+                let target_feature = "target_" + featureName;
+                audio_features[target_feature] = feature;
             }
         }
 

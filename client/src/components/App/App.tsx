@@ -15,6 +15,7 @@ import Home from "../../pages/Home/Home";
 import TopArtists from "../TopArtists/TopArtists";
 import TopTracks from "../TopTracks/TopTracks";
 import Album from "../../pages/Item/Album/Album";
+import GeneratePlaylist from "../../pages/GeneratePlaylists/GeneratePlaylist";
 
 function App() {
     const [loggedIn, setLoggedIn] = useState(authService.isAuthenticated());
@@ -32,18 +33,30 @@ function App() {
             {loggedIn ? (
                 <div>
                     <Nav logout={logout}></Nav>
-                    <Routes>
-                        <Route path="/" element={<Home />} />
-                        <Route path="/playlists" element={<Playlists />} />
-                        <Route path="/top-artists" element={<TopArtists />} />
-                        <Route path="/top-tracks" element={<TopTracks />} />
+                    <div className="Content">
+                        <Routes>
+                            <Route path="/" element={<Home />} />
+                            <Route
+                                path="/generate"
+                                element={<GeneratePlaylist />}
+                            />
+                            <Route path="/playlists" element={<Playlists />} />
+                            <Route
+                                path="/top-artists"
+                                element={<TopArtists />}
+                            />
+                            <Route path="/top-tracks" element={<TopTracks />} />
 
-                        <Route path="/playlist/:id" element={<Playlist />} />
-                        <Route path="/artist/:id" element={<Artist />} />
-                        <Route path="/album/:id" element={<Album />} />
-                        <Route path="/track/:id" element={<Track />} />
-                        <Route path="/recent" element={<Recent />} />
-                    </Routes>
+                            <Route
+                                path="/playlist/:id"
+                                element={<Playlist />}
+                            />
+                            <Route path="/artist/:id" element={<Artist />} />
+                            <Route path="/album/:id" element={<Album />} />
+                            <Route path="/track/:id" element={<Track />} />
+                            <Route path="/recent" element={<Recent />} />
+                        </Routes>
+                    </div>
                 </div>
             ) : (
                 <Welcome login={login} />
