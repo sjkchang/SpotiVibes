@@ -37,33 +37,36 @@ function AudioFeatureRadarChart({
 
     console.log(features);
 
-    let style = { width: width + "px", height: height + "px" };
+    let style = {};
+
+    let styles = {
+        width: width + "px",
+        height: height + "px",
+    };
     return (
-        <div style={style}>
-            <ResponsiveContainer width="100%" height="100%">
-                <RadarChart cx="50%" cy="50%" outerRadius="80%" data={data}>
-                    <PolarGrid />
-                    {useLabels == true ? (
-                        <PolarAngleAxis dataKey="feature" />
-                    ) : (
-                        <></>
-                    )}
-                    <PolarRadiusAxis
-                        angle={90}
-                        domain={[0, 1]}
-                        tickCount={10}
-                        tick={false}
-                    />
-                    <Radar
-                        name="Features"
-                        dataKey="value"
-                        stroke="#8884d8"
-                        fill="#8884d8"
-                        fillOpacity={0.6}
-                    />
-                </RadarChart>
-            </ResponsiveContainer>
-        </div>
+        <ResponsiveContainer width="99%" aspect={1.5}>
+            <RadarChart cx="50%" cy="50%" outerRadius="80%" data={data}>
+                <PolarGrid />
+                {useLabels == true ? (
+                    <PolarAngleAxis dataKey="feature" />
+                ) : (
+                    <></>
+                )}
+                <PolarRadiusAxis
+                    angle={90}
+                    domain={[0, 1]}
+                    tickCount={10}
+                    tick={false}
+                />
+                <Radar
+                    name="Features"
+                    dataKey="value"
+                    stroke="#8884d8"
+                    fill="#8884d8"
+                    fillOpacity={0.6}
+                />
+            </RadarChart>
+        </ResponsiveContainer>
     );
 }
 

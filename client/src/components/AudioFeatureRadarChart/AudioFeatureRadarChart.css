@@ -1,4 +1,15 @@
 .AudioFeatureRadarChart {
     width: 100%;
     height: 600px;
+    display: flex;
+    justify-content: center;
+}
+
+.FeatureChart {
+    display: flex;
+    justify-content: center;
+}
+
+.FeatureSelector {
+    max-width: 600px;
 }

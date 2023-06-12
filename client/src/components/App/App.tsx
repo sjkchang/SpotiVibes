@@ -11,9 +11,6 @@ import Artist from "../../pages/Item/Artist/Artist";
 import Track from "../../pages/Item/Track/Track";
 import Recent from "../../pages/Recent/Recent";
 import Home from "../../pages/Home/Home";
-
-import TopArtists from "../TopArtists/TopArtists";
-import TopTracks from "../TopTracks/TopTracks";
 import Album from "../../pages/Item/Album/Album";
 import GeneratePlaylist from "../../pages/GeneratePlaylists/GeneratePlaylist";
 
@@ -41,11 +38,6 @@ function App() {
                                 element={<GeneratePlaylist />}
                             />
                             <Route path="/playlists" element={<Playlists />} />
-                            <Route
-                                path="/top-artists"
-                                element={<TopArtists />}
-                            />
-                            <Route path="/top-tracks" element={<TopTracks />} />
 
                             <Route
                                 path="/playlist/:id"

@@ -139,7 +139,7 @@ function GeneratePlaylist() {
                 className="FormRoot"
             >
                 <div className="Form">
-                    <div className="PlaylistInfo">
+                    <div className="NewPlaylistInfo">
                         <Form.Field className="FormField" name="playlistName">
                             <div
                                 style={{

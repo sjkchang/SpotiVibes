@@ -12,6 +12,7 @@ import { TrackFeatures } from "../../spotify/service";
 import Slider from "../../components/Slider/Slider";
 import AudioFeatureRadarChart from "./AudioFeatureRadarChart";
 import { Feature } from "../../pages/GeneratePlaylists/GeneratePlaylist";
+import "./AudioFeatureRadarChart.css";
 
 interface AudioFeatureSelectorProps {
     features: Array<Feature>;
@@ -19,7 +20,7 @@ interface AudioFeatureSelectorProps {
 
 function AudioFeatureSelector({ features }: AudioFeatureSelectorProps) {
     return (
-        <div>
+        <div className="FeatureSelector">
             <div className="FeatureSliders">
                 {features.map((feature) => {
                     return (

@@ -1,9 +1,11 @@
 import React from "react";
 import "./ArtistBrick.css";
-import TooltipImage from "../../TooltipImage/TooltipImage";
 import SpotifyTypes from "spotify-types";
 import { useAppDispatch, useAppSelector } from "../../../redux/hooks";
 import { toggleSeeds } from "../../../redux/slices/seedsSlice";
+import Popover from "../../Popover/Popover";
+import ImageOverlayIcon from "../../ImageOverlayIcon/ImageOverlayIcon";
+import { PlusIcon, Cross2Icon, InfoCircledIcon } from "@radix-ui/react-icons";
 
 interface ArtistProps extends React.HTMLAttributes<any> {
     artist: SpotifyTypes.Artist;
@@ -22,14 +24,20 @@ function ArtistBrick({ artist }: ArtistProps) {
 
     return (
         <div className="Artist">
-            <TooltipImage
-                toggled={() => {
-                    return seeds.uris.includes(artist.uri);
-                }}
-                toggle={() => dispatch(toggleSeeds(artist.uri))}
-                image_url={image}
-                rounded={true}
-                tip="Set as Seed"
+            <Popover
+                trigger={
+                    <div>
+                        <ImageOverlayIcon
+                            image_url={image}
+                            Icon={<InfoCircledIcon />}
+                        />
+                    </div>
+                }
+                content={
+                    <div>
+                        <button>Add Seed</button>
+                    </div>
+                }
             />
             <div className="artist-info">
                 <div className="artist-name">

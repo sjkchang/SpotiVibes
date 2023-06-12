@@ -1,16 +1,63 @@
-import React from "react";
-import { Track } from "spotify-types";
-import TooltipImage from "../../TooltipImage/TooltipImage";
+import React, { useEffect, useState } from "react";
+import SpotifyTypes from "spotify-types";
 import { useAppDispatch, useAppSelector } from "../../../redux/hooks";
 import { toggleSeeds } from "../../../redux/slices/seedsSlice";
 import { parseMsToTime } from "../../../utils/TIme";
 import "./TrackBrick.css";
 
+import Popover from "../../Popover/Popover";
+import ImageOverlayIcon from "../../ImageOverlayIcon/ImageOverlayIcon";
+import { PlusIcon, Cross2Icon, InfoCircledIcon } from "@radix-ui/react-icons";
+import AudioFeatureRadarChart from "../../AudioFeatureRadarChart/AudioFeatureRadarChart";
+import { Feature } from "../../../pages/GeneratePlaylists/GeneratePlaylist";
+import { getTrackFeatures } from "../../../spotify/service";
 interface TrackProps extends React.HTMLAttributes<any> {
-    track: Track;
+    track: SpotifyTypes.Track;
 }
 
 function TrackBrick({ track }: TrackProps) {
+    const [features, setFeatures] = useState<SpotifyTypes.AudioFeatures>();
+
+    let sliderFeatures: Array<Feature> = [];
+    if (features) {
+        sliderFeatures = [
+            {
+                label: "speechiness",
+                value: features.speechiness,
+            },
+            {
+                label: "acoustic",
+                value: features.acousticness,
+            },
+            {
+                label: "danceable",
+                value: features.danceability,
+            },
+            {
+                label: "instrumentalness",
+                value: features.instrumentalness,
+            },
+            {
+                label: "energy",
+                value: features.energy,
+            },
+            {
+                label: "liveness",
+                value: features.liveness,
+            },
+        ];
+    }
+
+    useEffect(() => {
+        getTrackFeatures(track.id)
+            .then((result) => {
+                setFeatures(result);
+            })
+            .catch((error) => {
+                console.log(error);
+            });
+    }, []);
+
     const seeds = useAppSelector((state: any) => state.seeds);
     const dispatch = useAppDispatch();
 
@@ -23,13 +70,32 @@ function TrackBrick({ track }: TrackProps) {
 
     return (
         <div className="TrackBrick">
-            <TooltipImage
-                toggled={() => {
-                    return seeds.uris.includes(track.uri);
-                }}
-                toggle={() => dispatch(toggleSeeds(track.uri))}
-                image_url={image}
-                tip="Set as Seed"
+            <Popover
+                trigger={
+                    <div>
+                        <ImageOverlayIcon
+                            image_url={image}
+                            Icon={<InfoCircledIcon />}
+                        />
+                    </div>
+                }
+                content={
+                    <div>
+                        <AudioFeatureRadarChart
+                            features={sliderFeatures}
+                            width={300}
+                        />
+                        <button
+                            onClick={() => {
+                                dispatch(toggleSeeds(track.uri));
+                            }}
+                        >
+                            {seeds.uris.includes(track.uri)
+                                ? "Remove Seed"
+                                : "Add Seed"}
+                        </button>
+                    </div>
+                }
             />
 
             <div className="track-info">

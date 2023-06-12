@@ -1,6 +1,5 @@
 import React from "react";
 import { Playlist } from "spotify-types";
-import TooltipImage from "../../TooltipImage/TooltipImage";
 import "./PlaylistBrick.css";
 
 interface PlaylistBrickProps extends React.HTMLAttributes<any> {

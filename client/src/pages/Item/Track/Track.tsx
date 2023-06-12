@@ -21,28 +21,28 @@ function Track() {
     if (features) {
         sliderFeatures = [
             {
-                label: "acousticness",
+                label: "speechiness",
+                value: features.speechiness,
+            },
+            {
+                label: "acoustic",
                 value: features.acousticness,
             },
             {
-                label: "danceability",
+                label: "danceable",
                 value: features.danceability,
-            },
-            {
-                label: "energy",
-                value: features.energy,
             },
             {
                 label: "instrumentalness",
                 value: features.instrumentalness,
             },
             {
-                label: "liveness",
-                value: features.liveness,
+                label: "energy",
+                value: features.energy,
             },
             {
-                label: "speechiness",
-                value: features.speechiness,
+                label: "liveness",
+                value: features.liveness,
             },
         ];
     }

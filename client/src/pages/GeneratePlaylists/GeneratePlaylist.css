@@ -15,12 +15,16 @@ select {
 .Form {
     display: flex;
     flex-wrap: wrap;
+    gap: 50px;
 }
 
 .PlaylistInfo {
     flex-grow: 1;
     min-width: 300px;
-    max-width: 300px;
+}
+
+.FeatureSelector {
+    flex-grow: 1;
 }
 
 .FormField {
