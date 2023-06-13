@@ -1,15 +1,27 @@
 .Playlist {
-    display: flex;
-    flex-grow: 1;
-    flex-wrap: wrap;
+    display: grid;
+    grid-template-columns: 300px 1fr;
     gap: 40px;
-    justify-content: center;
+}
+
+@media only screen and (max-width: 900px) {
+    .Playlist {
+        display: grid;
+        grid-template-columns: 1fr;
+        grid-template-rows: auto 1fr;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .PlaylistInfo {
+        margin: auto;
+    }
 }
 
 .PlaylistInfo {
-    margin-right: 40px;
     text-align: center;
-    width: 250px;
+    width: 300px;
+    max-width: 300px;
 }
 
 .PlaylistName {
@@ -23,7 +35,7 @@
 }
 
 .PlaylistImage {
-    width: 250px;
+    width: 300px;
     aspect-ratio: 1/1;
 }
 

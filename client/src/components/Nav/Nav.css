@@ -3,17 +3,47 @@
     position: fixed;
     top: 0;
     left: 0;
-    width: 100vw;
+    width: 60px;
     background-color: var(--tertiary);
     text-align: center;
-    z-index: 99;
-    height: 60px;
+    height: 100vh;
+    padding: 10px;
+    display: flex;
+    gap: 20px;
+    z-index: 80;
 }
 
 .Menu {
     display: flex;
-    height: 100%;
-    flex-direction: row;
+    flex-direction: column;
     align-items: center;
     justify-content: space-around;
+    filter: brightness(175%);
+    border-radius: 5px;
+    background-color: var(--tertiary);
+}
+
+.MenuItem {
+    width: 50px;
+    height: 50px;
+    overflow: hidden;
+}
+
+.Seeds {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-around;
+    filter: brightness(175%);
+    border-radius: 5px;
+    background-color: var(--tertiary);
+}
+
+svg {
+    stroke: currentColor;
+}
+
+.bold {
+    color: red;
+    font-weight: 1200;
 }

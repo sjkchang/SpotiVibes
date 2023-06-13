@@ -28,7 +28,7 @@ function App() {
     return (
         <div className="App">
             {loggedIn ? (
-                <div>
+                <div className="Page">
                     <Nav logout={logout}></Nav>
                     <div className="Content">
                         <Routes>

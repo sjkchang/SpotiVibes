@@ -9,8 +9,6 @@ import {
 } from "../../spotify/service";
 import "./GeneratePlaylist.css";
 import useLocalStorage from "../../hooks/useLocalStorage";
-import SelectedSeeds from "../../components/SelectedSeeds/SelectedSeeds";
-import AudioFeatureRadarChart from "../../components/AudioFeatureRadarChart/AudioFeatureRadarChart";
 import AudioFeatureSelector from "../../components/AudioFeatureRadarChart/AudioFeatureSelector";
 import * as Form from "@radix-ui/react-form";
 
@@ -114,9 +112,11 @@ function GeneratePlaylist() {
     };
 
     useEffect(() => {
-        getGenres().then((response) => {
-            setGenres(response);
-        });
+        if (!genres) {
+            getGenres().then((response) => {
+                setGenres(response);
+            });
+        }
     }, []);
 
     return (

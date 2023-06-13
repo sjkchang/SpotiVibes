@@ -2,7 +2,6 @@ import React, { useEffect, useState } from "react";
 import SpotifyTypes from "spotify-types";
 import { getAlbum } from "../../../spotify/service";
 import { useParams } from "react-router-dom";
-import "./Album.css";
 import {
     SpotifyTypesEnum,
     TimeRangeEnum,

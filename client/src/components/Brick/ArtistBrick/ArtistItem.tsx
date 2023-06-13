@@ -30,14 +30,24 @@ function ArtistBrick({ artist }: ArtistProps) {
                         <ImageOverlayIcon
                             image_url={image}
                             Icon={<InfoCircledIcon />}
+                            rounded={true}
                         />
                     </div>
                 }
                 content={
                     <div>
-                        <button>Add Seed</button>
+                        <button
+                            onClick={() => {
+                                dispatch(toggleSeeds(artist.uri));
+                            }}
+                        >
+                            {seeds.uris.includes(artist.uri)
+                                ? "Remove Seed"
+                                : "Add Seed"}
+                        </button>
                     </div>
                 }
+                align="start"
             />
             <div className="artist-info">
                 <div className="artist-name">

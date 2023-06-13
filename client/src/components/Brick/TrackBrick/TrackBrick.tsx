@@ -96,6 +96,8 @@ function TrackBrick({ track }: TrackProps) {
                         </button>
                     </div>
                 }
+                side="bottom"
+                align="start"
             />
 
             <div className="track-info">

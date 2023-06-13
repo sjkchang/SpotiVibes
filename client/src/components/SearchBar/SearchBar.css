@@ -1,15 +1,20 @@
 .SearchBar {
-    width: 400px;
+    width: 100%;
+    max-width: 500px;
 }
 
 .SearchInput {
     all: unset;
-    width: 100%;
+    width: 80%;
     border-radius: 30px;
-    padding: 12px 0px 12px 50px;
+    padding: 12px 20px 12px 50px;
     background-color: var(--background);
     filter: brightness(90%);
     border: 2px solid transparent;
+
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
 }
 
 .input-icon {

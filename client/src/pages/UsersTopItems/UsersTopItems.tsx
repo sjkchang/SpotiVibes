@@ -13,6 +13,9 @@ import {
     TimeRangeEnum,
     TopItemsQuery,
 } from "../../spotify/types";
+import BrickList from "../../components/BrickList/BrickList";
+import CardGrid from "../../components/CardGrid/CardGrid";
+import Playlists from "../Playlists/Playlists";
 
 function UsersTopItems() {
     const [tracks, setTracks] = useState<Array<SpotifyTypes.Track>>();
@@ -52,12 +55,18 @@ function UsersTopItems() {
     if (tracks && artists && playlists) {
         return (
             <div>
-                <h1>Top Tracks</h1>
-                <CardRow items={tracks} />
-                <h1>Top Artists</h1>
-                <CardRow items={artists} />
-                <h1>Your Playlists</h1>
-                <CardRow items={playlists} />
+                <div className="UserTopItems">
+                    <div className="TopList">
+                        <h1>Your Top Tracks</h1>
+                        <BrickList items={tracks} />
+                    </div>
+                    <div className="TopList">
+                        <h1>Your Top Artists</h1>
+                        <BrickList items={artists} />
+                    </div>
+                </div>
+
+                <Playlists />
             </div>
         );
     } else {
