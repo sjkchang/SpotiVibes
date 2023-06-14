@@ -9,7 +9,7 @@
     height: 100vh;
     padding: 10px;
     display: flex;
-    gap: 20px;
+    gap: 10px;
     z-index: 80;
 }
 
@@ -21,12 +21,31 @@
     filter: brightness(175%);
     border-radius: 5px;
     background-color: var(--tertiary);
+    padding-top: 5px;
 }
 
 .MenuItem {
     width: 50px;
     height: 50px;
     overflow: hidden;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: var(--secondary);
+    filter: brightness(50%);
+    text-decoration: none;
+}
+
+.MenuItem:hover {
+    color: var(--primary);
+}
+
+.NavLabel {
+    font-size: 10px;
+}
+
+.active {
+    filter: brightness(100%);
 }
 
 .Seeds {
@@ -37,6 +56,7 @@
     filter: brightness(175%);
     border-radius: 5px;
     background-color: var(--tertiary);
+    gap: 3px;
 }
 
 svg {
@@ -46,4 +66,46 @@ svg {
 .bold {
     color: red;
     font-weight: 1200;
+}
+
+@media only screen and (max-width: 900px) {
+    .Nav {
+        all: unset;
+        flex-direction: row;
+        position: fixed;
+        bottom: 0;
+        left: 0;
+        width: 100vw;
+        background-color: var(--tertiary);
+        text-align: center;
+        height: 60px;
+        padding: 10px;
+        display: flex;
+        gap: 10px;
+        z-index: 80;
+    }
+
+    .Menu {
+        all: unset;
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        justify-content: space-around;
+        filter: brightness(175%);
+        border-radius: 5px;
+        background-color: var(--tertiary);
+        padding-top: 5px;
+        z-index: 80;
+    }
+
+    .Seeds {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        justify-content: space-around;
+        filter: brightness(175%);
+        border-radius: 5px;
+        background-color: var(--tertiary);
+        gap: 3px;
+    }
 }

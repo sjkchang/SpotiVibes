@@ -18,10 +18,16 @@ function Home() {
             <SearchBar setSearch={setSearch}></SearchBar>
             {search ? (
                 <Tabs.Root defaultValue="songs">
-                    <Tabs.List>
-                        <Tabs.Trigger value="songs">Songs</Tabs.Trigger>
-                        <Tabs.Trigger value="artists">Artists</Tabs.Trigger>
-                        <Tabs.Trigger value="playlists">Playlists</Tabs.Trigger>
+                    <Tabs.List className="Tabs">
+                        <Tabs.Trigger className="Tab" value="songs">
+                            Songs
+                        </Tabs.Trigger>
+                        <Tabs.Trigger className="Tab" value="artists">
+                            Artists
+                        </Tabs.Trigger>
+                        <Tabs.Trigger className="Tab" value="playlists">
+                            Playlists
+                        </Tabs.Trigger>
                     </Tabs.List>
                     <Tabs.Content value="songs">
                         <SearchTracks search={search} />

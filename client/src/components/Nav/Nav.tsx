@@ -5,10 +5,24 @@ import { getTracks, getArtists } from "../../spotify/service";
 import { useAppDispatch, useAppSelector } from "../../redux/hooks";
 import Popover from "../Popover/Popover";
 import ImageOverlayIcon from "../ImageOverlayIcon/ImageOverlayIcon";
-import { HomeIcon, InfoCircledIcon } from "@radix-ui/react-icons";
+import { InfoCircledIcon } from "@radix-ui/react-icons";
 import { toggleSeeds } from "../../redux/slices/seedsSlice";
 import SignOutIcon from "../../icons/SignOutIcon";
 import RecentIcon from "../../icons/RecentIcon";
+import HomeIcon from "../../icons/HomeIcon";
+
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import {
+    faHouse,
+    faSquarePlus,
+    faRightFromBracket,
+    faSeedling,
+} from "@fortawesome/free-solid-svg-icons";
+
+import {} from "@fortawesome/free-regular-svg-icons";
+
+import { Link } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 
 interface NavProps {
     logout: () => void;
@@ -55,28 +69,33 @@ function Nav({ logout }: NavProps) {
     }, [seeds]);
 
     return (
-        <div className="Nav">
+        <nav className="Nav">
             <div className="Menu">
-                <div className="MenuItem">
-                    <a href="/">
-                        <HomeIcon fill="#000" />
-                    </a>
-                </div>
-                <div className="MenuItem">
-                    <a href="/generate">Generate</a>
-                </div>
-                <div className="MenuItem">
-                    <a href="/recent">
-                        {" "}
-                        <RecentIcon fill="#000" width={30} height={30} />
-                    </a>
-                </div>
-                <div onClick={() => logout()}>
-                    <SignOutIcon fill="#000" width={30} height={30} />
-                </div>
+                <NavLink className="MenuItem" to="/">
+                    <div>
+                        <FontAwesomeIcon icon={faHouse} size="xl" />
+                        <div className="NavLabel">Home</div>
+                    </div>
+                </NavLink>
+                <NavLink className="MenuItem" to="/generate">
+                    <div>
+                        <FontAwesomeIcon icon={faSquarePlus} size="xl" />
+                        <div className="NavLabel">Generate Plalyist</div>
+                    </div>
+                </NavLink>
+                <NavLink className="MenuItem" to="/logout">
+                    <div onClick={() => logout()}>
+                        <FontAwesomeIcon icon={faRightFromBracket} size="xl" />
+                    </div>
+                </NavLink>
             </div>
             <div className="Seeds">
-                <div>seeds</div>
+                <div className="MenuItem">
+                    <div>
+                        <FontAwesomeIcon icon={faSeedling} size="xl" />
+                        <div className="NavLabel">Your Seeds</div>
+                    </div>
+                </div>
                 {tracks.map((track, idx) => {
                     return (
                         <Popover
@@ -137,7 +156,7 @@ function Nav({ logout }: NavProps) {
                     );
                 })}
             </div>
-        </div>
+        </nav>
     );
 }
 

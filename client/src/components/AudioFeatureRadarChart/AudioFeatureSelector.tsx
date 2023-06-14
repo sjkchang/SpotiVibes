@@ -21,6 +21,9 @@ interface AudioFeatureSelectorProps {
 function AudioFeatureSelector({ features }: AudioFeatureSelectorProps) {
     return (
         <div className="FeatureSelector">
+            <div className="FeatureChart">
+                <AudioFeatureRadarChart features={features} />
+            </div>
             <div className="FeatureSliders">
                 {features.map((feature) => {
                     return (
@@ -40,9 +43,6 @@ function AudioFeatureSelector({ features }: AudioFeatureSelectorProps) {
                         </div>
                     );
                 })}
-            </div>
-            <div className="FeatureChart">
-                <AudioFeatureRadarChart features={features} />
             </div>
         </div>
     );
