@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 
-import SearchBar from "../../components/SearchBar/SearchBar";
+import SearchBar from "../../components/SearchBar";
 import "./Home.css";
 
 import SearchTracks from "../Search/SearchTracks";

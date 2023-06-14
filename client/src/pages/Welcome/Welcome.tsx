@@ -1,14 +1,24 @@
 import React from "react";
-import "./Welcome.css";
+import { Button } from "../../styles";
+import styled from "styled-components/macro";
+import { theme, media } from "../../styles";
+
+const Content = styled.div`
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    min-height: 100vh;
+`;
 
 function Welcome({ login }: any) {
     return (
-        <div className="Welcome">
-            <h1>Welcome</h1>
-            <button className="welcome-btn" onClick={login}>
+        <Content>
+            <h1>Welcome to SpotiVibes</h1>
+            <Button className="welcome-btn" onClick={login}>
                 Login
-            </button>
-        </div>
+            </Button>
+        </Content>
     );
 }
 

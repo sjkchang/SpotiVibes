@@ -1,4 +1,3 @@
-import "./Nav.css";
 import React, { useEffect, useState } from "react";
 import SpotifyTypes from "spotify-types";
 import { getTracks, getArtists } from "../../spotify/service";
@@ -7,9 +6,6 @@ import Popover from "../Popover/Popover";
 import ImageOverlayIcon from "../ImageOverlayIcon/ImageOverlayIcon";
 import { InfoCircledIcon } from "@radix-ui/react-icons";
 import { toggleSeeds } from "../../redux/slices/seedsSlice";
-import SignOutIcon from "../../icons/SignOutIcon";
-import RecentIcon from "../../icons/RecentIcon";
-import HomeIcon from "../../icons/HomeIcon";
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
@@ -18,11 +14,40 @@ import {
     faRightFromBracket,
     faSeedling,
 } from "@fortawesome/free-solid-svg-icons";
-
-import {} from "@fortawesome/free-regular-svg-icons";
-
-import { Link } from "react-router-dom";
+import styled from "styled-components/macro";
 import { NavLink } from "react-router-dom";
+
+import { theme, mixins, media } from "../../styles";
+const { colors } = theme;
+
+const Navbar = styled.nav`
+    ${mixins.coverShadow};
+    ${mixins.flexBetween};
+    flex-direction: column;
+    min-height: 100vh;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: ${theme.navWidth};
+    background-color: ${colors.tertiary};
+    text-align: center;
+    z-index: 99;
+    ${media.phablet`
+    top: auto;
+    bottom: 0;
+    right: 0;
+    width: 100%;
+    min-height: ${theme.navHeight};
+    height: ${theme.navHeight};
+    flex-direction: row;
+  `};
+    & > * {
+        width: 100%;
+        ${media.phablet`
+      height: 100%;
+    `};
+    }
+`;
 
 interface NavProps {
     logout: () => void;
@@ -69,7 +94,7 @@ function Nav({ logout }: NavProps) {
     }, [seeds]);
 
     return (
-        <nav className="Nav">
+        <Navbar>
             <div className="Menu">
                 <NavLink className="MenuItem" to="/">
                     <div>
@@ -156,7 +181,7 @@ function Nav({ logout }: NavProps) {
                     );
                 })}
             </div>
-        </nav>
+        </Navbar>
     );
 }
 

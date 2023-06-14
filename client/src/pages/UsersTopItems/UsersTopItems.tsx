@@ -16,6 +16,19 @@ import {
 import BrickList from "../../components/BrickList/BrickList";
 import CardGrid from "../../components/CardGrid/CardGrid";
 import Playlists from "../Playlists/Playlists";
+import styled from "styled-components/macro";
+import { theme, media } from "../../styles";
+
+const TopItems = styled.div`
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 50px;
+    ${media.tablet`
+        display: block;
+        justify-content: space-between;
+        flex-wrap: wrap;
+  `};
+`;
 
 function UsersTopItems() {
     const [tracks, setTracks] = useState<Array<SpotifyTypes.Track>>();
@@ -55,7 +68,7 @@ function UsersTopItems() {
     if (tracks && artists && playlists) {
         return (
             <div>
-                <div className="UserTopItems">
+                <TopItems>
                     <div className="TopList">
                         <h1>Your Top Tracks</h1>
                         <BrickList items={tracks} />
@@ -64,7 +77,7 @@ function UsersTopItems() {
                         <h1>Your Top Artists</h1>
                         <BrickList items={artists} />
                     </div>
-                </div>
+                </TopItems>
 
                 <Playlists />
             </div>
