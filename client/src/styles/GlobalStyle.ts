@@ -27,6 +27,7 @@ const GlobalStyle = createGlobalStyle`
     font-size: ${fontSizes.base};
     background-color: ${colors.background};
     color: ${colors.primary};
+    padding-bottom: 50px;
   }
   #root {
     min-height: 100%;

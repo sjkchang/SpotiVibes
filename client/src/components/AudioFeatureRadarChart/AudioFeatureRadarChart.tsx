@@ -1,73 +1,73 @@
 import React, { useEffect, useState } from "react";
-import {
-    Radar,
-    RadarChart,
-    PolarGrid,
-    PolarAngleAxis,
-    PolarRadiusAxis,
-    ResponsiveContainer,
-} from "recharts";
+
 import SpotifyTypes from "spotify-types";
-import { TrackFeatures } from "../../spotify/service";
+import { TrackFeatures, getTrackFeatures } from "../../spotify/service";
 import { Feature } from "../../pages/GeneratePlaylists/GeneratePlaylist";
+import { theme } from "../../styles";
+import RadarChart, { DataPoint } from "./RadarChart";
+import { isTrack } from "../../spotify/types";
+const { colors } = theme;
 
 interface AudioFeatureRadarChartProps {
-    features: Array<Feature>;
-    width?: number;
-    height?: number;
+    item?: SpotifyTypes.Track;
+    data?: Array<Feature> | Array<DataPoint>;
     useLabels?: boolean;
 }
 
 function AudioFeatureRadarChart({
-    features,
-    width = 300,
-    height = 200,
+    item,
+    data,
     useLabels = true,
 }: AudioFeatureRadarChartProps) {
-    let data = [];
-    if (features) {
-        for (let feature of features) {
-            data.push({
-                feature: feature.label,
-                value: feature.value,
-                max: 1,
-            });
+    const [features, setFeatures] = useState<Array<DataPoint>>();
+
+    useEffect(() => {
+        if (item) {
+            getTrackFeatures(item.id)
+                .then((result) => {
+                    data = [
+                        {
+                            label: "speechiness",
+                            value: result.speechiness,
+                            max: 1,
+                        },
+                        {
+                            label: "acoustic",
+                            value: result.acousticness,
+                            max: 1,
+                        },
+                        {
+                            label: "danceable",
+                            value: result.danceability,
+                            max: 1,
+                        },
+                        {
+                            label: "instrumentalness",
+                            value: result.instrumentalness,
+                            max: 1,
+                        },
+                        {
+                            label: "energy",
+                            value: result.energy,
+                            max: 1,
+                        },
+                        {
+                            label: "liveness",
+                            value: result.liveness,
+                            max: 1,
+                        },
+                    ];
+                    setFeatures(data);
+                })
+                .catch((error) => {
+                    console.log(error);
+                });
         }
-    }
+    }, []);
 
-    console.log(features);
-
-    let style = {};
-
-    let styles = {
-        width: width + "px",
-        height: height + "px",
-    };
-    return (
-        <ResponsiveContainer width="99%" aspect={1.5}>
-            <RadarChart cx="50%" cy="50%" outerRadius="80%" data={data}>
-                <PolarGrid />
-                {useLabels == true ? (
-                    <PolarAngleAxis dataKey="feature" />
-                ) : (
-                    <></>
-                )}
-                <PolarRadiusAxis
-                    angle={90}
-                    domain={[0, 1]}
-                    tickCount={10}
-                    tick={false}
-                />
-                <Radar
-                    name="Features"
-                    dataKey="value"
-                    stroke="#8884d8"
-                    fill="#8884d8"
-                    fillOpacity={0.6}
-                />
-            </RadarChart>
-        </ResponsiveContainer>
-    );
+    if (data) return <RadarChart data={data} />;
+    if (features) return <RadarChart data={features} />;
+    return <>Loading</>;
 }
 
 export default AudioFeatureRadarChart;

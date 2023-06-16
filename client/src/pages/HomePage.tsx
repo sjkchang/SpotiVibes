@@ -1,13 +1,13 @@
 import React from "react";
 
-import Nav from "../components/Nav/Nav";
+import Nav from "../components/Nav";
 import { Routes, Route } from "react-router-dom";
-import Playlists from "./Playlists/Playlists";
+import Playlists from "./Playlists";
 import Playlist from "./Item/Playlist/Playlist";
 import Artist from "./Item/Artist";
 import Track from "./Item/Track/Track";
 import Recent from "./Recent/Recent";
-import Home from "./Home/Home";
+import Home from "./Home";
 import Album from "./Item/Album/Album";
 import GeneratePlaylist from "./GeneratePlaylists/GeneratePlaylist";
 import styled from "styled-components/macro";

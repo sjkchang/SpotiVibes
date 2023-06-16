@@ -8,7 +8,7 @@ import {
     TimeRangeEnum,
     TopItemsQuery,
 } from "../../../spotify/types";
-import BrickList from "../../../components/BrickList/BrickList";
+import BrickList from "../../../components/Brick/layouts/BrickList/BrickList";
 
 function Playlist() {
     const [playlist, setPlaylist] = useState<SpotifyTypes.Playlist>();

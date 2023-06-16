@@ -1,48 +1,41 @@
-import React, { useEffect, useState } from "react";
-import SpotifyTypes from "spotify-types";
-import { searchSpotify } from "../../spotify/service";
-import "./Search.css";
-import CardGrid from "../../components/CardGrid/CardGrid";
+import React from "react";
+import { SearchResult } from "../../spotify/service";
+import CardGrid from "../../components/Card/layouts/CardGrid";
+import useSpotifyApi from "../../hooks/useSpotfiyApi";
 
 interface SearchResultsProps {
     search: string;
 }
 
 function Search({ search }: SearchResultsProps) {
-    const [loading, setLoading] = useState<boolean>(false);
-
-    const [playlists, setPlaylists] = useState<Array<SpotifyTypes.Playlist>>(
-        []
+    const { response, error, loading } = useSpotifyApi<SearchResult>(
+        {
+            url: "https://api.spotify.com/v1/search",
+            method: "get",
+            body: {
+                q: search,
+                type: "playlist",
+            },
+        },
+        [search]
     );
 
-    useEffect(() => {
-        setLoading(true);
-        if (search.trim()) {
-            searchSpotify({ queryString: search, type: ["playlist"] })
-                .then((response) => {
-                    setPlaylists(response.playlists.items);
-
-                    setLoading(false);
-                })
-                .catch((error) => {
-                    console.log(error);
-                });
+    if (response) {
+        let { items: playlists } = response.playlists;
+        if (playlists.length == 0) {
+            return <div>No results found for "{search}"</div>;
         }
-    }, [search]);
-
-    if (playlists.length == 0 && !loading) {
-        return <div>No results found for "{search}"</div>;
+        return (
+            <div>
+                <h1>Results</h1>
+                <CardGrid items={playlists} />
+            </div>
+        );
     }
     return (
         <div>
-            {playlists.length > 0 ? (
-                <div>
-                    <h1>Results</h1>
-                    <CardGrid items={playlists} />
-                </div>
-            ) : (
-                <></>
-            )}
+            {loading && <h1>loading</h1>}
+            {error && <h1>{error}</h1>}
         </div>
     );
 }

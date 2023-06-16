@@ -23,26 +23,32 @@ function Track() {
             {
                 label: "speechiness",
                 value: features.speechiness,
+                max: 1,
             },
             {
                 label: "acoustic",
                 value: features.acousticness,
+                max: 1,
             },
             {
                 label: "danceable",
                 value: features.danceability,
+                max: 1,
             },
             {
                 label: "instrumentalness",
                 value: features.instrumentalness,
+                max: 1,
             },
             {
                 label: "energy",
                 value: features.energy,
+                max: 1,
             },
             {
                 label: "liveness",
                 value: features.liveness,
+                max: 1,
             },
         ];
     }
@@ -106,7 +112,7 @@ function Track() {
                     </div>
                 </div>
                 <div className="TrackData">
-                    <AudioFeatureRadarChart features={sliderFeatures} />
+                    <AudioFeatureRadarChart data={sliderFeatures} />
                 </div>
             </div>
         );

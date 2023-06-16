@@ -15,6 +15,7 @@ import * as Form from "@radix-ui/react-form";
 export interface Feature {
     label: string;
     value: number;
+    max: number;
     setValue?: (value: number) => void;
 }
 
@@ -39,32 +40,38 @@ function GeneratePlaylist() {
         {
             label: "speechiness",
             value: speechiness,
+            max: 1,
             setValue: setSpeechiness,
         },
         {
             label: "acoustic",
             value: acousticness,
+            max: 1,
             setValue: setAcousticness,
         },
         {
             label: "danceable",
             value: danceability,
+            max: 1,
             setValue: setDanceability,
         },
         {
             label: "instrumental",
             value: instrumentalness,
+            max: 1,
             setValue: setInstramentalness,
         },
         {
             label: "energy",
             value: energy,
+            max: 1,
             setValue: setEnergy,
         },
 
         {
             label: "liveness",
             value: liveness,
+            max: 1,
             setValue: setLiveness,
         },
     ];

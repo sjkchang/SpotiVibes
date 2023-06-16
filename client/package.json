@@ -28,6 +28,7 @@
         "@types/recharts": "^1.8.24",
         "axios": "^1.4.0",
         "chart.js": "^4.3.0",
+        "fuzzysort": "^2.0.4",
         "react": "^18.2.0",
         "react-chartjs-2": "^5.2.0",
         "react-custom-scroll": "^5.0.0",

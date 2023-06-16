@@ -1,47 +1,42 @@
-import React, { useEffect, useState } from "react";
-import SpotifyTypes from "spotify-types";
-import { searchSpotify } from "../../spotify/service";
-import "./Search.css";
-import CardRow from "../../components/CardRow/CardRow";
-import BrickList from "../../components/BrickList/BrickList";
+import React from "react";
+import { SearchResult } from "../../spotify/service";
+import BrickList from "../../components/Brick/layouts/BrickList/BrickList";
+import useSpotifyApi from "../../hooks/useSpotfiyApi";
 
 interface SearchResultsProps {
     search: string;
 }
 
 function Search({ search }: SearchResultsProps) {
-    const [loading, setLoading] = useState<boolean>(false);
+    const { response, error, loading } = useSpotifyApi<SearchResult>(
+        {
+            url: "https://api.spotify.com/v1/search",
+            method: "get",
+            body: {
+                q: search,
+                type: "track",
+            },
+        },
+        [search]
+    );
 
-    const [tracks, setTracks] = useState<Array<SpotifyTypes.Track>>([]);
-
-    useEffect(() => {
-        setLoading(true);
-        if (search.trim()) {
-            searchSpotify({ queryString: search, type: ["track"] })
-                .then((response) => {
-                    setTracks(response.tracks.items);
-
-                    setLoading(false);
-                })
-                .catch((error) => {
-                    console.log(error);
-                });
+    if (response) {
+        let { items: tracks } = response.tracks;
+        if (tracks.length == 0) {
+            return <div>No results found for "{search}"</div>;
         }
-    }, [search]);
-
-    if (tracks.length == 0 && !loading) {
-        return <div>No results found for "{search}"</div>;
+        return (
+            <div>
+                <h1>Results</h1>
+                <BrickList items={tracks} />
+            </div>
+        );
     }
+
     return (
         <div>
-            {tracks.length > 0 ? (
-                <div>
-                    <h1>Results</h1>
-                    <BrickList items={tracks} />
-                </div>
-            ) : (
-                <></>
-            )}
+            {loading && <h1>loading</h1>}
+            {error && <h1>{error}</h1>}
         </div>
     );
 }

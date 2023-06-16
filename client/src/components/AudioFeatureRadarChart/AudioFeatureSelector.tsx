@@ -9,7 +9,7 @@ import {
 } from "recharts";
 import SpotifyTypes from "spotify-types";
 import { TrackFeatures } from "../../spotify/service";
-import Slider from "../../components/Slider/Slider";
+import Slider from "../Slider";
 import AudioFeatureRadarChart from "./AudioFeatureRadarChart";
 import { Feature } from "../../pages/GeneratePlaylists/GeneratePlaylist";
 import "./AudioFeatureRadarChart.css";
@@ -22,7 +22,7 @@ function AudioFeatureSelector({ features }: AudioFeatureSelectorProps) {
     return (
         <div className="FeatureSelector">
             <div className="FeatureChart">
-                <AudioFeatureRadarChart features={features} />
+                <AudioFeatureRadarChart data={features} />
             </div>
             <div className="FeatureSliders">
                 {features.map((feature) => {
