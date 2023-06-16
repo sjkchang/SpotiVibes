@@ -20,6 +20,7 @@ import { NavLink } from "react-router-dom";
 
 import { theme, mixins, media } from "../styles";
 import SeedImage from "./SeedImage";
+import SelectedSeeds from "./SelectedSeeds";
 const { colors } = theme;
 
 const Navbar = styled.nav`
@@ -115,67 +116,28 @@ interface NavProps {
 }
 
 function Nav({ logout }: NavProps) {
-    const [artists, setArtists] = useState<Array<SpotifyTypes.Artist>>([]);
-    const [tracks, setTracks] = useState<Array<SpotifyTypes.Track>>([]);
-
-    const seeds = useAppSelector((state: any) => state.seeds);
-    const dispatch = useAppDispatch();
-
-    useEffect(() => {
-        let trackUris: Array<string> = [];
-        let artistUris: Array<string> = [];
-        if (seeds.uris.length > 0) {
-            for (let seed of seeds.uris) {
-                let uri_components = seed.split(":");
-                if (uri_components.length === 3) {
-                    if (uri_components[1] === "track") {
-                        trackUris.push(uri_components[2]);
-                    }
-                    if (uri_components[1] === "artist") {
-                        artistUris.push(uri_components[2]);
-                    }
-                }
-            }
-        }
-        getTracks(trackUris)
-            .then((tracks) => {
-                setTracks(tracks);
-            })
-            .catch((error) => {
-                console.log(error);
-            });
-
-        getArtists(artistUris)
-            .then((artists) => {
-                setArtists(artists);
-            })
-            .catch((error) => {
-                console.log(error);
-            });
-    }, [seeds]);
-
     return (
         <Navbar>
             <Menu>
                 <MenuItem top={true}>
-                    <NavLink className="MenuItem" to="/">
+                    <NavLink to="/">
                         <div>
                             <FontAwesomeIcon icon={faHouse} size="xl" />
-                            <div className="NavLabel">Home</div>
+                            <div>Home</div>
                         </div>
                     </NavLink>
                 </MenuItem>
                 <MenuItem>
-                    <NavLink className="MenuItem" to="/generate">
+                    <NavLink to="/generate">
                         <div>
                             <FontAwesomeIcon icon={faSquarePlus} size="xl" />
-                            <div className="NavLabel">Generate Plalyist</div>
+                            <div>Generate Plalyist</div>
                         </div>
                     </NavLink>
                 </MenuItem>
 
                 <MenuItem bottom={true}>
-                    <NavLink className="MenuItem" to="/logout">
+                    <NavLink to="/logout">
                         <div onClick={() => logout()}>
                             <FontAwesomeIcon
                                 icon={faRightFromBracket}
@@ -185,34 +147,7 @@ function Nav({ logout }: NavProps) {
                     </NavLink>
                 </MenuItem>
             </Menu>
-            <div className="Seeds">
-                <div className="MenuItem">
-                    <div>
-                        <FontAwesomeIcon icon={faSeedling} size="xl" />
-                        <div className="NavLabel">Your Seeds</div>
-                    </div>
-                </div>
-                {tracks.map((track, idx) => {
-                    return (
-                        <SeedImage
-                            item={track}
-                            uri={track.uri}
-                            side="right"
-                            align="center"
-                        />
-                    );
-                })}
-                {artists.map((artist, idx) => {
-                    return (
-                        <SeedImage
-                            item={artist}
-                            uri={artist.uri}
-                            side="right"
-                            align="center"
-                        />
-                    );
-                })}
-            </div>
+            <SelectedSeeds />
         </Navbar>
     );
 }

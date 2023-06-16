@@ -12,6 +12,8 @@ interface PopoverProps {
     side?: "bottom" | "top" | "right" | "left" | undefined;
     sideOffset?: number;
     align?: "center" | "start" | "end" | undefined;
+    includeClose?: boolean;
+    contentWidth?: number;
 }
 
 const PopoverContent = styled(RadixPopover.Content)`
@@ -19,17 +21,12 @@ const PopoverContent = styled(RadixPopover.Content)`
     z-index: 100;
     border-radius: 4px;
     padding: 20px;
-    width: 300px;
     box-shadow: hsl(206 22% 7% / 35%) 0px 10px 38px -10px,
         hsl(206 22% 7% / 20%) 0px 10px 20px -15px;
     animation-duration: 400ms;
     animation-timing-function: cubic-bezier(0.16, 1, 0.3, 1);
     will-change: transform, opacity;
 
-    &:focus {
-        box-shadow: hsl(206 22% 7% / 35%) 0px 10px 38px -10px,
-            hsl(206 22% 7% / 20%) 0px 10px 20px -15px, 0 0 0 2px var(--violet7);
-    }
     &[data-state="open"][data-side="top"] {
         animation-name: slideDownAndFade;
     }
@@ -74,6 +71,8 @@ function Popover({
     sideOffset = 5,
     trigger = <></>,
     content = <></>,
+    contentWidth = 300,
+    includeClose = true,
 }: PopoverProps) {
     return (
         <RadixPopover.Root>
@@ -83,11 +82,15 @@ function Popover({
                     side={side}
                     sideOffset={sideOffset}
                     align={align}
+                    style={{ width: contentWidth }}
                 >
                     {content}
-                    <PopoverClose aria-label="Close">
-                        <Cross2Icon />
-                    </PopoverClose>
+                    {includeClose && (
+                        <PopoverClose aria-label="Close">
+                            <Cross2Icon />
+                        </PopoverClose>
+                    )}
+
                     <PopoverArrow className="PopoverArrow" />
                 </PopoverContent>
             </RadixPopover.Portal>

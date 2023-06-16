@@ -22,7 +22,6 @@ const { colors } = theme;
 const TrackInfo = styled(BrickInfo)`
     display: grid;
     grid-template-columns: 1fr max-content;
-    min-width: 200px;
 `;
 
 const TrackData = styled.div`
