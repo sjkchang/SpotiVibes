@@ -8,16 +8,6 @@ select {
     border: unset;
 }
 
-.FormRoot {
-    width: 100%;
-}
-
-.Form {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 50px;
-}
-
 .PlaylistInfo {
     flex-grow: 1;
     min-width: 300px;
@@ -36,19 +26,6 @@ select {
     display: grid;
     grid-template-columns: 1fr 1fr;
     gap: 20px;
-}
-
-.FormLabel {
-    font-size: 15px;
-    font-weight: 500;
-    line-height: 35px;
-    color: var(--primary);
-}
-
-.FormMessage {
-    font-size: 13px;
-    color: red;
-    opacity: 0.8;
 }
 
 .Input,

@@ -11,6 +11,108 @@ import "./GeneratePlaylist.css";
 import useLocalStorage from "../../hooks/useLocalStorage";
 import AudioFeatureSelector from "../../components/AudioFeatureRadarChart/AudioFeatureSelector";
 import * as Form from "@radix-ui/react-form";
+import styled from "styled-components";
+import { Button, theme } from "../../styles";
+const { colors } = theme;
+const StyledForm = styled.div`
+    display: flex;
+    flex-wrap: wrap;
+    gap: 50px;
+`;
+
+const FormErrorMessage = styled(Form.Message)`
+    font-size: 13px;
+    color: red;
+    opacity: 0.8;
+`;
+
+const FormLabel = styled(Form.Label)`
+    font-size: 15px;
+    font-weight: 500;
+    line-height: 35px;
+    color: ${colors.primary};
+`;
+
+const FormField = styled(Form.Field)`
+    display: grid;
+    margin-bottom: 10px;
+`;
+
+const Input = styled.input`
+    padding: 0 10px;
+    height: 35px;
+    line-height: 1;
+
+    width: 100%;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 4px;
+
+    font-size: 15px;
+    color: white;
+    background-color: ${colors.background};
+    box-shadow: 0 0 0 1px ${colors.secondary};
+    &:hover {
+        box-shadow: 0 0 0 1px ${colors.primary};
+    }
+    &:focus {
+        box-shadow: 0 0 0 2px ${colors.primary};
+    }
+    &:selection {
+        background-color: var(red);
+        color: white;
+    }
+`;
+
+const Textarea = styled.textarea`
+    resize: none;
+    padding: 10px;
+
+    width: 100%;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 4px;
+
+    font-size: 15px;
+    color: white;
+    background-color: ${colors.background};
+    box-shadow: 0 0 0 1px ${colors.secondary};
+    &:hover {
+        box-shadow: 0 0 0 1px ${colors.primary};
+    }
+    &:focus {
+        box-shadow: 0 0 0 2px ${colors.primary};
+    }
+    &:selection {
+        background-color: var(red);
+        color: white;
+    }
+`;
+
+const Select = styled.select`
+    width: 100%;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 4px;
+
+    font-size: 15px;
+    color: white;
+    background-color: ${colors.background};
+    box-shadow: 0 0 0 1px ${colors.secondary};
+    &:hover {
+        box-shadow: 0 0 0 1px ${colors.primary};
+    }
+    &:focus {
+        box-shadow: 0 0 0 2px ${colors.primary};
+    }
+    &:selection {
+        background-color: var(red);
+        color: white;
+    }
+`;
 
 export interface Feature {
     label: string;
@@ -127,7 +229,7 @@ function GeneratePlaylist() {
     }, []);
 
     return (
-        <div style={{ margin: "auto" }}>
+        <div>
             <h1>Generate Playlist</h1>
             <Form.Root
                 onSubmit={(event: any) => {
@@ -143,11 +245,10 @@ function GeneratePlaylist() {
                         numTracks
                     );
                 }}
-                className="FormRoot"
             >
-                <div className="Form">
+                <StyledForm>
                     <div className="NewPlaylistInfo">
-                        <Form.Field className="FormField" name="playlistName">
+                        <FormField name="playlistName">
                             <div
                                 style={{
                                     display: "flex",
@@ -155,21 +256,16 @@ function GeneratePlaylist() {
                                     justifyContent: "space-between",
                                 }}
                             >
-                                <Form.Label className="FormLabel">
-                                    Name
-                                </Form.Label>
-                                <Form.Message
-                                    className="FormMessage"
-                                    match="valueMissing"
-                                >
+                                <FormLabel>Name</FormLabel>
+                                <FormErrorMessage match="valueMissing">
                                     Please enter your email
-                                </Form.Message>
+                                </FormErrorMessage>
                             </div>
                             <Form.Control asChild>
-                                <input className="Input" type="text" required />
+                                <Input type="text" required />
                             </Form.Control>
-                        </Form.Field>
-                        <Form.Field className="FormField" name="description">
+                        </FormField>
+                        <FormField name="description">
                             <div
                                 style={{
                                     display: "flex",
@@ -177,22 +273,17 @@ function GeneratePlaylist() {
                                     justifyContent: "space-between",
                                 }}
                             >
-                                <Form.Label className="FormLabel">
-                                    Description
-                                </Form.Label>
-                                <Form.Message
-                                    className="FormMessage"
-                                    match="valueMissing"
-                                >
+                                <FormLabel>Description</FormLabel>
+                                <FormErrorMessage match="valueMissing">
                                     Please enter a playlist description
-                                </Form.Message>
+                                </FormErrorMessage>
                             </div>
                             <Form.Control asChild>
-                                <textarea className="Textarea" required />
+                                <Textarea required />
                             </Form.Control>
-                        </Form.Field>
+                        </FormField>
                         <div className="PlaylistData">
-                            <Form.Field className="FormField" name="genres">
+                            <FormField name="genres">
                                 <div
                                     style={{
                                         display: "flex",
@@ -200,9 +291,7 @@ function GeneratePlaylist() {
                                         justifyContent: "space-between",
                                     }}
                                 >
-                                    <Form.Label className="FormLabel">
-                                        Genre
-                                    </Form.Label>
+                                    <FormLabel>Genre</FormLabel>
                                     <Form.Message
                                         className="FormMessage"
                                         match="valueMissing"
@@ -211,21 +300,16 @@ function GeneratePlaylist() {
                                     </Form.Message>
                                 </div>
                                 <Form.Control asChild>
-                                    <select
-                                        id="genres"
-                                        name="genre"
-                                        className="Input"
-                                        required
-                                    >
+                                    <Select id="genres" name="genre" required>
                                         {genres?.map((genre, i) => (
                                             <option value={genre} key={i}>
                                                 {genre}
                                             </option>
                                         ))}
-                                    </select>
+                                    </Select>
                                 </Form.Control>
-                            </Form.Field>
-                            <Form.Field className="FormField" name="numTracks">
+                            </FormField>
+                            <FormField name="numTracks">
                                 <div
                                     style={{
                                         display: "flex",
@@ -233,9 +317,7 @@ function GeneratePlaylist() {
                                         justifyContent: "space-between",
                                     }}
                                 >
-                                    <Form.Label className="FormLabel">
-                                        # Tracks
-                                    </Form.Label>
+                                    <FormLabel># Tracks</FormLabel>
                                     <Form.Message
                                         className="FormMessage"
                                         match="rangeOverflow"
@@ -254,29 +336,26 @@ function GeneratePlaylist() {
                                     />
                                 </div>
                                 <Form.Control asChild>
-                                    <input
+                                    <Input
                                         type="number"
                                         max={100}
                                         min={1}
                                         defaultValue={20}
                                         name="numTracks"
-                                        className="Input"
                                     />
                                 </Form.Control>
-                            </Form.Field>
+                            </FormField>
                         </div>
                     </div>
                     <div className="FeatureSelector">
                         <AudioFeatureSelector
                             features={sliderFeatures}
                         ></AudioFeatureSelector>
+                        <Form.Submit asChild>
+                            <Button style={{ float: "right" }}>Generate</Button>
+                        </Form.Submit>
                     </div>
-                </div>
-                <Form.Submit asChild>
-                    <button className="Button" style={{ marginTop: 10 }}>
-                        Generate
-                    </button>
-                </Form.Submit>
+                </StyledForm>
             </Form.Root>
         </div>
     );
