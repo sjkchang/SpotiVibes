@@ -36,7 +36,7 @@ function Search({ search }: SearchResultsProps) {
     return (
         <div>
             {loading && <h1>loading</h1>}
-            {error && <h1>{error}</h1>}
+            {error && <h1>{error.message}</h1>}
         </div>
     );
 }

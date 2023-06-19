@@ -14,6 +14,8 @@ interface PopoverProps {
     align?: "center" | "start" | "end" | undefined;
     includeClose?: boolean;
     contentWidth?: number;
+    onPointerDownOutside?: (event: any) => void;
+    onInteractOutside?: (event: any) => void;
 }
 
 const PopoverContent = styled(RadixPopover.Content)`
@@ -73,12 +75,16 @@ function Popover({
     content = <></>,
     contentWidth = 300,
     includeClose = true,
+    onPointerDownOutside,
+    onInteractOutside,
 }: PopoverProps) {
     return (
         <RadixPopover.Root>
             <RadixPopover.Trigger asChild>{trigger}</RadixPopover.Trigger>
             <RadixPopover.Portal>
                 <PopoverContent
+                    onPointerDownOutside={onPointerDownOutside}
+                    onInteractOutside={onInteractOutside}
                     side={side}
                     sideOffset={sideOffset}
                     align={align}

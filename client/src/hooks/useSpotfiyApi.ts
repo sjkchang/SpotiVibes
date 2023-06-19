@@ -1,5 +1,5 @@
 import { useState, useEffect, DependencyList } from "react";
-import axios from "axios";
+import axios, { AxiosError } from "axios";
 import { authService } from "../spotify/AuthService";
 
 interface UseSpotifyApiArgs {
@@ -14,10 +14,11 @@ function useSpotifyApi<T>(
     deps: DependencyList = []
 ) {
     const [response, setResponse] = useState<T>();
-    const [error, setError] = useState("");
+    const [error, setError] = useState<Error | AxiosError>();
     const [loading, setloading] = useState(true);
 
     const fetchData = () => {
+        setloading(true);
         axios[method](url, {
             headers: {
                 ...{ Authorization: "Bearer " + authService.getToken() },
@@ -27,9 +28,11 @@ function useSpotifyApi<T>(
         })
             .then((res) => {
                 setResponse(res.data);
+                setError(undefined);
             })
-            .catch((err) => {
-                setError("Something went wrong");
+            .catch((err: Error | AxiosError) => {
+                setError(err);
+                setResponse(undefined);
             })
             .finally(() => {
                 setloading(false);
@@ -37,6 +40,7 @@ function useSpotifyApi<T>(
     };
 
     useEffect(() => {
+        console.log("Fetching: " + url);
         fetchData();
     }, deps);
 

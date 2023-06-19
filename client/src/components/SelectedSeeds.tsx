@@ -1,14 +1,15 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import SpotifyTypes from "spotify-types";
 import { useAppDispatch, useAppSelector } from "../redux/hooks";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSeedling } from "@fortawesome/free-solid-svg-icons";
 import styled from "styled-components/macro";
-import { theme } from "../styles";
+import { Button, theme } from "../styles";
 
 import SeedImage from "./SeedImage";
 import useSpotifyApi from "../hooks/useSpotfiyApi";
 import Popover from "./Popover";
+import { loadavg } from "os";
 const { colors } = theme;
 
 const SeedPopover = styled.div``;
@@ -90,6 +91,12 @@ function SelectedSeeds() {
     return (
         <SeedPopover>
             <Popover
+                onPointerDownOutside={(event: any): void => {
+                    event.preventDefault();
+                }}
+                onInteractOutside={(event: any): void => {
+                    event.preventDefault();
+                }}
                 contentWidth={85}
                 includeClose={false}
                 trigger={<Trigger icon={faSeedling} size="lg" />}
@@ -122,6 +129,9 @@ function SelectedSeeds() {
                                     );
                                 })}
                             </>
+                        )}
+                        {(tracks.loading || artists.loading) && (
+                            <>{"loading"}</>
                         )}
                     </Seeds>
                 }
