@@ -1,6 +1,6 @@
 import React from "react";
 
-import Nav from "../components/Nav";
+import Nav from "../components/Navbar/Nav";
 import { Routes, Route } from "react-router-dom";
 import Playlists from "./Playlists";
 import Playlist from "./Item/Playlist/Playlist";
@@ -12,6 +12,7 @@ import Album from "./Item/Album/Album";
 import GeneratePlaylist from "./GeneratePlaylists/GeneratePlaylist";
 import styled from "styled-components/macro";
 import { theme, media } from "../styles";
+import SelectedSeeds from "../components/SelectedSeeds/SelectedSeedsPopout";
 
 const SiteWrapper = styled.div`
     padding-left: ${theme.navWidth};
@@ -33,6 +34,7 @@ function HomePage({ logout }: HomePageProps) {
     return (
         <div>
             <Nav logout={logout}></Nav>
+
             <SiteWrapper>
                 <PageWrapper>
                     <Routes>

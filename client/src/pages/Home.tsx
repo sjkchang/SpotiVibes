@@ -12,11 +12,13 @@ import styled from "styled-components";
 import { theme } from "../styles";
 import SearchAll from "./Search/SearchAll";
 const { colors } = theme;
+
 const TabsList = styled(Tabs.List)`
     padding-top: 15px;
     display: flex;
     flex-direction: row;
     gap: 5px;
+    margin-bottom: 20px;
 `;
 
 const Tab = styled(Tabs.Trigger)`

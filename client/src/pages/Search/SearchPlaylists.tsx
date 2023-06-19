@@ -2,6 +2,7 @@ import React from "react";
 import { SearchResult } from "../../spotify/service";
 import CardGrid from "../../components/Card/layouts/CardGrid";
 import useSpotifyApi from "../../hooks/useSpotfiyApi";
+import { ScaleLoader } from "react-spinners";
 
 interface SearchResultsProps {
     search: string;
@@ -34,7 +35,7 @@ function Search({ search }: SearchResultsProps) {
     }
     return (
         <div>
-            {loading && <h1>loading</h1>}
+            {loading && <ScaleLoader color="#36d7b7" />}
             {error && <h1>{error.message}</h1>}
         </div>
     );

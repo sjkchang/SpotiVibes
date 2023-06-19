@@ -8,6 +8,7 @@ import { current } from "@reduxjs/toolkit";
 import Card from "../../components/Card/Card";
 import styled from "styled-components";
 import CardGrid from "../../components/Card/layouts/CardGrid";
+import { ScaleLoader } from "react-spinners";
 
 const SearchResults = styled.div`
     display: flex;
@@ -23,9 +24,13 @@ const Header = styled.div`
 
 const TopResult = styled.div`
     min-width: 260px;
+    flex-grow: 1;
+    max-width: 400px;
 `;
 
-const Tracks = styled.div``;
+const Tracks = styled.div`
+    flex-grow: 1;
+`;
 
 interface SearchResultsProps {
     search: string;
@@ -39,7 +44,7 @@ function Search({ search }: SearchResultsProps) {
             body: {
                 q: search,
                 type: ["artist", "track", "playlist"].toString(),
-                limit: 6,
+                limit: 8,
             },
         },
         [search]
@@ -116,7 +121,7 @@ function Search({ search }: SearchResultsProps) {
 
     return (
         <div>
-            {loading && <h1>loading</h1>}
+            {loading && <ScaleLoader color="#36d7b7" />}
             {error && <h1>{error.message}</h1>}
         </div>
     );

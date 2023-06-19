@@ -1,15 +1,14 @@
 import React, { useEffect, useState } from "react";
 import SpotifyTypes from "spotify-types";
-import { useAppDispatch, useAppSelector } from "../redux/hooks";
+import { useAppDispatch, useAppSelector } from "../../redux/hooks";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSeedling } from "@fortawesome/free-solid-svg-icons";
 import styled from "styled-components/macro";
-import { Button, theme } from "../styles";
+import { theme } from "../../styles";
 
-import SeedImage from "./SeedImage";
-import useSpotifyApi from "../hooks/useSpotfiyApi";
-import Popover from "./Popover";
-import { loadavg } from "os";
+import SeedImage from "../SeedImage";
+import useSpotifyApi from "../../hooks/useSpotfiyApi";
+import Popover from "../Popover";
 const { colors } = theme;
 
 const SeedPopover = styled.div``;
@@ -21,8 +20,8 @@ const Seeds = styled.div`
 `;
 
 const Trigger = styled(FontAwesomeIcon)`
-    margin-top: 40px;
-    margin-right: 40px;
+    margin-top: 5px;
+    margin-right: 20px;
     position: fixed;
     top: 0;
     right: 0;
@@ -32,7 +31,7 @@ const Trigger = styled(FontAwesomeIcon)`
     border-radius: 50%;
     box-shadow: 2px 2px 2px 1px rgba(0, 0, 0, 0.2);
     background-color: ${colors.accent};
-
+    z-index: 99;
     &:hover {
         background-color: ${colors.tertiary};
     }
@@ -46,7 +45,7 @@ interface ArtistSet {
     artists: Array<SpotifyTypes.Artist>;
 }
 
-function SelectedSeeds() {
+function SelectedSeedsPopout() {
     const seeds = useAppSelector((state: any) => state.seeds);
     const dispatch = useAppDispatch();
 
@@ -109,8 +108,12 @@ function SelectedSeeds() {
                                         <SeedImage
                                             item={track}
                                             uri={track.uri}
-                                            side="left"
-                                            align="start"
+                                            side="bottom"
+                                            align="end"
+                                            sideOffset={5}
+                                            backgroundColor={
+                                                colors.lightTertiary
+                                            }
                                         />
                                     );
                                 })}
@@ -123,8 +126,12 @@ function SelectedSeeds() {
                                         <SeedImage
                                             item={artist}
                                             uri={artist.uri}
-                                            side="left"
-                                            align="start"
+                                            side="bottom"
+                                            align="end"
+                                            sideOffset={5}
+                                            backgroundColor={
+                                                colors.lightTertiary
+                                            }
                                         />
                                     );
                                 })}
@@ -140,4 +147,4 @@ function SelectedSeeds() {
     );
 }
 
-export default SelectedSeeds;
+export default SelectedSeedsPopout;

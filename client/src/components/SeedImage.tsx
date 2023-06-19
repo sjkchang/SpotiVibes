@@ -19,6 +19,7 @@ interface TrackProps extends React.HTMLAttributes<any> {
     align?: "start" | "end" | "center";
     side?: "bottom" | "right" | "top" | "left";
     sideOffset?: number;
+    backgroundColor?: string;
 }
 
 function SeedImage({
@@ -28,6 +29,7 @@ function SeedImage({
     align = "start",
     side = "bottom",
     sideOffset = 5,
+    backgroundColor,
 }: TrackProps) {
     const seeds = useAppSelector((state: any) => state.seeds);
     const dispatch = useAppDispatch();
@@ -53,7 +55,8 @@ function SeedImage({
                 }
                 content={
                     <div>
-                        {popoutContent}
+                        <h2>{item.name}</h2>
+                        <h4>Popularity: {item.popularity}%</h4>
                         <Button
                             onClick={() => {
                                 dispatch(toggleSeeds(uri));
@@ -68,6 +71,7 @@ function SeedImage({
                 side={side}
                 align={align}
                 sideOffset={sideOffset}
+                backgroundColor={backgroundColor}
             />
         );
     } else {
@@ -105,6 +109,8 @@ function SeedImage({
                 }
                 side={side}
                 align={align}
+                sideOffset={sideOffset}
+                backgroundColor={backgroundColor}
             />
         );
     }

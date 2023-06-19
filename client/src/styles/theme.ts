@@ -5,6 +5,7 @@ const theme = {
         accent: "#475e45",
         background: "#063437",
         tertiary: "#042325",
+        lightTertiary: "#062b2e",
         spotifyGreen: "#1db954",
     },
 
@@ -34,7 +35,7 @@ const theme = {
 
     transition: `all 0.25s cubic-bezier(0.3, 0, 0.4, 1);`,
 
-    navWidth: "100px",
+    navWidth: "75px",
     navHeight: "70px",
 };
 

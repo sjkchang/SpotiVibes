@@ -3,6 +3,7 @@ import useSpotifyApi from "../hooks/useSpotfiyApi";
 import CardGrid from "../components/Card/layouts/CardGrid";
 import SpotifyTypes from "spotify-types";
 import BrickList from "../components/Brick/layouts/BrickList/BrickList";
+import { SyncLoader } from "react-spinners";
 
 function Playlists() {
     let { response, loading, error } = useSpotifyApi<
@@ -29,8 +30,8 @@ function Playlists() {
         <div className="Playlists">
             <h1>Playlists</h1>
             {playlists && <CardGrid items={playlists} />}
-            {error && <h1>error</h1>}
-            {loading && <h1>loading</h1>}
+            {error && error.message}
+            {loading && <SyncLoader />}
         </div>
     );
 }

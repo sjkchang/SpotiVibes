@@ -47,7 +47,11 @@ function TrackBrick({ track }: TrackProps) {
 
     return (
         <Brick>
-            <SeedImage item={track} uri={track.uri} />
+            <SeedImage
+                item={track}
+                uri={track.uri}
+                backgroundColor={colors.lightTertiary}
+            />
 
             <TrackInfo
                 onClick={() => {

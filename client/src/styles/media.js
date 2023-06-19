@@ -1,7 +1,6 @@
 import { css } from "styled-components";
-import { TupleType } from "typescript";
 
-const sizes = {
+export const sizes = {
     giant: 1440,
     desktop: 1200,
     netbook: 1000,

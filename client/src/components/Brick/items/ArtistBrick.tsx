@@ -8,6 +8,8 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCircleInfo } from "@fortawesome/free-solid-svg-icons";
 import { Brick, BrickTitle, BrickInfo } from "../BrickStyles";
 import SeedImage from "../../SeedImage";
+import { theme } from "../../../styles";
+const { colors } = theme;
 
 interface ArtistProps extends React.HTMLAttributes<any> {
     artist: SpotifyTypes.Artist;
@@ -26,7 +28,11 @@ function ArtistBrick({ artist }: ArtistProps) {
 
     return (
         <Brick>
-            <SeedImage item={artist} uri={artist.uri} />
+            <SeedImage
+                item={artist}
+                uri={artist.uri}
+                backgroundColor={colors.lightTertiary}
+            />
 
             <BrickInfo
                 onClick={() => {

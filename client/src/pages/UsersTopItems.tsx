@@ -6,6 +6,7 @@ import Playlists from "./Playlists";
 import styled from "styled-components/macro";
 import { theme, media } from "../styles";
 import useSpotifyApi from "../hooks/useSpotfiyApi";
+import { ScaleLoader, SyncLoader } from "react-spinners";
 
 const TopItems = styled.div`
     display: grid;
@@ -53,16 +54,16 @@ function UsersTopItems() {
                     {topTracks.response && (
                         <BrickList items={topTracks.response.items} />
                     )}
-                    {topTracks.error && <h1>error</h1>}
-                    {topTracks.loading && <h1>loading</h1>}
+                    {topTracks.error && topTracks.error.message}
+                    {topTracks.loading && <SyncLoader color="#36d7b7" />}
                 </div>
                 <div>
                     <h1>Your Top Artists</h1>
                     {topArtists.response && (
                         <BrickList items={topArtists.response.items} />
                     )}
-                    {topArtists.error && <h1>error</h1>}
-                    {topArtists.loading && <h1>loading</h1>}
+                    {topArtists.error && topArtists.error.message}
+                    {topArtists.loading && <SyncLoader color="#36d7b7" />}
                 </div>
             </TopItems>
             <Playlists />

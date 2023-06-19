@@ -16,10 +16,12 @@ interface PopoverProps {
     contentWidth?: number;
     onPointerDownOutside?: (event: any) => void;
     onInteractOutside?: (event: any) => void;
+
+    backgroundColor?: string;
 }
 
-const PopoverContent = styled(RadixPopover.Content)`
-    background-color: ${colors.tertiary};
+const PopoverContent = styled(RadixPopover.Content)<{ $background?: string }>`
+    background-color: ${(p) => p.$background};
     z-index: 100;
     border-radius: 4px;
     padding: 20px;
@@ -43,6 +45,10 @@ const PopoverContent = styled(RadixPopover.Content)`
     }
 `;
 
+const PopoverArrow = styled(RadixPopover.Arrow)<{ $background?: string }>`
+    fill: ${(p) => p.$background};
+`;
+
 const PopoverClose = styled(RadixPopover.Close)`
     all: unset;
 
@@ -63,10 +69,6 @@ const PopoverClose = styled(RadixPopover.Close)`
     }
 `;
 
-const PopoverArrow = styled(RadixPopover.Arrow)`
-    fill: ${colors.tertiary};
-`;
-
 function Popover({
     side = "bottom",
     align = "center",
@@ -77,12 +79,14 @@ function Popover({
     includeClose = true,
     onPointerDownOutside,
     onInteractOutside,
+    backgroundColor = colors.tertiary,
 }: PopoverProps) {
     return (
         <RadixPopover.Root>
             <RadixPopover.Trigger asChild>{trigger}</RadixPopover.Trigger>
             <RadixPopover.Portal>
                 <PopoverContent
+                    $background={backgroundColor}
                     onPointerDownOutside={onPointerDownOutside}
                     onInteractOutside={onInteractOutside}
                     side={side}
@@ -97,7 +101,7 @@ function Popover({
                         </PopoverClose>
                     )}
 
-                    <PopoverArrow className="PopoverArrow" />
+                    <PopoverArrow $background={backgroundColor} />
                 </PopoverContent>
             </RadixPopover.Portal>
         </RadixPopover.Root>
