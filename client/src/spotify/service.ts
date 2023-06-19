@@ -9,6 +9,8 @@ import {
     Paging,
     Recommendations,
     AudioFeatures,
+    PrivateUser,
+    PublicUser,
 } from "spotify-types";
 import { TopItemsQuery, TopTracksResponse, TopArtistsResponse } from "./types";
 
@@ -407,15 +409,75 @@ export async function generatePlaylist(params: GeneratePlaylistParams) {
         ...audio_features,
     });
 
-    let tracks = await axios
+    let error = undefined;
+
+    let trackUris = await axios
         .get("https://api.spotify.com/v1/recommendations?" + args, {
             headers: {
                 Authorization: "Bearer " + accessToken,
             },
         })
         .then(({ data }: { data: Recommendations }) => {
-            return data.tracks;
+            let uris = [];
+            for (let track of data.tracks) {
+                uris.push(track.uri);
+            }
+            return uris;
         });
 
-    return tracks;
+    let userId = await axios
+        .get("https://api.spotify.com/v1/me", {
+            headers: {
+                Authorization: "Bearer " + accessToken,
+            },
+        })
+        .then(({ data }: { data: PrivateUser | PublicUser }) => {
+            return data.id;
+        })
+        .catch((err) => {
+            error = err;
+        });
+
+    //Create Playlist
+    let playlistId = await axios
+        .post(
+            "https://api.spotify.com/v1/users/" + userId + "/playlists",
+            {
+                name: params.playlistName,
+                description: params.playlistDescription,
+            },
+            {
+                headers: {
+                    Authorization: "Bearer " + accessToken,
+                },
+            }
+        )
+        .then(({ data }: { data: Playlist }) => {
+            return data.id;
+        })
+        .catch((err) => {
+            error = err;
+        });
+
+    let playlist = await axios
+        .post(
+            "https://api.spotify.com/v1/playlists/" + playlistId + "/tracks",
+            {},
+            {
+                headers: {
+                    Authorization: "Bearer " + accessToken,
+                },
+                params: {
+                    uris: trackUris.toString(),
+                },
+            }
+        )
+        .then(({ data }: { data: Playlist }) => {
+            return data;
+        })
+        .catch((err) => {
+            error = err;
+        });
+
+    return { playlistId, error };
 }

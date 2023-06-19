@@ -212,8 +212,12 @@ function GeneratePlaylist() {
                 seed_genres: [genre],
                 limit: limit,
                 track_features: features,
-            }).then((response) => {
-                console.log(response);
+            }).then(({ playlistId, error }) => {
+                if (error) {
+                    console.log(error);
+                } else if (playlistId) {
+                    window.location.href = "playlist/" + playlistId;
+                }
             });
         } else {
             console.log("No seeds");

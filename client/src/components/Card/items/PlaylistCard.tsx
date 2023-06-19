@@ -14,6 +14,11 @@ function PlaylistCard({ playlist }: CardProps) {
     const seeds = useAppSelector((state: any) => state.seeds);
     const dispatch = useAppDispatch();
 
+    let image = "https://freeimage.host/i/album-cover-placeholder.HlHy9Yx";
+    if (playlist.images.length > 0) {
+        image = playlist.images[0].url;
+    }
+
     return (
         <StyledCard
             onClick={(e) => {
@@ -21,7 +26,7 @@ function PlaylistCard({ playlist }: CardProps) {
             }}
         >
             <CardImage>
-                <img alt="playlist" src={playlist.images[0].url} />
+                <img alt="playlist" src={image} />
             </CardImage>
             <Title>
                 <span>{playlist.name}</span>
