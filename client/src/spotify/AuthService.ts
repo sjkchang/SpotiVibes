@@ -34,7 +34,7 @@ const parseHashParams = (): URLSearchParams => {
     const parsedHash: URLSearchParams = new URLSearchParams(
         window.location.hash.substring(1) // any_hash_key=any_value
     );
-    window.history.replaceState(null, "", window.location.pathname);
+    //window.history.replaceState(null, "", window.location.pathname);
     return parsedHash;
 };
 

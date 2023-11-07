@@ -5,8 +5,8 @@ const CLIENT_SECRET = process.env.CLIENT_SECRET;
 const PORT = process.env.PORT || 8080;
 const HOST = process.env.HOST || "http://localhost";
 const BASE_URI = HOST + ":" + PORT;
-let REDIRECT_URI = BASE_URI + "/callback";
-let FRONTEND_URI = BASE_URI;
+let REDIRECT_URI = process.env.REDIRECT_URI || BASE_URI + "/callback";
+let FRONTEND_URI = process.env.FRONTEND_URI || BASE_URI;
 
 const express = require("express");
 const request = require("request");
