@@ -53,9 +53,7 @@ export async function refresh() {
 
 export class AuthService {
     authorize(): void {
-        const LOGIN_URI =
-            process.env.REACT_APP_LOGIN_URI || "http://localhost:8080/login";
-        window.location.assign(LOGIN_URI);
+        window.location.assign(window.location + "login");
     }
 
     logout(): void {
